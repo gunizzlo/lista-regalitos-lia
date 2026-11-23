@@ -573,7 +573,7 @@ function runLoader(onDone){
 
   // ---- CHARACTER DRAWERS ----
 
-  function drawEmanuel(x,y,scale,breathScale,cheeksBlown,sweatAlpha){
+  function drawGonzalo(x,y,scale,breathScale,cheeksBlown,sweatAlpha){
     // scale = overall, breathScale = chest inflate (1.0 to 1.3)
     ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
 
@@ -669,7 +669,7 @@ function runLoader(onDone){
     ctx.restore();
   }
 
-  function drawEmanuela(x,y,scale,panzaR){
+  function drawLu(x,y,scale,panzaR){
     ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
     // vestido negro largo
     ctx.beginPath();
@@ -840,15 +840,15 @@ function runLoader(onDone){
     // ---- SCENE 1: personajes aparecen (800-1800ms) ----
     else if(elapsed<1800){
       const p=easeOut((elapsed-800)/1000);
-      // Emanuel entra desde la derecha
+      // Gonzalo entra desde la derecha
       const emX=lerp(400,230,p), emY=100;
       ctx.save();ctx.globalAlpha=p;
-      drawEmanuel(emX,emY,.72,1,0,0);
+      drawGonzalo(emX,emY,.72,1,0,0);
       ctx.restore();
       // Emanuela entra desde la izquierda
       const luX=lerp(-60,110,p), luY=120;
       ctx.save();ctx.globalAlpha=p;
-      drawEmanuela(luX,luY,.78,15);
+      drawLu(luX,luY,.78,15);
       ctx.restore();
       cap.textContent='¡Preparando la lista de Lía! 🎀';
     }
@@ -862,8 +862,8 @@ function runLoader(onDone){
       const panzaR=lerp(16,38,easeInOut(t)); // panza crece
       const sweat=Math.min(1,t*1.5); // mas sudor con tiempo
 
-      drawEmanuel(230,100,.72,breathScale,cheeks,sweat);
-      drawEmanuela(110,120,.78,panzaR);
+      drawGonzalo(230,100,.72,breathScale,cheeks,sweat);
+      drawLu(110,120,.78,panzaR);
 
       // aire soplando
       if(cheeks>.3){
@@ -887,7 +887,7 @@ function runLoader(onDone){
       }
 
       // captions dinamicos
-      const caps=['¡Emanuel está soplando! 💨','¡La panza crece! 👶','¡Más fuerte Emanuel! 😤','¡Ya llega Lía! 🌸'];
+      const caps=['¡Gonzalo está soplando! 💨','¡La panza crece! 👶','¡Más fuerte Gonzalo! 😤','¡Ya llega Lía! 🌸'];
       cap.textContent=caps[Math.floor(t*caps.length*.99)];
     }
 
@@ -899,8 +899,8 @@ function runLoader(onDone){
       if(flashA>0){ctx.fillStyle=`rgba(255,255,255,${flashA})`;ctx.fillRect(0,0,W,H);}
       const bebeA=easeOut(Math.max(0,(t-.2)/.8));
       const bebeScale=lerp(.3,1,bounce(Math.min(1,(t-.1)/.9)));
-      drawEmanuel(230,100,.72,1,0,0);
-      drawEmanuela(110,120,.78,38);
+      drawGonzalo(230,100,.72,1,0,0);
+      drawLu(110,120,.78,38);
       drawBaby(170,105,bebeScale,bebeA);
       // corazones volando
       for(let i=0;i<6;i++){
