@@ -78,7 +78,10 @@ h2.script{font-family:"Great Vibes",cursive;font-size:2.4rem;color:var(--rose);m
 @keyframes heartPop{0%{opacity:1;transform:scale(0) translateY(0)}60%{opacity:1;transform:scale(1.4) translateY(-40px)}100%{opacity:0;transform:scale(1) translateY(-80px)}}
 
 /* LOADING */
-.loading{text-align:center;padding:60px 0;color:#B8A09A;font-style:italic}
+.loading{text-align:center;padding:40px 0}
+.anim-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.loading-txt{color:#B8A09A;font-style:italic;font-size:.95rem;margin:0}
+#baby-anim{filter:drop-shadow(0 4px 12px #F9A8C922)}
 </style>
 </head>
 <body>
@@ -98,7 +101,83 @@ h2.script{font-family:"Great Vibes",cursive;font-size:2.4rem;color:var(--rose);m
     <small>Los links y precios son solo ideas de Mercado Libre: podés comprarlo donde quieras. Lo que ya tiene dueño aparece tachado. La ropa, los pañales y las toallitas pueden repetirse.</small>
   </div>
   <div class="count" id="count">Cargando...</div>
-  <div id="list"><div class="loading">Cargando regalitos... 🎀</div></div>
+  <div id="list">
+<div class="loading" id="loader">
+<div class="anim-wrap">
+<svg id="baby-anim" viewBox="0 0 200 220" width="160" height="176" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pregnant woman -->
+  <g id="mama">
+    <!-- head -->
+    <circle cx="100" cy="38" r="22" fill="#F5C5A3" stroke="#E8A882" stroke-width="1.5"/>
+    <!-- hair -->
+    <ellipse cx="100" cy="20" rx="22" ry="12" fill="#C0845A"/>
+    <ellipse cx="80" cy="30" rx="8" ry="14" fill="#C0845A"/>
+    <ellipse cx="120" cy="30" rx="8" ry="14" fill="#C0845A"/>
+    <!-- eyes -->
+    <ellipse cx="92" cy="37" rx="2.5" ry="3" fill="#5A3A1A"/>
+    <ellipse cx="108" cy="37" rx="2.5" ry="3" fill="#5A3A1A"/>
+    <!-- smile -->
+    <path d="M93 46 Q100 52 107 46" fill="none" stroke="#C0785A" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- body/dress -->
+    <path d="M72 60 Q100 55 128 60 L134 130 Q100 140 66 130 Z" fill="#F9A8C9" stroke="#E87DB0" stroke-width="1"/>
+    <!-- belly - animated -->
+    <ellipse id="panza" cx="100" cy="102" rx="18" ry="16" fill="#F7C5D8" stroke="#E87DB0" stroke-width="1.5"/>
+    <!-- arms -->
+    <path d="M72 72 Q55 85 58 100" fill="none" stroke="#F5C5A3" stroke-width="8" stroke-linecap="round"/>
+    <path d="M128 72 Q145 85 142 100" fill="none" stroke="#F5C5A3" stroke-width="8" stroke-linecap="round"/>
+    <!-- hands on belly -->
+    <circle cx="62" cy="102" r="6" fill="#F5C5A3"/>
+    <circle cx="138" cy="102" r="6" fill="#F5C5A3"/>
+    <!-- legs -->
+    <rect x="82" y="130" width="14" height="38" rx="7" fill="#F9A8C9"/>
+    <rect x="104" y="130" width="14" height="38" rx="7" fill="#F9A8C9"/>
+    <!-- shoes -->
+    <ellipse cx="89" cy="170" rx="11" ry="6" fill="#C0785A"/>
+    <ellipse cx="111" cy="170" rx="11" ry="6" fill="#C0785A"/>
+  </g>
+
+  <!-- Baby (hidden initially) -->
+  <g id="bebe" opacity="0">
+    <!-- baby body -->
+    <ellipse cx="100" cy="130" rx="22" ry="26" fill="#F9C5B0" stroke="#F0A880" stroke-width="1"/>
+    <!-- baby head -->
+    <circle cx="100" cy="94" r="26" fill="#F5C5A3" stroke="#E8A882" stroke-width="1.5"/>
+    <!-- baby hair tuft -->
+    <path d="M92 72 Q100 65 108 72" fill="none" stroke="#C0845A" stroke-width="4" stroke-linecap="round"/>
+    <!-- baby eyes closed/happy -->
+    <path d="M89 93 Q92 90 95 93" fill="none" stroke="#5A3A1A" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M105 93 Q108 90 111 93" fill="none" stroke="#5A3A1A" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- baby smile -->
+    <path d="M93 103 Q100 110 107 103" fill="none" stroke="#C0785A" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- baby onesie -->
+    <path d="M78 118 Q100 112 122 118 L126 155 Q100 162 74 155 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width="1"/>
+    <!-- tiny star on onesie -->
+    <text x="97" y="142" font-size="12" text-anchor="middle">⭐</text>
+    <!-- arms -->
+    <ellipse cx="74" cy="130" rx="10" ry="7" fill="#F5C5A3" transform="rotate(-20,74,130)"/>
+    <ellipse cx="126" cy="130" rx="10" ry="7" fill="#F5C5A3" transform="rotate(20,126,130)"/>
+    <!-- legs/booties -->
+    <ellipse cx="88" cy="158" rx="12" ry="8" fill="#F9C5B0" transform="rotate(10,88,158)"/>
+    <ellipse cx="112" cy="158" rx="12" ry="8" fill="#F9C5B0" transform="rotate(-10,112,158)"/>
+    <!-- booties -->
+    <ellipse cx="84" cy="164" rx="10" ry="5" fill="#FFD6E8"/>
+    <ellipse cx="116" cy="164" rx="10" ry="5" fill="#FFD6E8"/>
+  </g>
+
+  <!-- Hearts (hidden initially) -->
+  <g id="hearts" opacity="0">
+    <text x="30" y="60" font-size="20" id="h1" opacity="0">💕</text>
+    <text x="155" y="50" font-size="16" id="h2" opacity="0">💝</text>
+    <text x="20" y="100" font-size="14" id="h3" opacity="0">🎀</text>
+    <text x="160" y="90" font-size="18" id="h4" opacity="0">✨</text>
+    <text x="50" y="40" font-size="12" id="h5" opacity="0">💗</text>
+    <text x="140" y="130" font-size="14" id="h6" opacity="0">🌸</text>
+  </g>
+</svg>
+<p class="loading-txt" id="loading-txt">Preparando los regalitos de Lía...</p>
+</div>
+</div>
+</div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -350,9 +429,57 @@ function launchHearts(anchor) {
   });
 }
 
+
+function runLoaderAnimation(onDone) {
+  const panza = document.getElementById('panza');
+  const bebe = document.getElementById('bebe');
+  const mama = document.getElementById('mama');
+  const hearts = document.getElementById('hearts');
+  const txt = document.getElementById('loading-txt');
+  if (!panza) { onDone(); return; }
+  let start = null;
+  const dur = 2200;
+  function grow(ts) {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / dur, 1);
+    const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+    panza.setAttribute('rx', 18 + ease * 20);
+    panza.setAttribute('ry', 16 + ease * 22);
+    if (p < 1) { requestAnimationFrame(grow); }
+    else {
+      txt.textContent = 'Llegó Lía Isabella! 🎀';
+      mama.style.transition = 'opacity .4s'; mama.style.opacity = '0';
+      setTimeout(() => {
+        mama.style.display='none';
+        bebe.style.transition='opacity .6s'; bebe.setAttribute('opacity','1');
+        hearts.setAttribute('opacity','1');
+        ['h1','h2','h3','h4','h5','h6'].forEach((id,i) => {
+          setTimeout(() => {
+            const el=document.getElementById(id);
+            el.setAttribute('opacity','1');
+            el.style.transition='transform 1.2s, opacity 1.2s';
+            el.style.transform='translateY(-'+(20+i*8)+'px)';
+          }, i*120);
+        });
+        setTimeout(onDone, 900);
+      }, 450);
+    }
+  }
+  requestAnimationFrame(grow);
+}
+
 (async () => {
+  const loaderEl = document.getElementById('loader');
+  const listEl = document.getElementById('list');
   await loadReservas();
-  renderList();
+  if (loaderEl) {
+    runLoaderAnimation(() => {
+      loaderEl.remove();
+      renderList();
+    });
+  } else {
+    renderList();
+  }
 })();
 </script>
 </body>
