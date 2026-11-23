@@ -144,13 +144,15 @@ let fileSha = '';
 
 async function loadReservas() {
   try {
+    // Get SHA from API
     const r = await fetch(API + '?cachebust=' + Date.now(), {
       headers: { Authorization: 'token ' + TOKEN }
     });
     const d = await r.json();
     fileSha = d.sha;
-    const bytes = Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0));
-    reservas = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+    // Fetch raw content directly (avoids base64 encoding issues)
+    const raw = await fetch('https://raw.githubusercontent.com/' + REPO + '/main/reservas.json?cb=' + Date.now());
+    reservas = await raw.json();
   } catch(e) { reservas = {}; }
 }
 
