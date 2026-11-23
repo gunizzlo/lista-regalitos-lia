@@ -292,67 +292,171 @@ body::after{width:500px;height:500px;bottom:-150px;left:-150px;background:radial
 
 <!-- LOADER -->
 <div id="loader">
-<svg id="baby-svg" viewBox="0 0 200 240" width="180" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="skin" cx="50%" cy="40%"><stop offset="0%" stop-color="#FCDEC0"/><stop offset="100%" stop-color="#F5C5A3"/></radialGradient>
-  </defs>
-  <!-- mama -->
-  <g id="g-mama">
-    <circle cx="100" cy="40" r="24" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
-    <ellipse cx="100" cy="21" rx="24" ry="13" fill="#B87040"/>
-    <ellipse cx="79" cy="33" rx="8" ry="15" fill="#B87040"/>
-    <ellipse cx="121" cy="33" rx="8" ry="15" fill="#B87040"/>
-    <ellipse cx="92" cy="39" rx="2.8" ry="3.2" fill="#5A3A1A"/>
-    <ellipse cx="108" cy="39" rx="2.8" ry="3.2" fill="#5A3A1A"/>
-    <circle cx="90" cy="38" r="1" fill="#fff" opacity=".7"/>
-    <circle cx="106" cy="38" r="1" fill="#fff" opacity=".7"/>
-    <path d="M93 49 Q100 55 107 49" fill="none" stroke="#C07050" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- body/dress -->
-    <path d="M70 65 Q100 58 130 65 L136 148 Q100 158 64 148 Z" fill="#F9A8C9" stroke="#E87DB0" stroke-width=".8"/>
-    <!-- belt detail -->
-    <path d="M71 90 Q100 85 129 90" fill="none" stroke="#E87DB0" stroke-width="1.5" stroke-dasharray="4 3"/>
-    <!-- belly -->
-    <ellipse id="panza" cx="100" cy="115" rx="20" ry="18" fill="#FCDEC0" stroke="#EDB892" stroke-width="1.5"/>
-    <ellipse id="panza-shine" cx="94" cy="108" rx="6" ry="4" fill="#fff" opacity=".25"/>
-    <!-- arms -->
-    <path d="M70 78 Q50 92 54 112" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
-    <path d="M130 78 Q150 92 146 112" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
-    <circle cx="56" cy="114" r="7" fill="#FCDEC0"/>
-    <circle cx="144" cy="114" r="7" fill="#FCDEC0"/>
-    <!-- legs -->
-    <rect x="80" y="148" width="16" height="42" rx="8" fill="#F9A8C9"/>
-    <rect x="104" y="148" width="16" height="42" rx="8" fill="#F9A8C9"/>
-    <ellipse cx="88" cy="193" rx="13" ry="7" fill="#C07050"/>
-    <ellipse cx="112" cy="193" rx="13" ry="7" fill="#C07050"/>
-  </g>
-  <!-- bebe -->
-  <g id="g-bebe" opacity="0">
-    <ellipse cx="100" cy="150" rx="26" ry="30" fill="#FCDEC0" stroke="#EDB892" stroke-width="1"/>
-    <circle cx="100" cy="108" r="30" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
-    <path d="M90 85 Q100 77 110 85" fill="none" stroke="#B87040" stroke-width="5" stroke-linecap="round"/>
-    <path d="M86 107 Q89 103 92 107" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M108 107 Q111 103 114 107" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M92 118 Q100 125 108 118" fill="none" stroke="#C07050" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M74 134 Q76 128 83 130 L80 148 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-    <path d="M126 134 Q124 128 117 130 L120 148 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-    <path d="M74 134 Q100 126 126 134 L128 175 Q100 183 72 175 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-    <text x="100" y="162" font-size="14" text-anchor="middle">🌸</text>
-    <ellipse cx="85" cy="178" rx="14" ry="9" fill="#FCDEC0" transform="rotate(12,85,178)"/>
-    <ellipse cx="115" cy="178" rx="14" ry="9" fill="#FCDEC0" transform="rotate(-12,115,178)"/>
-    <ellipse cx="80" cy="186" rx="12" ry="6" fill="#FFD6E8"/>
-    <ellipse cx="120" cy="186" rx="12" ry="6" fill="#FFD6E8"/>
-  </g>
-  <!-- hearts around -->
-  <g id="g-hearts" opacity="0">
-    <text class="hh" x="22" y="70" font-size="22" opacity="0">💕</text>
-    <text class="hh" x="158" y="55" font-size="18" opacity="0">💝</text>
-    <text class="hh" x="15" y="120" font-size="16" opacity="0">🎀</text>
-    <text class="hh" x="166" y="110" font-size="20" opacity="0">✨</text>
-    <text class="hh" x="45" y="45" font-size="14" opacity="0">💗</text>
-    <text class="hh" x="148" y="150" font-size="16" opacity="0">🌸</text>
-    <text class="hh" x="30" y="160" font-size="13" opacity="0">⭐</text>
-    <text class="hh" x="155" y="175" font-size="12" opacity="0">🌷</text>
-  </g>
+<svg id="baby-svg" viewBox="0 0 360 260" width="320" height="232" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="skin" cx="50%" cy="40%"><stop offset="0%" stop-color="#FCDEC0"/><stop offset="100%" stop-color="#F5C5A3"/></radialGradient>
+  <radialGradient id="skin2" cx="50%" cy="40%"><stop offset="0%" stop-color="#F5D5B0"/><stop offset="100%" stop-color="#E8B888"/></radialGradient>
+</defs>
+
+<!-- PAPA (gordito, alto, con barba) -->
+<g id="g-papa">
+  <!-- body gordo -->
+  <ellipse cx="68" cy="148" rx="38" ry="52" fill="#6B8DC2" stroke="#5070A8" stroke-width="1"/>
+  <!-- panza gordita que sobresale -->
+  <ellipse cx="74" cy="158" rx="28" ry="30" fill="#7B9DD2" stroke="#5070A8" stroke-width="1"/>
+  <!-- camisa detalles -->
+  <line x1="68" y1="100" x2="68" y2="180" stroke="#5070A8" stroke-width="1" stroke-dasharray="3 4"/>
+  <!-- botones camisa -->
+  <circle cx="68" cy="115" r="2" fill="#5070A8"/>
+  <circle cx="68" cy="128" r="2" fill="#5070A8"/>
+  <circle cx="68" cy="141" r="2" fill="#5070A8"/>
+  <!-- cabeza grande -->
+  <circle cx="68" cy="52" r="30" fill="url(#skin2)" stroke="#D4A878" stroke-width="1.2"/>
+  <!-- pelo castaño oscuro corto -->
+  <ellipse cx="68" cy="30" rx="30" ry="14" fill="#6B4020"/>
+  <ellipse cx="42" cy="42" rx="9" ry="16" fill="#6B4020"/>
+  <ellipse cx="94" cy="42" rx="9" ry="16" fill="#6B4020"/>
+  <!-- pelo lateral izq -->
+  <rect x="38" y="38" width="6" height="20" rx="3" fill="#6B4020"/>
+  <rect x="90" y="38" width="6" height="20" rx="3" fill="#6B4020"/>
+  <!-- BARBA frondosa -->
+  <ellipse cx="68" cy="76" rx="22" ry="14" fill="#8B5530"/>
+  <ellipse cx="50" cy="70" rx="10" ry="10" fill="#7A4825"/>
+  <ellipse cx="86" cy="70" rx="10" ry="10" fill="#7A4825"/>
+  <ellipse cx="68" cy="82" rx="18" ry="10" fill="#9B6540"/>
+  <!-- lineas de barba textura -->
+  <path d="M54 70 Q56 75 54 80" stroke="#6B4020" stroke-width="1" fill="none"/>
+  <path d="M62 68 Q64 76 62 83" stroke="#6B4020" stroke-width="1" fill="none"/>
+  <path d="M70 68 Q72 76 70 83" stroke="#6B4020" stroke-width="1" fill="none"/>
+  <path d="M78 70 Q80 75 78 80" stroke="#6B4020" stroke-width="1" fill="none"/>
+  <!-- bigote -->
+  <path d="M56 64 Q68 60 80 64" fill="#7A4825" stroke="none"/>
+  <!-- ojos -->
+  <ellipse cx="57" cy="52" rx="4" ry="4.5" fill="#fff"/>
+  <ellipse cx="79" cy="52" rx="4" ry="4.5" fill="#fff"/>
+  <ellipse cx="57" cy="52" rx="2.8" ry="3" fill="#3A5A1A"/>
+  <ellipse cx="79" cy="52" rx="2.8" ry="3" fill="#3A5A1A"/>
+  <circle cx="58" cy="51" r="1" fill="#fff" opacity=".8"/>
+  <circle cx="80" cy="51" r="1" fill="#fff" opacity=".8"/>
+  <!-- cejas -->
+  <path d="M51 46 Q57 43 63 46" fill="none" stroke="#6B4020" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M73 46 Q79 43 85 46" fill="none" stroke="#6B4020" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- brazos gordos -->
+  <ellipse cx="28" cy="140" rx="13" ry="30" fill="#6B8DC2" stroke="#5070A8" stroke-width=".8" transform="rotate(-10,28,140)"/>
+  <ellipse cx="108" cy="130" rx="13" ry="28" fill="#6B8DC2" stroke="#5070A8" stroke-width=".8" transform="rotate(15,108,130)"/>
+  <!-- manos -->
+  <circle cx="20" cy="168" r="10" fill="url(#skin2)"/>
+  <circle cx="112" cy="150" r="10" fill="url(#skin2)"/>
+  <!-- mano con bomba/pajita -->
+  <line x1="112" y1="150" x2="145" y2="145" stroke="#E8829A" stroke-width="3" stroke-linecap="round"/>
+  <!-- bomba (pajita soplando) -->
+  <ellipse cx="152" cy="143" rx="10" ry="7" fill="#F5B8C8" stroke="#E8829A" stroke-width="1.2"/>
+  <circle cx="162" cy="143" r="4" fill="#F9D0DC" stroke="#E8829A" stroke-width="1"/>
+  <!-- aire saliendo con flechitas -->
+  <path d="M166 143 L175 138" stroke="#E8829A" stroke-width="1.5" stroke-dasharray="3 2" stroke-linecap="round"/>
+  <path d="M166 143 L176 143" stroke="#E8829A" stroke-width="1.5" stroke-dasharray="3 2" stroke-linecap="round"/>
+  <path d="M166 143 L175 148" stroke="#E8829A" stroke-width="1.5" stroke-dasharray="3 2" stroke-linecap="round"/>
+  <!-- piernas gordas -->
+  <ellipse cx="50" cy="210" rx="18" ry="30" fill="#4A6090" stroke="#3A5080" stroke-width=".8"/>
+  <ellipse cx="86" cy="210" rx="18" ry="30" fill="#4A6090" stroke="#3A5080" stroke-width=".8"/>
+  <!-- zapatos -->
+  <ellipse cx="47" cy="238" rx="20" ry="8" fill="#2A2A2A"/>
+  <ellipse cx="89" cy="238" rx="20" ry="8" fill="#2A2A2A"/>
+  <!-- sudando -->
+  <ellipse cx="96" cy="38" rx="4" ry="6" fill="#A8D4F8" opacity=".8"/>
+  <ellipse cx="100" cy="30" rx="3" ry="4.5" fill="#A8D4F8" opacity=".6"/>
+  <text x="104" y="22" font-size="11" opacity=".8">😅</text>
+</g>
+
+<!-- MAMA (ojos verdes, pelo castaño claro) desplazada a la derecha -->
+<g id="g-mama">
+  <!-- body/dress -->
+  <path d="M218 72 Q252 64 286 72 L292 168 Q252 178 212 168 Z" fill="#F9A8C9" stroke="#E87DB0" stroke-width=".8"/>
+  <!-- belt detail -->
+  <path d="M219 100 Q252 94 285 100" fill="none" stroke="#E87DB0" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- belly -->
+  <ellipse id="panza" cx="252" cy="128" rx="22" ry="20" fill="#FCDEC0" stroke="#EDB892" stroke-width="1.5"/>
+  <ellipse id="panza-shine" cx="246" cy="120" rx="7" ry="5" fill="#fff" opacity=".25"/>
+  <!-- cabeza -->
+  <circle cx="252" cy="44" r="26" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
+  <!-- pelo castaño CLARO largo -->
+  <ellipse cx="252" cy="24" rx="27" ry="16" fill="#C8904A"/>
+  <ellipse cx="228" cy="38" rx="10" ry="20" fill="#C8904A"/>
+  <ellipse cx="276" cy="38" rx="10" ry="20" fill="#C8904A"/>
+  <!-- pelo largo cayendo -->
+  <path d="M228 44 Q222 80 226 110" fill="none" stroke="#C8904A" stroke-width="8" stroke-linecap="round"/>
+  <path d="M276 44 Q282 80 278 110" fill="none" stroke="#C8904A" stroke-width="8" stroke-linecap="round"/>
+  <!-- OJOS VERDES -->
+  <ellipse cx="243" cy="44" rx="4" ry="4.5" fill="#fff"/>
+  <ellipse cx="261" cy="44" rx="4" ry="4.5" fill="#fff"/>
+  <ellipse cx="243" cy="44" rx="3" ry="3.5" fill="#2D7A3A"/>
+  <ellipse cx="261" cy="44" rx="3" ry="3.5" fill="#2D7A3A"/>
+  <!-- brillo ojo -->
+  <circle cx="244.5" cy="42.5" r="1.2" fill="#fff" opacity=".9"/>
+  <circle cx="262.5" cy="42.5" r="1.2" fill="#fff" opacity=".9"/>
+  <!-- puntito oscuro pupila -->
+  <ellipse cx="243" cy="44" rx="1.5" ry="1.8" fill="#1A4A22"/>
+  <ellipse cx="261" cy="44" rx="1.5" ry="1.8" fill="#1A4A22"/>
+  <!-- pestañas -->
+  <path d="M239 40 L237 37" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M243 39 L242 36" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M247 40 L249 37" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M257 40 L255 37" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M261 39 L260 36" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M265 40 L267 37" stroke="#5A3A1A" stroke-width="1" stroke-linecap="round"/>
+  <!-- cejas finas -->
+  <path d="M237 38 Q243 35 249 38" fill="none" stroke="#C8904A" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M255 38 Q261 35 267 38" fill="none" stroke="#C8904A" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- nariz -->
+  <path d="M250 50 Q252 54 254 50" fill="none" stroke="#E0A878" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- sonrisa -->
+  <path d="M245 56 Q252 63 259 56" fill="none" stroke="#C07050" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- chapitas mejillas -->
+  <ellipse cx="234" cy="52" rx="6" ry="4" fill="#F5A0B0" opacity=".4"/>
+  <ellipse cx="270" cy="52" rx="6" ry="4" fill="#F5A0B0" opacity=".4"/>
+  <!-- brazos -->
+  <path d="M218 84 Q198 100 202 122" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
+  <path d="M286 84 Q306 100 302 122" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
+  <!-- manos sobre panza -->
+  <circle cx="204" cy="124" r="8" fill="#FCDEC0"/>
+  <circle cx="300" cy="124" r="8" fill="#FCDEC0"/>
+  <!-- piernas -->
+  <rect x="230" y="168" width="17" height="44" rx="8.5" fill="#F9A8C9"/>
+  <rect x="257" y="168" width="17" height="44" rx="8.5" fill="#F9A8C9"/>
+  <!-- zapatos -->
+  <ellipse cx="238" cy="214" rx="14" ry="7" fill="#C07050"/>
+  <ellipse cx="265" cy="214" rx="14" ry="7" fill="#C07050"/>
+</g>
+
+<!-- BEBE -->
+<g id="g-bebe" opacity="0">
+  <ellipse cx="180" cy="175" rx="26" ry="30" fill="#FCDEC0" stroke="#EDB892" stroke-width="1"/>
+  <circle cx="180" cy="130" r="30" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
+  <path d="M170 108 Q180 100 190 108" fill="none" stroke="#C8904A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M166 129 Q169 125 172 129" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M188 129 Q191 125 194 129" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M172 141 Q180 148 188 141" fill="none" stroke="#C07050" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M154 156 Q156 150 163 152 L160 170 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+  <path d="M206 156 Q204 150 197 152 L200 170 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+  <path d="M154 156 Q180 148 206 156 L208 197 Q180 205 152 197 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+  <text x="180" y="183" font-size="14" text-anchor="middle">🌸</text>
+  <ellipse cx="162" cy="200" rx="14" ry="9" fill="#FCDEC0" transform="rotate(12,162,200)"/>
+  <ellipse cx="198" cy="200" rx="14" ry="9" fill="#FCDEC0" transform="rotate(-12,198,200)"/>
+  <ellipse cx="158" cy="208" rx="12" ry="6" fill="#FFD6E8"/>
+  <ellipse cx="202" cy="208" rx="12" ry="6" fill="#FFD6E8"/>
+</g>
+
+<!-- CORAZONES -->
+<g id="g-hearts" opacity="0">
+  <text class="hh" x="10" y="80" font-size="20" opacity="0">💕</text>
+  <text class="hh" x="315" y="65" font-size="17" opacity="0">💝</text>
+  <text class="hh" x="5" y="140" font-size="15" opacity="0">🎀</text>
+  <text class="hh" x="320" y="130" font-size="19" opacity="0">✨</text>
+  <text class="hh" x="140" y="30" font-size="13" opacity="0">💗</text>
+  <text class="hh" x="310" y="185" font-size="15" opacity="0">🌸</text>
+  <text class="hh" x="20" y="200" font-size="12" opacity="0">⭐</text>
+  <text class="hh" x="300" y="210" font-size="11" opacity="0">🌷</text>
+</g>
 </svg>
 <div class="loader-txt" id="loader-txt">Preparando los regalitos de Lía...</div>
 </div>
@@ -589,6 +693,7 @@ function runLoader(onDone){
   const panza=document.getElementById('panza');
   const pShine=document.getElementById('panza-shine');
   const gMama=document.getElementById('g-mama');
+  const gPapaTmp=document.getElementById('g-papa');
   const gBebe=document.getElementById('g-bebe');
   const gHearts=document.getElementById('g-hearts');
   const svg=document.getElementById('baby-svg');
@@ -606,7 +711,7 @@ function runLoader(onDone){
     else{
       txt.textContent='¡Llegó Lía Isabella! 🎀';
       txt.style.color='#C5A8D8';
-      gMama.style.transition='opacity .5s';gMama.style.opacity='0';
+      gMama.style.transition='opacity .5s';gMama.style.opacity='0';if(gPapaTmp){gPapaTmp.style.transition='opacity .5s';gPapaTmp.style.opacity='0';}
       svg.style.transition='transform .5s cubic-bezier(.34,1.56,.64,1)';
       svg.style.transform='scale(1.08)';
       setTimeout(()=>{
