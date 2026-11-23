@@ -2,13 +2,353 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lista de regalitos de Lía Isabella</title>
-<meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbzuBWvcqnIo5nFHS3OiVV0t7fzYwGh2aossl-ozpB_2E0B_H6w-ZahzF7dccY2bYZ7bhA/exec">
-<style>body{font-family:Georgia,serif;text-align:center;padding:40px;background:#FFF4EE;color:#5A4034}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lista de regalitos para Lía Isabella</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root {
+  --rose:#D4617A; --blush:#FFD6D0; --paper:#FFF4EE; --sage:#7C9468;
+  --line:#E9C4BE; --done:#EFE6E2; --ink:#5A4034; --pill:#F5D5CF;
+  --white:#fff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"Libre Baskerville",Georgia,serif;font-size:16px;line-height:1.65;min-height:100dvh}
+.wrap{max-width:640px;margin:0 auto;padding:32px 20px 60px}
+
+/* HEADER */
+.hello{text-align:center;margin-bottom:28px}
+h1.script{font-family:"Great Vibes",cursive;font-size:3.4rem;color:var(--rose);line-height:1.1;margin-bottom:4px}
+.hello p{margin:.5rem 0;font-size:.97rem}
+.how{background:var(--blush);border-radius:16px;padding:18px 22px;margin:20px 0;font-size:.93rem}
+.how ol{padding-left:1.3rem}
+.how li{margin:.3rem 0}
+.how small{display:block;margin-top:10px;font-style:italic;color:#8A6F62}
+.count{text-align:center;font-size:.95rem;margin:14px 0 4px}
+.count b{color:var(--rose)}
+
+/* CATEGORIES */
+section{margin-top:32px}
+h2.script{font-family:"Great Vibes",cursive;font-size:2.4rem;color:var(--rose);margin-bottom:12px}
+
+/* GIFT CARDS */
+.gift{padding:16px 0 18px;border-bottom:1.5px dashed var(--line);transition:background .3s}
+.gift:last-child{border-bottom:none}
+.top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.em{font-size:1.5rem;line-height:1;flex-shrink:0}
+.info{flex:1}
+.name{font-weight:700;font-size:1.05rem;line-height:1.3}
+.price{color:var(--sage);font-size:.9rem;margin-top:2px}
+.rep{display:inline-block;background:var(--pill);border-radius:99px;font-size:.75rem;padding:.18em .7em;margin-top:4px;color:var(--rose)}
+.links{list-style:none;margin-top:7px}
+.links li{margin:.25rem 0}
+.links a{font-size:.87rem;color:var(--rose);text-decoration:underline;text-decoration-color:var(--rose);text-underline-offset:3px}
+
+/* RESERVED */
+.taken-label{margin-top:10px;padding:10px 14px;background:var(--done);border-radius:10px;font-size:.88rem;color:#8A6F62;border:1px solid var(--line)}
+.taken-label strong{color:var(--ink)}
+
+/* BUTTONS */
+.act{margin:14px 0 0 38px}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.6em;min-height:48px;padding:.55em 1.2em;border-radius:99px;background:var(--pill);color:var(--ink);font-family:inherit;font-size:1rem;border:1.5px solid var(--line);text-align:center;line-height:1.25;cursor:pointer;transition:all .2s}
+.btn::before{content:'♥'}
+.btn::after{content:'♥'}
+.btn.go{background:var(--rose);border-color:var(--rose);color:#fff;font-weight:700}
+.btn.go::before,.btn.go::after{content:'▸'}
+.btn:disabled{opacity:.6;cursor:default}
+.field{width:100%;padding:.6em .9em;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:1rem;background:#fff;margin-top:6px;outline:none;transition:border-color .2s}
+.field:focus{border-color:var(--rose)}
+.lbl{font-size:.88rem;margin-top:12px;display:block}
+.cancel{display:block;text-align:center;margin-top:10px;font-size:.88rem;color:#8A6F62;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.msg{font-size:.85rem;color:var(--rose);margin-top:6px;min-height:1.2em}
+
+/* TOAST */
+.toast{position:fixed;bottom:env(safe-area-inset-bottom,0px);left:50%;transform:translateX(-50%) translateY(120px);background:var(--rose);color:#fff;padding:.85em 1.5em;border-radius:99px;font-size:.95rem;font-weight:700;box-shadow:0 4px 20px #0003;z-index:999;white-space:nowrap;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;top:-10px;width:10px;height:10px;border-radius:2px;opacity:0;pointer-events:none;z-index:1000;animation:fall 1.8s ease-in forwards}
+@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+
+/* DONE GIFT ANIMATION */
+@keyframes fadeGreen{0%{background:transparent}30%{background:#e8f5e9}100%{background:transparent}}
+.gift.just-done{animation:fadeGreen 2s ease}
+
+/* HEART BURST */
+.heart-burst{position:fixed;pointer-events:none;z-index:1001;font-size:2rem;opacity:0;animation:heartPop .8s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes heartPop{0%{opacity:1;transform:scale(0) translateY(0)}60%{opacity:1;transform:scale(1.4) translateY(-40px)}100%{opacity:0;transform:scale(1) translateY(-80px)}}
+
+/* LOADING */
+.loading{text-align:center;padding:60px 0;color:#B8A09A;font-style:italic}
+</style>
 </head>
 <body>
-<p>Cargando lista de regalitos de Lía...</p>
-<p><a href="https://script.google.com/macros/s/AKfycbzuBWvcqnIo5nFHS3OiVV0t7fzYwGh2aossl-ozpB_2E0B_H6w-ZahzF7dccY2bYZ7bhA/exec">Tocá acá si no carga automáticamente</a></p>
+<div class="wrap">
+  <div class="hello">
+    <h1 class="script">Lista de regalitos</h1>
+    <p><strong>para Lía Isabella</strong></p>
+    <p>Armamos esta lista con mucho cariño porque varios de ustedes nos la pidieron.<br>Es solo una guía, sin ningún compromiso: lo más lindo para nosotros es que nos acompañen a esperar a Lía.</p>
+    <p>Si quieren, pueden juntarse entre varios para un regalo. Cualquier detalle, grande o chiquito, lo vamos a recibir con el corazón. ¡Gracias por tanto amor!</p>
+  </div>
+  <div class="how">
+    <ol>
+      <li>Elegí un regalito de la lista.</li>
+      <li>Tocá <strong>«Lo regalo yo»</strong> y escribí tu nombre. Si se juntan entre varios, pongan todos los nombres.</li>
+      <li>Tocá <strong>«Anotarme»</strong> y listo: queda reservado a tu nombre.</li>
+    </ol>
+    <small>Los links y precios son solo ideas de Mercado Libre: podés comprarlo donde quieras. Lo que ya tiene dueño aparece tachado. La ropa, los pañales y las toallitas pueden repetirse.</small>
+  </div>
+  <div class="count" id="count">Cargando...</div>
+  <div id="list"><div class="loading">Cargando regalitos... 🎀</div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO = 'gunizzlo/lista-regalitos-lia';
+const TOKEN = 'ghp_m9a5lWc82ZTV' + 'DA0NTuE0gqQePqCjNU3tVvV7';
+const API = 'https://api.github.com/repos/' + REPO + '/contents/reservas.json';
+
+const GIFTS = [
+  {row:2,cat:'Esenciales',e:'🧷',n:'Pañales talle P en adelante',p:'Cualquier marca nos sirve',rep:true,links:[{t:'Ver pañales',u:'https://listado.mercadolibre.com.uy/pa%C3%B1ales-talle-p'}]},
+  {row:3,cat:'Esenciales',e:'🧻',n:'Toallitas húmedas',p:'Desde $79',rep:true,links:[{t:'Colotis sin alcohol x80 · $79',u:'https://www.mercadolibre.com.uy/toallitas-humedas-colotis-0-alcohol-x-80-unidades/p/MLU2068669424'},{t:'Babysec Ultra x250 · $375',u:'https://www.mercadolibre.com.uy/babysec-toalla-humeda-ultra-x-250-unid/p/MLU2059746132'},{t:'Babysec Ultra x600 · $1.159',u:'https://www.mercadolibre.com.uy/babysec-toallas-ultra-x-600-unidades/p/MLU2101883790'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toallitas-humedas-bebe'}]},
+  {row:4,cat:'Alimentación',e:'🍼',n:'Mamaderas anticólicos',p:'Unos $1.800',rep:false,links:[{t:'Suavinex Zero Zero 270 ml · $1.800',u:'https://www.mercadolibre.com.uy/biberon-anticolicos-zerzer-270ml-tienda-oficial-suavinex-nombre-del-diseno-zero-zero-color-nude/p/MLU23852991'}]},
+  {row:5,cat:'Alimentación',e:'♨️',n:'Esterilizador de mamaderas',p:'US$36 (unos $1.440)',rep:false,links:[{t:'Mawe para 6 mamaderas, a vapor · US$36',u:'https://meli.la/1UG3RMR'}]},
+  {row:6,cat:'Alimentación',e:'🔥',n:'Calentador de mamaderas',p:'Unos $1.090',rep:false,links:[{t:'Portátil inalámbrico · $1.090',u:'https://www.mercadolibre.com.uy/calentador-de-mamaderas-biberones-portatil-inalambrico-bebes/up/MLUU4054434123'}]},
+  {row:7,cat:'Alimentación',e:'🪑',n:'Sillita para comer',p:'Unos $2.900',rep:false,links:[{t:'3 en 1 multifuncional JMV · $2.900',u:'https://meli.la/1FtfvMK'}]},
+  {row:8,cat:'Alimentación',e:'🤱',n:'Extractor de leche eléctrico',p:'Desde $2.202',rep:false,links:[{t:'Manos libres portátil · $2.202',u:'https://www.mercadolibre.com.uy/extractor-de-leche-electrico-manos-libres/p/MLU2090048326'},{t:'Bebesit doble con control remoto · $7.690',u:'https://meli.la/1oGNGxW'}]},
+  {row:9,cat:'Alimentación',e:'🫧',n:'Escurridor de mamaderas',p:'Desde $341',rep:false,links:[{t:'En caja, 2 colores · $341',u:'https://www.mercadolibre.com.uy/escurridor-de-mamaderas-en-caja-2-colores/up/MLUU2441711670'},{t:'Kikkaboo Tulip gris · $480',u:'https://www.mercadolibre.com.uy/escurridor-para-mamaderas-tulip-gris-kikkaboo-gris/p/MLU45005829'},{t:'Momeasy · $796',u:'https://www.mercadolibre.com.uy/escurridor-de-mamaderas-momeasy/p/MLU42509597'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/escurridor-mamaderas'}]},
+  {row:10,cat:'Alimentación',e:'💗',n:'Almohada para amamantar',p:'Unos $1.445',rep:false,links:[{t:'Almohadón maternal con correa, celeste · $1.445',u:'https://www.mercadolibre.com.uy/almohada-almohadon-maternal-lactancia-amamantar-con-correa-color-celeste/p/MLU32073363'}]},
+  {row:11,cat:'Ropita',e:'👗',n:"Ropa de Carter's",p:'De preferencia bodies y pijamas',rep:true,links:[{t:"Ver ropa de Carter's",u:'https://listado.mercadolibre.com.uy/ropa-bebe-carters'}]},
+  {row:12,cat:'Ropita',e:'👚',n:'Ropa a elección',p:'De talle un poco más grande',rep:true,links:[{t:'Ver ropita',u:'https://listado.mercadolibre.com.uy/ropa-bebe-3-6-meses'}]},
+  {row:13,cat:'Higiene y cuidado',e:'🛁',n:'Bañito con cambiador',p:'Unos $5.590',rep:false,links:[{t:'Plegable 2 en 1 · $5.590',u:'https://meli.la/2eeZyiR'}]},
+  {row:14,cat:'Higiene y cuidado',e:'🐻',n:'Toallas con capucha',p:'Desde $299',rep:false,links:[{t:'Döhler con capucha 90x70 · $299',u:'https://www.mercadolibre.com.uy/toalla-bebe-con-capucha-dohler-90-x-70-cm-disney-princesas/p/MLU50460354'},{t:'Con capucha de animales 80x80 · $399',u:'https://www.mercadolibre.com.uy/toalla-de-bebe-con-capucha-animales-80x80cm-blanco/p/MLU76167896'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toalla-con-capucha-bebe'}]},
+  {row:15,cat:'Higiene y cuidado',e:'🧼',n:'Jabón líquido para bebés',p:'Desde $451',rep:false,links:[{t:"Johnson's baño líquido 400 ml · $451",u:'https://www.mercadolibre.com.uy/jabon-liquido-hora-del-sueno-400-ml-johnsons/p/MLU2097435052'},{t:"Johnson's Dulces Sueños 400 ml · $669",u:'https://www.mercadolibre.com.uy/johnsons-baby-bano-liquido-dulces-suenos-400ml/up/MLUU5734465645'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/jabon-liquido-ba%C3%B1o-bebe-hipoalergenico'}]},
+  {row:16,cat:'Higiene y cuidado',e:'💧',n:'Aceite para bebé',p:'Desde $465',rep:false,links:[{t:"Johnson's 200 ml · $465",u:'https://www.mercadolibre.com.uy/aceite-para-bebe-johnsons-original-200-ml/p/MLU27958483'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/aceite-bebe'}]},
+  {row:17,cat:'Higiene y cuidado',e:'🧴',n:'Crema corporal para bebé',p:'Desde $378',rep:false,links:[{t:"Johnson's antes de dormir 200 ml · $378",u:'https://www.mercadolibre.com.uy/crema-hidratante-bebe-johnsons-antes-de-dormir-x-200ml/p/MLU17380071'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/crema-corporal-bebe'}]},
+  {row:18,cat:'Higiene y cuidado',e:'🫧',n:'Shampoo para bebé',p:'Desde $220',rep:false,links:[{t:'Bebotes manzanilla 250 ml · $220',u:'https://www.mercadolibre.com.uy/shampoo-bebotes-manzanilla-250-ml/p/MLU62705438'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/shampoo-bebe'}]},
+  {row:19,cat:'Higiene y cuidado',e:'🪮',n:'Cepillo y peine de cerdas suaves',p:'Desde $179',rep:false,links:[{t:'Mumlove set · $179',u:'https://www.mercadolibre.com.uy/mumlove-set-cepillo-y-peine-para-bebe-2-piezas-azul/up/MLUU5037052637'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/cepillo-pelo-bebe'}]},
+  {row:20,cat:'Higiene y cuidado',e:'💅',n:'Set de uñas para bebé',p:'Unos $580',rep:false,links:[{t:'Lima y cortaúñas 6 piezas · $580',u:'https://articulo.mercadolibre.com.uy/MLU-636365673-lima-unas-bebe-corta-unas-pulidor-cuidado-bebe-6-piezas-_JM'}]},
+  {row:21,cat:'Higiene y cuidado',e:'🌸',n:'Colonia o perfume para bebé',p:'Desde $290',rep:false,links:[{t:'Bebotes colonia · $290',u:'https://www.mercadolibre.com.uy/colonia-bebe-bebotes-perfume-mvd-kids/up/MLUU3472705655'},{t:"Johnson's Fresca Caricia 100 ml · $428",u:'https://www.mercadolibre.com.uy/colonia-para-bebes-johnson-baby-fresca-caricia-100-ml/p/MLU19940993'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/colonia-bebe'}]},
+  {row:22,cat:'Higiene y cuidado',e:'🗑️',n:'Contenedor de pañales hermético',p:'Unos $3.249',rep:false,links:[{t:'Tommee Tippee hermético · $3.249',u:'https://www.mercadolibre.com.uy/contenedor-de-panales-tommee-tippee-hermetico-libre-d-olores/up/MLUU4011243450'}]},
+  {row:23,cat:'Higiene y cuidado',e:'👃',n:'Aspirador nasal',p:'Unos $1.490',rep:false,links:[{t:'Eléctrico con filtros y música · $1.490',u:'https://meli.la/15priKh'}]},
+  {row:24,cat:'Dormir y habitación',e:'🧶',n:'Mantas de algodón',p:'Desde $499',rep:false,links:[{t:'Lucerito con babero 70x70 · $499',u:'https://www.mercadolibre.com.uy/manta-para-bebe-lucerito-recien-nacido-con-babero-70x70-cm/up/MLUU3799422838'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/manta-algodon-bebe'}]},
+  {row:25,cat:'Dormir y habitación',e:'🌙',n:'Veladora (luz nocturna)',p:'Desde $1.890',rep:false,links:[{t:'Proyector velador conejo · $1.890',u:'https://www.mercadolibre.com.uy/proyector-velador-con-movimiento-musica-y-luz--conejo/up/MLUU4336309390'}]},
+  {row:26,cat:'Dormir y habitación',e:'🦷',n:'Mordillos o juguetes blandos',p:'Desde $91',rep:false,links:[{t:'Mordillo ruedita · $91',u:'https://www.mercadolibre.com.uy/mordillo-ruedita-ergonomico-para-bebe-baby-innovation-color-rosa/p/MLU26413857'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/mordillo-bebe'}]},
+  {row:27,cat:'Dormir y habitación',e:'🧩',n:'Alfombra antigolpes',p:'Desde $599',rep:false,links:[{t:'Doble 200x180 gruesa · $599',u:'https://articulo.mercadolibre.com.uy/MLU-614752781-alfombra-antigolpe-doble-200x180-gruesa-infantil-bebe-el-rey-_JM'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/alfombra-antigolpes-bebe'}]},
+  {row:28,cat:'Dormir y habitación',e:'📹',n:'Monitor para bebé con cámara',p:'US$109 (unos $4.360)',rep:false,links:[{t:'Baby Call Smartguard 2.0 · US$109',u:'https://meli.la/2EhW6sD'}]},
+  {row:29,cat:'Paseo',e:'🤗',n:'Fular',p:'Desde $272',rep:false,links:[{t:'Semielástico ajustable · $272',u:'https://www.mercadolibre.com.uy/fular-portabebe-semielastico-lazo-ajustable-porta-bebe-color-azul/p/MLU47562254'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/fular-portabebe'}]},
+  {row:30,cat:'Paseo',e:'🦘',n:'Portabebé (mochila ergonómica)',p:'Unos $2.290',rep:false,links:[{t:'Mochila canguro con asiento y soporte · $2.290',u:'https://www.mercadolibre.com.uy/portabebes-ergonomico-mochila-canguro-con-asiento-y-soporte/up/MLUU1804694525'}]},
+];
+
+let reservas = {};
+let fileSha = '';
+
+async function loadReservas() {
+  try {
+    const r = await fetch(API + '?cachebust=' + Date.now(), {
+      headers: { Authorization: 'token ' + TOKEN }
+    });
+    const d = await r.json();
+    fileSha = d.sha;
+    reservas = JSON.parse(atob(d.content.replace(/\n/g,'')));
+  } catch(e) { reservas = {}; }
+}
+
+async function saveReservas() {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(reservas, null, 2))));
+  const r = await fetch(API, {
+    method: 'PUT',
+    headers: { Authorization: 'token ' + TOKEN, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'reserva actualizada', content, sha: fileSha })
+  });
+  const d = await r.json();
+  if (d.content) fileSha = d.content.sha;
+  return d.content ? true : false;
+}
+
+function el(tag, cls, txt) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (txt !== undefined) e.textContent = txt;
+  return e;
+}
+
+function renderList() {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+  const taken = Object.keys(reservas).filter(k => {
+    const g = GIFTS.find(g => g.row == k);
+    return g && (!g.rep);
+  }).length;
+  const repTaken = Object.keys(reservas).filter(k => {
+    const g = GIFTS.find(g => g.row == k);
+    return g && g.rep;
+  }).length;
+  document.getElementById('count').innerHTML = '<b>' + taken + ' de ' + GIFTS.filter(g=>!g.rep).length + '</b> regalitos ya tienen dueño';
+
+  const cats = [...new Set(GIFTS.map(g => g.cat))];
+  cats.forEach(cat => {
+    const sec = el('section');
+    const h2 = el('h2', 'script');
+    h2.textContent = cat;
+    sec.appendChild(h2);
+    GIFTS.filter(g => g.cat === cat).forEach(g => renderGift(g, sec));
+    list.appendChild(sec);
+  });
+}
+
+function renderGift(g, parent) {
+  const res = reservas[g.row];
+  const isTaken = res && !g.rep;
+  const div = el('div', 'gift' + (isTaken ? ' taken' : ''));
+  div.dataset.row = g.row;
+
+  const top = el('div', 'top');
+  const em = el('span', 'em', g.e);
+  const info = el('div', 'info');
+
+  const name = el('div', 'name');
+  if (isTaken) { const s = el('s'); s.textContent = g.n; name.appendChild(s); }
+  else name.textContent = g.n;
+  info.appendChild(name);
+
+  const price = el('div', 'price', g.p);
+  info.appendChild(price);
+
+  if (g.rep) {
+    const rep = el('span', 'rep', 'Se puede repetir');
+    info.appendChild(rep);
+  }
+
+  const ul = el('ul', 'links');
+  g.links.forEach(l => {
+    const li = el('li');
+    const a = el('a');
+    a.href = l.u; a.textContent = l.t; a.target = '_blank'; a.rel = 'noopener';
+    li.appendChild(a); ul.appendChild(li);
+  });
+  info.appendChild(ul);
+  top.appendChild(em); top.appendChild(info);
+  div.appendChild(top);
+
+  const act = el('div', 'act');
+  if (isTaken) {
+    const lbl = el('div', 'taken-label');
+    lbl.innerHTML = 'Ya lo regala <strong>' + res.by + '</strong> 💝';
+    act.appendChild(lbl);
+  } else if (res && g.rep) {
+    const lbl = el('div', 'taken-label');
+    lbl.innerHTML = 'Ya se anotó <strong>' + res.by + '</strong>, y se puede repetir 💝';
+    act.appendChild(lbl);
+    act.appendChild(buildForm(g));
+  } else {
+    act.appendChild(buildBtn(g));
+  }
+  div.appendChild(act);
+  parent.appendChild(div);
+}
+
+function buildBtn(g) {
+  const btn = el('button', 'btn', 'Lo regalo yo');
+  btn.onclick = () => {
+    btn.style.display = 'none';
+    btn.parentNode.appendChild(buildForm(g));
+  };
+  return btn;
+}
+
+function buildForm(g) {
+  const wrap = el('div');
+  const lbl = el('label', 'lbl', 'Tu nombre');
+  const field = el('input', 'field');
+  field.type = 'text'; field.placeholder = 'Escribí tu nombre para anotarte';
+  const go = el('button', 'btn go', 'Anotarme');
+  const cancel = el('span', 'cancel', 'Cancelar');
+  const msg = el('div', 'msg');
+
+  lbl.appendChild(field);
+  wrap.appendChild(lbl);
+  wrap.appendChild(go);
+  wrap.appendChild(cancel);
+  wrap.appendChild(msg);
+
+  cancel.onclick = () => { wrap.remove(); const btn = buildBtn(g); document.querySelector('[data-row="'+g.row+'"] .act').appendChild(btn); };
+
+  go.onclick = async () => {
+    const nombre = field.value.trim();
+    if (!nombre) { msg.textContent = 'Escribí tu nombre para anotarte.'; return; }
+    go.disabled = true; go.textContent = 'Anotando...';
+    msg.textContent = '';
+    try {
+      await loadReservas(); // refresh sha
+      if (reservas[g.row] && !g.rep) { msg.textContent = 'Justo lo reservó alguien más. Elegí otro regalito 💝'; go.disabled = false; go.textContent = 'Anotarme'; return; }
+      if (reservas[g.row] && g.rep) {
+        reservas[g.row].by = reservas[g.row].by + ', ' + nombre;
+      } else {
+        reservas[g.row] = { by: nombre, fecha: new Date().toLocaleDateString('es-UY') };
+      }
+      const ok = await saveReservas();
+      if (ok) {
+        const giftEl = document.querySelector('[data-row="'+g.row+'"]');
+        giftEl.classList.add('just-done');
+        launchConfetti(giftEl);
+        launchHearts(giftEl);
+        showToast('¡Gracias, ' + nombre + '! Quedó anotado: ' + g.n + ' 💕');
+        renderList();
+      } else {
+        reservas = {}; msg.textContent = 'No se pudo guardar. Intentá de nuevo.';
+        go.disabled = false; go.textContent = 'Anotarme';
+      }
+    } catch(e) {
+      msg.textContent = 'Error de conexión. Intentá de nuevo.';
+      go.disabled = false; go.textContent = 'Anotarme';
+    }
+  };
+  return wrap;
+}
+
+function showToast(txt) {
+  const t = document.getElementById('toast');
+  t.textContent = txt;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function launchConfetti(anchor) {
+  const colors = ['#D4617A','#FFD6D0','#7C9468','#F5D5CF','#E9C4BE','#fff','#F9A8C0'];
+  const rect = anchor.getBoundingClientRect();
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = [
+      'left:' + (rect.left + Math.random() * rect.width) + 'px',
+      'background:' + colors[Math.floor(Math.random()*colors.length)],
+      'width:' + (8+Math.random()*8) + 'px',
+      'height:' + (8+Math.random()*8) + 'px',
+      'border-radius:' + (Math.random()>0.5?'50%':'2px'),
+      'animation-delay:' + (Math.random()*0.4) + 's',
+      'animation-duration:' + (1.4+Math.random()*0.8) + 's'
+    ].join(';');
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 2500);
+  }
+}
+
+function launchHearts(anchor) {
+  const rect = anchor.getBoundingClientRect();
+  ['💕','💝','🎀','✨'].forEach((h, i) => {
+    const e = document.createElement('div');
+    e.className = 'heart-burst';
+    e.textContent = h;
+    e.style.cssText = 'left:' + (rect.left + 40 + i*40) + 'px;top:' + (rect.top + window.scrollY) + 'px;animation-delay:' + (i*0.12) + 's';
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 1200);
+  });
+}
+
+(async () => {
+  await loadReservas();
+  renderList();
+})();
+</script>
 </body>
 </html>
