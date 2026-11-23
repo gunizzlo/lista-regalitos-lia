@@ -75,7 +75,7 @@ h2.script{font-size:2.3rem;margin:0 0 2px}
 var API = 'https://script.google.com/macros/s/AKfycbzuBWvcqnIo5nFHS3OiVV0t7fzYwGh2aossl-ozpB_2E0B_H6w-ZahzF7dccY2bYZ7bhA/exec';
 function api(params) {
   var q = Object.keys(params).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-  return fetch(API + '?' + q, { redirect: 'follow' }).then(function (r) { return r.json(); });
+  return fetch(API + '?' + q, { credentials: 'omit', redirect: 'follow' }).then(function (r) { return r.json(); });
 }
 var list = document.getElementById('list');
 var count = document.getElementById('count');
