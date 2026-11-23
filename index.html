@@ -611,7 +611,7 @@ function runLoader(onDone){
   function burst(list,cx,cy,p,n,rad){for(let i=0;i<n;i++){const a=i/n*6.283+p;ctx.globalAlpha=cl(1.3-p);emo(list[i%list.length],cx+Math.cos(a)*rad*eo(p),cy+Math.sin(a)*rad*.6*eo(p),16);}ctx.globalAlpha=1;}
 
   const GY=258, S=[0,2400,5000,7600,10400,13000,17000,19800,21500], TOTAL=S[8];
-  const CAPS=['🎬 La historia de Lu y Gonzalo','💕 Se conocieron...','💍 ¡Se casaron!','🌙 Una noche muy especial 😏','🤰 ¡Dos rayitas!','💨 Gonzalo infla la panza','👶 ¡Nació Lía Isabella!','🎀 ¡Gracias por tanto amor!'];
+  const CAPS=['🎬 La historia de Lu y Gonzalo','💕 Se conocieron...','💍 ¡Se casaron!','🌙 Una noche muy especial 😏','🤰 ¡Dos rayitas!','💨 Gonzalo infla la panza con el inflador','👶 ¡Nació Lía Isabella!','🎀 ¡Gracias por tanto amor!'];
 
   function frame(ms){
     let k=0;while(k<7&&ms>=S[k+1])k++;
@@ -669,16 +669,20 @@ function runLoader(onDone){
       banner(m>1100?'¡Positivo! 🎉':'¿Y esto...? 👀',m/500);
     }else if(k===5){
       bg('#FFF6FB','#F3EEFF');
-      const g=eo(m/(d-500)),belly=4+g*36;
-      const cyc=m/500,blow=Math.max(0,Math.sin(cyc*Math.PI)),breath=1+.16*Math.sin(cyc*Math.PI);
-      const sL=.84,lx=104,gx=246;
+      const g=cl(m/(d-500)),cyc=m/650,h=.5+.5*Math.cos(cyc*6.2832),push=Math.max(0,Math.sin(cyc*6.2832));
+      const belly=4+g*36+push*1.5,sL=.84,lx=90,gx=250,px=184;
       lu(lx,GY,sL,{belly:belly});
-      gonza(gx,GY,sL,{breath:breath,tilt:-.22,hx:-12,handL:[-40,-128],handR:[-18,-124]});
-      const mx=gx+(-12-14)*sL,my=GY+(-158+14)*sL,bx=lx+belly*sL*.9,by=GY-66*sL;
-      ctx.beginPath();ctx.moveTo(mx,my);ctx.quadraticCurveTo((mx+bx)/2+10,my+34,bx,by);ctx.strokeStyle='#F48FB1';ctx.lineWidth=7;ctx.lineCap='round';ctx.stroke();
-      ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.stroke();
-      if(blow>.15){for(let i=0;i<3;i++){const q=((cyc*1.3)+i*.33)%1;const px=lerp(mx,bx,q),py=lerp(my,by,q)+Math.sin(q*3.14)*22;ctx.globalAlpha=blow*cl(1.2-q);emo('💨',px,py-12,13);}ctx.globalAlpha=1;}
-      if(g>.35){ctx.globalAlpha=cl((g-.35)*3);emo('💦',gx+34,GY-176,15);if(g>.7)emo('😮‍💨',gx+44,GY-148,15);ctx.globalAlpha=1;}
+      const hy=GY-86-h*38;
+      gonza(gx,GY+ (1-h)*3,sL,{breath:1+.14*h,tilt:-.1,handL:[(px-13-gx)/sL,(hy-GY)/sL],handR:[(px+13-gx)/sL,(hy-GY)/sL]});
+      const bx=lx+belly*sL*.92,by=GY-66*sL;
+      ctx.beginPath();ctx.moveTo(px-6,GY-14);ctx.bezierCurveTo(px-34,GY-2,bx+34,by+30,bx,by);ctx.strokeStyle='#8A8FA3';ctx.lineWidth=5;ctx.lineCap='round';ctx.stroke();
+      circ(bx,by,4,'#6E7387');
+      rr(px-20,GY-7,40,7,3,'#6E7387');
+      line(px,GY-72,px,hy,'#B9BDCB',4);
+      rr(px-8,GY-74,16,68,5,'#F48FB1','#D9668F',1.5);rr(px-8,GY-58,16,6,0,'rgba(255,255,255,.55)');
+      rr(px-22,hy-5,44,10,5,'#4B4F60');
+      if(push>.2){ctx.globalAlpha=push;emo('💨',bx+16,by-16,14);emo('✨',lx-belly*sL-8,by-10-push*8,12);ctx.globalAlpha=1;}
+      if(g>.35){ctx.globalAlpha=cl((g-.35)*3);emo('💦',gx+36,GY-178,15);if(g>.7)emo('😮‍💨',gx+46,GY-150,15);ctx.globalAlpha=1;}
       banner('Mes '+Math.min(9,1+Math.floor(g*9))+' de 9 🤰',m/500);
     }else if(k===6){
       bg('#FFF0FB','#EFEAFF');
