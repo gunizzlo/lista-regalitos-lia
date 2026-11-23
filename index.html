@@ -149,12 +149,15 @@ async function loadReservas() {
     });
     const d = await r.json();
     fileSha = d.sha;
-    reservas = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    const bytes = Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0));
+    reservas = JSON.parse(new TextDecoder('utf-8').decode(bytes));
   } catch(e) { reservas = {}; }
 }
 
 async function saveReservas() {
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(reservas, null, 2))));
+  const str = JSON.stringify(reservas, null, 2);
+    const bytes2 = new TextEncoder().encode(str);
+    const content = btoa(String.fromCharCode(...bytes2));
   const r = await fetch(API, {
     method: 'PUT',
     headers: { Authorization: 'token ' + TOKEN, 'Content-Type': 'application/json' },
