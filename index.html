@@ -45,11 +45,6 @@ body::after{width:500px;height:500px;bottom:-150px;left:-150px;background:radial
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-20px)}}
-.loader-txt{
-  font-size:1.1rem;font-weight:600;color:var(--rose);letter-spacing:.02em;
-  animation:pulse-txt 1.6s ease-in-out infinite;
-}
-@keyframes pulse-txt{0%,100%{opacity:.7}50%{opacity:1}}
 #loader.hiding{animation:fadeOut .5s ease forwards}
 
 /* ---- HEADER ---- */
@@ -292,190 +287,13 @@ body::after{width:500px;height:500px;bottom:-150px;left:-150px;background:radial
 
 <!-- LOADER -->
 <div id="loader">
-<svg id="baby-svg" viewBox="0 0 380 280" width="340" height="250" xmlns="http://www.w3.org/2000/svg">
-<defs>
-  <radialGradient id="skin-lu" cx="50%" cy="35%"><stop offset="0%" stop-color="#FCDEC0"/><stop offset="100%" stop-color="#F0C0A0"/></radialGradient>
-  <radialGradient id="skin-em" cx="50%" cy="35%"><stop offset="0%" stop-color="#F5D5B5"/><stop offset="100%" stop-color="#E8B890"/></radialGradient>
-  <clipPath id="head-clip-em"><circle cx="285" cy="58" r="29"/></clipPath>
-</defs>
-
-<!-- ===== EMANUELA (mama, adelante) ===== -->
-<g id="g-mama">
-  <!-- vestido negro largo -->
-  <path d="M148 95 Q190 86 232 95 L240 260 Q190 268 140 260 Z" fill="#1A1A1A" stroke="#2A2A2A" stroke-width=".8"/>
-  <!-- abertura panza en vestido -->
-  <ellipse id="panza-abertura" cx="190" cy="160" rx="22" ry="20" fill="#2A1A1A" opacity=".6"/>
-  <!-- panza que crece -->
-  <ellipse id="panza" cx="190" cy="160" rx="30" ry="28" fill="url(#skin-lu)" stroke="#E0A880" stroke-width="1.5" opacity=".9"/>
-  <ellipse id="panza-shine" cx="183" cy="150" rx="8" ry="6" fill="#fff" opacity=".2"/>
-  <!-- decoracion panza (estrellitas que tenia en la foto) -->
-  <text id="panza-deco" x="190" y="166" font-size="13" text-anchor="middle" opacity=".8">✨</text>
-  <!-- cuerpo/torso -->
-  <path d="M148 95 Q158 88 190 86 Q222 88 232 95 L228 128 Q190 120 152 128 Z" fill="#1A1A1A"/>
-  <!-- escote -->
-  <path d="M172 90 Q190 102 208 90" fill="#2A1A1A" stroke="#1A1A1A" stroke-width=".5"/>
-  <!-- collar -->
-  <ellipse cx="190" cy="108" rx="14" ry="3" fill="none" stroke="#C8A060" stroke-width="1.2"/>
-  <!-- CABEZA -->
-  <circle cx="190" cy="52" r="28" fill="url(#skin-lu)" stroke="#E0B090" stroke-width="1"/>
-  <!-- pelo castaño largo oscuro -->
-  <ellipse cx="190" cy="30" rx="29" ry="16" fill="#4A2810"/>
-  <ellipse cx="163" cy="46" rx="11" ry="22" fill="#4A2810"/>
-  <ellipse cx="217" cy="46" rx="11" ry="22" fill="#4A2810"/>
-  <path d="M163 50 Q158 95 162 130" fill="none" stroke="#4A2810" stroke-width="10" stroke-linecap="round"/>
-  <path d="M217 50 Q222 95 218 130" fill="none" stroke="#4A2810" stroke-width="10" stroke-linecap="round"/>
-  <!-- OJOS VERDES -->
-  <ellipse cx="180" cy="52" rx="4.5" ry="4" fill="#fff"/>
-  <ellipse cx="200" cy="52" rx="4.5" ry="4" fill="#fff"/>
-  <ellipse cx="180" cy="52" rx="3.2" ry="3.5" fill="#2A7030"/>
-  <ellipse cx="200" cy="52" rx="3.2" ry="3.5" fill="#2A7030"/>
-  <ellipse cx="180" cy="52.5" rx="1.8" ry="2" fill="#1A4820"/>
-  <ellipse cx="200" cy="52.5" rx="1.8" ry="2" fill="#1A4820"/>
-  <circle cx="181.5" cy="51" r="1.3" fill="#fff" opacity=".9"/>
-  <circle cx="201.5" cy="51" r="1.3" fill="#fff" opacity=".9"/>
-  <!-- pestañas superiores -->
-  <path d="M176 48 L174 45" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M180 47 L179 44" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M184 48 L185 45" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M196 48 L195 45" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M200 47 L200 44" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M204 48 L206 45" stroke="#2A1810" stroke-width="1.2" stroke-linecap="round"/>
-  <!-- cejas finas arqueadas -->
-  <path d="M174 46 Q180 42 186 45" fill="none" stroke="#3A2010" stroke-width="1.8" stroke-linecap="round"/>
-  <path d="M194 45 Q200 42 206 46" fill="none" stroke="#3A2010" stroke-width="1.8" stroke-linecap="round"/>
-  <!-- nariz pequena -->
-  <path d="M188 58 Q190 62 192 58" fill="none" stroke="#D09070" stroke-width="1.2" stroke-linecap="round"/>
-  <!-- SONRISA amplia (igual a la foto) -->
-  <path d="M178 66 Q190 76 202 66" fill="#D06050" stroke="none"/>
-  <path d="M178 66 Q190 72 202 66" fill="#fff"/>
-  <path d="M178 66 Q190 76 202 66" fill="none" stroke="#C05040" stroke-width="1" stroke-linecap="round"/>
-  <!-- chapitas mejillas rosadas -->
-  <ellipse cx="168" cy="60" rx="8" ry="5" fill="#F5A0A8" opacity=".35"/>
-  <ellipse cx="212" cy="60" rx="8" ry="5" fill="#F5A0A8" opacity=".35"/>
-  <!-- brazos sobre panza -->
-  <path d="M148 110 Q128 135 138 158" fill="none" stroke="#F0C0A0" stroke-width="12" stroke-linecap="round"/>
-  <path d="M232 110 Q252 135 242 158" fill="none" stroke="#F0C0A0" stroke-width="12" stroke-linecap="round"/>
-  <ellipse cx="138" cy="162" rx="10" ry="9" fill="#FCDEC0"/>
-  <ellipse cx="242" cy="162" rx="10" ry="9" fill="#FCDEC0"/>
-  <!-- aros -->
-  <ellipse cx="162" cy="62" rx="3" ry="5" fill="none" stroke="#C8A060" stroke-width="1.5"/>
-  <ellipse cx="218" cy="62" rx="3" ry="5" fill="none" stroke="#C8A060" stroke-width="1.5"/>
-</g>
-
-<!-- ===== PAPA (Emanuel, atras, mas alto) ===== -->
-<g id="g-papa">
-  <!-- cuerpo camisa blanca con puntitos (igual foto) -->
-  <path d="M248 108 Q285 98 322 108 L328 240 Q285 248 242 240 Z" fill="#F5F0E8" stroke="#D8D0C0" stroke-width=".8"/>
-  <!-- textura puntitos camisa -->
-  <circle cx="270" cy="120" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="285" cy="115" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="300" cy="120" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="265" cy="135" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="280" cy="130" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="295" cy="135" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="310" cy="130" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="270" cy="150" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="290" cy="148" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <circle cx="308" cy="152" r="1.5" fill="#C8C0B0" opacity=".6"/>
-  <!-- linea botones camisa -->
-  <line x1="285" y1="105" x2="285" y2="200" stroke="#D8D0C0" stroke-width=".8"/>
-  <!-- botones -->
-  <circle cx="285" cy="118" r="2" fill="#C8C0B0"/>
-  <circle cx="285" cy="132" r="2" fill="#C8C0B0"/>
-  <circle cx="285" cy="146" r="2" fill="#C8C0B0"/>
-  <!-- brazos: izquierdo SOPLANDO con pajita -->
-  <path d="M248 118 Q225 128 215 148" fill="none" stroke="#F5D5B5" stroke-width="13" stroke-linecap="round"/>
-  <ellipse cx="210" cy="152" r="11" fill="url(#skin-em)"/>
-  <!-- pajita/soplador en la mano -->
-  <rect x="195" y="148" width="20" height="7" rx="3.5" fill="#F9A8C9" stroke="#E87DB0" stroke-width="1"/>
-  <circle cx="215" cy="151" r="4" fill="#FFD6E8" stroke="#E87DB0" stroke-width=".8"/>
-  <!-- AIRE soplando animado -->
-  <g id="aire">
-    <path id="a1" d="M219 151 Q228 145 236 148" fill="none" stroke="#E8D0F8" stroke-width="2" stroke-linecap="round" opacity="0"/>
-    <path id="a2" d="M219 151 Q230 151 238 151" fill="none" stroke="#C8E8F8" stroke-width="2" stroke-linecap="round" opacity="0"/>
-    <path id="a3" d="M219 151 Q228 157 236 154" fill="none" stroke="#E8F0C8" stroke-width="2" stroke-linecap="round" opacity="0"/>
-  </g>
-  <!-- brazo derecho normal -->
-  <path d="M322 118 Q342 130 338 155" fill="none" stroke="#F5D5B5" stroke-width="13" stroke-linecap="round"/>
-  <ellipse cx="336" cy="158" rx="11" ry="10" fill="url(#skin-em)"/>
-  <!-- CABEZA (mas arriba que la mama) -->
-  <circle cx="285" cy="58" r="29" fill="url(#skin-em)" stroke="#D4A878" stroke-width="1"/>
-  <!-- pelo castaño oscuro con volumen (igual foto) -->
-  <ellipse cx="285" cy="36" rx="30" ry="16" fill="#3A2008"/>
-  <ellipse cx="258" cy="50" rx="10" ry="18" fill="#3A2008"/>
-  <ellipse cx="312" cy="50" rx="10" ry="18" fill="#3A2008"/>
-  <path d="M258 46 Q252 54 255 68" fill="none" stroke="#3A2008" stroke-width="6" stroke-linecap="round"/>
-  <path d="M312 46 Q318 54 315 68" fill="none" stroke="#3A2008" stroke-width="6" stroke-linecap="round"/>
-  <!-- OJOS -->
-  <ellipse cx="275" cy="58" rx="4" ry="3.8" fill="#fff"/>
-  <ellipse cx="295" cy="58" rx="4" ry="3.8" fill="#fff"/>
-  <ellipse cx="275" cy="58" rx="2.8" ry="3" fill="#3A2808"/>
-  <ellipse cx="295" cy="58" rx="2.8" ry="3" fill="#3A2808"/>
-  <circle cx="276.5" cy="57" r="1.1" fill="#fff" opacity=".8"/>
-  <circle cx="296.5" cy="57" r="1.1" fill="#fff" opacity=".8"/>
-  <!-- cejas pobladas -->
-  <path d="M269 53 Q275 50 281 53" fill="none" stroke="#2A1808" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M289 53 Q295 50 301 53" fill="none" stroke="#2A1808" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- BARBA frondosa y bien hecha -->
-  <!-- base barba -->
-  <path d="M258 65 Q260 88 268 94 Q285 100 302 94 Q310 88 312 65 Q300 72 285 73 Q270 72 258 65 Z" fill="#3A2008"/>
-  <!-- textura barba -->
-  <path d="M264 70 Q266 80 265 90" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M272 68 Q274 80 273 92" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M280 68 Q282 82 281 94" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M288 68 Q290 82 289 94" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M296 68 Q298 80 297 91" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M304 70 Q306 80 305 89" fill="none" stroke="#2A1008" stroke-width="1.2" stroke-linecap="round"/>
-  <!-- bigote -->
-  <path d="M268 65 Q276 61 285 63 Q294 61 302 65" fill="#2A1808" stroke="none"/>
-  <!-- SONRISA bajo la barba -->
-  <path d="M274 78 Q285 86 296 78" fill="none" stroke="#6A3818" stroke-width="1.5" stroke-linecap="round"/>
-  <!-- chapitas mejillas -->
-  <ellipse cx="260" cy="66" rx="7" ry="4" fill="#F0A888" opacity=".2"/>
-  <ellipse cx="310" cy="66" rx="7" ry="4" fill="#F0A888" opacity=".2"/>
-  <!-- cuello camisa -->
-  <path d="M270 87 Q285 92 300 87 L298 108 Q285 112 272 108 Z" fill="#F5F0E8" stroke="#D8D0C0" stroke-width=".8"/>
-  <!-- piernas pantalon oscuro -->
-  <rect x="254" y="225" width="22" height="40" rx="10" fill="#2A2A3A"/>
-  <rect x="284" y="225" width="22" height="40" rx="10" fill="#2A2A3A"/>
-  <ellipse cx="265" cy="264" rx="15" ry="6" fill="#1A1A28"/>
-  <ellipse cx="295" cy="264" rx="15" ry="6" fill="#1A1A28"/>
-  <!-- sudando al soplar -->
-  <text id="sweat" x="348" y="135" font-size="14" opacity="0">😅</text>
-</g>
-
-<!-- BEBE (oculta al principio) -->
-<g id="g-bebe" opacity="0">
-  <circle cx="190" cy="130" r="32" fill="url(#skin-lu)" stroke="#EDB892" stroke-width="1.2"/>
-  <path d="M178 106 Q190 98 202 106" fill="none" stroke="#4A2810" stroke-width="5" stroke-linecap="round"/>
-  <path d="M178 128 Q181 123 184 128" fill="none" stroke="#2A1808" stroke-width="1.8" stroke-linecap="round"/>
-  <path d="M196 128 Q199 123 202 128" fill="none" stroke="#2A1808" stroke-width="1.8" stroke-linecap="round"/>
-  <path d="M180 142 Q190 150 200 142" fill="none" stroke="#C07050" stroke-width="1.8" stroke-linecap="round"/>
-  <ellipse cx="175" cy="168" rx="22" ry="30" fill="#FCDEC0" stroke="#EDB892" stroke-width="1"/>
-  <ellipse cx="205" cy="168" rx="22" ry="30" fill="#FCDEC0" stroke="#EDB892" stroke-width="1"/>
-  <path d="M155 155 Q158 148 166 150 L163 175 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-  <path d="M225 155 Q222 148 214 150 L217 175 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-  <path d="M155 155 Q190 145 225 155 L228 198 Q190 206 152 198 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
-  <text x="190" y="184" font-size="16" text-anchor="middle">🌸</text>
-  <ellipse cx="162" cy="202" rx="15" ry="8" fill="#FCDEC0" transform="rotate(12,162,202)"/>
-  <ellipse cx="218" cy="202" rx="15" ry="8" fill="#FCDEC0" transform="rotate(-12,218,202)"/>
-  <ellipse cx="158" cy="210" rx="13" ry="6" fill="#FFD6E8"/>
-  <ellipse cx="222" cy="210" rx="13" ry="6" fill="#FFD6E8"/>
-</g>
-
-<!-- CORAZONES -->
-<g id="g-hearts" opacity="0">
-  <text class="hh" x="10" y="80" font-size="22" opacity="0">💕</text>
-  <text class="hh" x="338" y="65" font-size="18" opacity="0">💝</text>
-  <text class="hh" x="6" y="150" font-size="16" opacity="0">🎀</text>
-  <text class="hh" x="342" y="140" font-size="20" opacity="0">✨</text>
-  <text class="hh" x="155" y="25" font-size="14" opacity="0">💗</text>
-  <text class="hh" x="332" y="200" font-size="16" opacity="0">🌸</text>
-  <text class="hh" x="18" y="215" font-size="13" opacity="0">⭐</text>
-  <text class="hh" x="330" y="230" font-size="12" opacity="0">🌷</text>
-</g>
-</svg>
-<div class="loader-txt" id="loader-txt">Preparando los regalitos de Lía...</div>
+<div id="cinematic" style="text-align:center;position:relative;width:340px;margin:0 auto">
+  <canvas id="scene" width="340" height="260" style="display:block;margin:0 auto;border-radius:20px"></canvas>
+  <div id="caption" style="margin-top:14px;font-size:1rem;font-weight:700;color:#E8829A;min-height:28px;transition:opacity .3s;letter-spacing:.01em"></div>
+  <div id="progress-bar" style="margin-top:10px;height:4px;border-radius:4px;background:rgba(232,130,154,.15);overflow:hidden">
+    <div id="progress-fill" style="height:100%;border-radius:4px;background:linear-gradient(90deg,#E8829A,#C5A8D8);width:0%;transition:width .1s linear"></div>
+  </div>
+</div>
 </div>
 
 <!-- MAIN -->
@@ -707,51 +525,427 @@ function launchHearts(anchor){
 }
 
 function runLoader(onDone){
-  const panza=document.getElementById('panza');
-  const pShine=document.getElementById('panza-shine');
-  const gMama=document.getElementById('g-mama');
-  const gPapaTmp=document.getElementById('g-papa');
-  const gBebe=document.getElementById('g-bebe');
-  const gHearts=document.getElementById('g-hearts');
-  const svg=document.getElementById('baby-svg');
-  const txt=document.getElementById('loader-txt');
-  if(!panza){onDone();return;}
-  let start=null,dur=2400;
-  function grow(ts){
-    if(!start)start=ts;
-    const p=Math.min((ts-start)/dur,1);
-    const ease=p<.5?2*p*p:-1+(4-2*p)*p;
-    panza.setAttribute('rx',20+ease*26);
-    panza.setAttribute('ry',18+ease*28);
-    pShine.setAttribute('rx',6+ease*4);
-    if(p<1)requestAnimationFrame(grow);
-    else{
-      txt.textContent='¡Llegó Lía Isabella! 🎀';
-      txt.style.color='#C5A8D8';
-      gMama.style.transition='opacity .5s';gMama.style.opacity='0';if(gPapaTmp){gPapaTmp.style.transition='opacity .5s';gPapaTmp.style.opacity='0';}
-      svg.style.transition='transform .5s cubic-bezier(.34,1.56,.64,1)';
-      svg.style.transform='scale(1.08)';
-      setTimeout(()=>{
-        gMama.style.display='none';
-        svg.style.transform='scale(1)';
-        gBebe.style.transition='opacity .7s';gBebe.setAttribute('opacity','1');
-        gHearts.setAttribute('opacity','1');
-        [...document.querySelectorAll('.hh')].forEach((h,i)=>{
-          setTimeout(()=>{
-            h.setAttribute('opacity','1');
-            h.style.transition='transform 1.3s, opacity 1.3s';
-            h.style.transform='translateY(-'+(18+i*10)+'px)';
-          },i*110);
-        });
-        setTimeout(()=>{
-          const loader=document.getElementById('loader');
-          loader.classList.add('hiding');
-          setTimeout(()=>{loader.style.display='none';onDone();},500);
-        },900);
-      },520);
+  const canvas=document.getElementById('scene');
+  const ctx=canvas.getContext('2d');
+  const cap=document.getElementById('caption');
+  const pf=document.getElementById('progress-fill');
+  const W=340,H=260;
+
+  // ---- DRAWING HELPERS ----
+  function clear(){ctx.clearRect(0,0,W,H);}
+  function bg(c1,c2){
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,c1);g.addColorStop(1,c2);
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  }
+  function circle(x,y,r,fill,stroke,sw){
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=fill;ctx.fill();
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
+  }
+  function ellipse(x,y,rx,ry,fill,stroke,sw,rot){
+    ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);
+    ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);
+    ctx.fillStyle=fill;ctx.fill();
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
+    ctx.restore();
+  }
+  function path(pts,fill,stroke,sw,close){
+    ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+    for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+    if(close)ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
+  }
+  function curve(x1,y1,cx1,cy1,cx2,cy2,x2,y2,stroke,sw){
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(cx1,cy1,cx2,cy2,x2,y2);
+    ctx.strokeStyle=stroke;ctx.lineWidth=sw||2;ctx.lineCap='round';ctx.stroke();
+  }
+  function txt(t,x,y,size,fill,align,bold){
+    ctx.font=(bold?'bold ':'')+size+'px Nunito,sans-serif';
+    ctx.fillStyle=fill;ctx.textAlign=align||'center';ctx.fillText(t,x,y);
+  }
+  function roundRect(x,y,w,h,r,fill,stroke,sw){
+    ctx.beginPath();ctx.roundRect(x,y,w,h,r);
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
+  }
+
+  // ---- CHARACTER DRAWERS ----
+
+  function drawEmanuel(x,y,scale,breathScale,cheeksBlown,sweatAlpha){
+    // scale = overall, breathScale = chest inflate (1.0 to 1.3)
+    ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
+
+    // body / camisa blanca con puntitos
+    const bw=70,bh=100;
+    roundRect(-bw/2,-10,bw,bh,12,'#F5F0E8','#D8D0C0',1);
+    // puntitos camisa
+    for(let r=0;r<4;r++)for(let c=0;c<4;c++){
+      circle(-25+c*18,-2+r*22,2,'rgba(180,170,155,.5)');
+    }
+    // linea botones
+    ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(0,88);
+    ctx.strokeStyle='#D8D0C0';ctx.lineWidth=.8;ctx.stroke();
+    // botones
+    [15,32,49].forEach(yy=>circle(0,yy,2,'#C8C0B0'));
+
+    // PECHO que se infla — escalamos el torso solo en anchura
+    const chestW=bw*breathScale;
+    roundRect(-chestW/2,-10,chestW,45,12,'#F5F0E8','#D8D0C0',1);
+    if(cheeksBlown>0){
+      // mejillas infladas soplando
+      ellipse(-38,52,8*cheeksBlown,6*cheeksBlown,'rgba(240,170,120,.5)');
+      ellipse(38,52,8*cheeksBlown,6*cheeksBlown,'rgba(240,170,120,.5)');
+    }
+    // CARA
+    circle(0,52,29,'#F5D5B5','#D4A878',1);
+    // pelo oscuro
+    ellipse(0,30,30,16,'#3A2008');
+    ellipse(-26,44,10,18,'#3A2008');
+    ellipse(26,44,10,18,'#3A2008');
+    // ojos (si sopla, semicerrados)
+    if(cheeksBlown>0.5){
+      ctx.beginPath();ctx.arc(-14,52,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(14,52,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+    } else {
+      ellipse(-14,52,4,3.8,'#fff');ellipse(14,52,4,3.8,'#fff');
+      ellipse(-14,52,2.8,3,'#3A2808');ellipse(14,52,2.8,3,'#3A2808');
+      circle(-12.5,51,1,'#fff');circle(15.5,51,1,'#fff');
+    }
+    // cejas
+    curve(-20,47,-14,43,-8,43,-2,47,'#2A1808',2.5);
+    curve(2,47,8,43,14,43,20,47,'#2A1808',2.5);
+    // barba
+    ctx.beginPath();
+    ctx.moveTo(-24,65);ctx.bezierCurveTo(-26,88,-18,98,0,100);
+    ctx.bezierCurveTo(18,98,26,88,24,65);
+    ctx.bezierCurveTo(16,72,0,73,-16,72);ctx.closePath();
+    ctx.fillStyle='#3A2008';ctx.fill();
+    // textura barba
+    [-16,-8,0,8,16].forEach(xx=>{
+      curve(xx,68,xx-.5,78,xx-.5,88,xx-1,96,'#2A1008',1.2);
+    });
+    // bigote
+    ctx.beginPath();ctx.moveTo(-18,65);ctx.quadraticCurveTo(0,59,18,65);
+    ctx.fillStyle='#2A1808';ctx.fill();
+
+    // boca soplando (si sopla)
+    if(cheeksBlown>0){
+      ctx.beginPath();ctx.arc(0,80,4,0,Math.PI*2);ctx.fillStyle='#8A5020';ctx.fill();
+      ctx.beginPath();ctx.arc(0,80,2.5,0,Math.PI*2);ctx.fillStyle='#4A1808';ctx.fill();
+    } else {
+      curve(-10,80,-4,86,4,86,10,80,'#6A3818',1.5);
+    }
+
+    // brazo izq
+    ctx.save();ctx.translate(-45,10);ctx.rotate(cheeksBlown>0?-0.3:-0.1);
+    roundRect(-10,-5,16,55,8,'#F5D5B5','#D4A878',1);ctx.restore();
+    // mano izq con pajita
+    circle(-48,68,10,'#F5D5B5','#D4A878',1);
+    if(cheeksBlown>0){
+      // pajita
+      roundRect(-68,65,22,7,3.5,'#F9A8C9','#E87DB0',1);
+      circle(-46,68,4,'#FFD6E8','#E87DB0',.8);
+    }
+    // brazo der
+    ctx.save();ctx.translate(45,10);ctx.rotate(0.1);
+    roundRect(-6,-5,16,55,8,'#F5D5B5','#D4A878',1);ctx.restore();
+    circle(50,68,10,'#F5D5B5','#D4A878',1);
+
+    // piernas
+    roundRect(-30,88,25,55,10,'#2A2A3A','#1A1A28',1);
+    roundRect(5,88,25,55,10,'#2A2A3A','#1A1A28',1);
+    ellipse(-18,143,20,7,'#1A1A28');ellipse(18,143,20,7,'#1A1A28');
+
+    // sudor si esta soplando fuerte
+    if(sweatAlpha>0){
+      ctx.globalAlpha=sweatAlpha;
+      txt('💧',48,28,16,'','center');
+      txt('💧',52,10,12,'','center');
+      ctx.globalAlpha=1;
+    }
+
+    ctx.restore();
+  }
+
+  function drawEmanuela(x,y,scale,panzaR){
+    ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
+    // vestido negro largo
+    ctx.beginPath();
+    ctx.moveTo(-52,-5);ctx.bezierCurveTo(-55,20,-60,80,-58,140);
+    ctx.lineTo(58,140);ctx.bezierCurveTo(60,80,55,20,52,-5);ctx.closePath();
+    ctx.fillStyle='#1A1A1A';ctx.fill();ctx.strokeStyle='#2A2A2A';ctx.lineWidth=.8;ctx.stroke();
+    // escote
+    ctx.beginPath();ctx.moveTo(-25,-5);ctx.quadraticCurveTo(0,8,25,-5);
+    ctx.fillStyle='#111';ctx.fill();
+    // collar dorado
+    ellipse(0,15,16,3.5,'rgba(0,0,0,0)','#C8A060',1.5);
+    // PANZA que crece
+    ellipse(0,70,panzaR,panzaR*.92,'#FCDEC0','#E0A880',1.5);
+    // brillo panza
+    ellipse(-6,62,panzaR*.25,panzaR*.18,'rgba(255,255,255,.22)');
+    // estrellita
+    if(panzaR>20)txt('✨',0,74,Math.min(14,panzaR*.38),'','center');
+    // CARA
+    circle(0,52-(scale>.9?0:0),27,'#FCDEC0','#E0B090',1);
+    // pelo castaño oscuro largo
+    ellipse(0,30,28,15,'#4A2810');
+    ellipse(-24,44,10,21,'#4A2810');ellipse(24,44,10,21,'#4A2810');
+    curve(-24,46,-26,80,-24,115,-22,135,'#4A2810',9);
+    curve(24,46,26,80,24,115,22,135,'#4A2810',9);
+    // ojos verdes
+    ellipse(-14,50,4.5,4,'#fff');ellipse(14,50,4.5,4,'#fff');
+    ellipse(-14,50,3.2,3.5,'#2A7030');ellipse(14,50,3.2,3.5,'#2A7030');
+    ellipse(-14,50.5,1.8,2,'#1A4820');ellipse(14,50.5,1.8,2,'#1A4820');
+    circle(-12.5,49,1.3,'#fff');circle(15.5,49,1.3,'#fff');
+    // pestañas
+    [[-18,46],[-14,45],[-10,46],[10,46],[14,45],[18,46]].forEach(([px,py],i)=>{
+      const ex=px+(i<3?-2:2),ey=py-3;
+      ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(ex,ey);
+      ctx.strokeStyle='#2A1810';ctx.lineWidth=1.2;ctx.lineCap='round';ctx.stroke();
+    });
+    // cejas
+    curve(-20,44,-14,40,-8,41,-4,44,'#3A2010',1.8);
+    curve(4,44,8,41,14,40,20,44,'#3A2010',1.8);
+    // nariz
+    curve(-2,56,0,60,0,60,2,56,'#D09070',1.2);
+    // SONRISA grande
+    ctx.beginPath();ctx.arc(0,61,13,0.1,Math.PI-.1);
+    ctx.fillStyle='#D06050';ctx.fill();
+    ctx.beginPath();ctx.arc(0,61,10,0.2,Math.PI-.2);
+    ctx.fillStyle='#fff';ctx.fill();
+    // mejillas
+    ellipse(-22,58,8,5,'rgba(245,160,168,.35)');
+    ellipse(22,58,8,5,'rgba(245,160,168,.35)');
+    // aros dorados
+    ellipse(-28,60,3,5,'rgba(0,0,0,0)','#C8A060',1.5);
+    ellipse(28,60,3,5,'rgba(0,0,0,0)','#C8A060',1.5);
+    // brazos sobre panza
+    curve(-52,8,-55,40,-52,65,-45,72,'#F0C0A0',12);
+    curve(52,8,55,40,52,65,45,72,'#F0C0A0',12);
+    circle(-44,74,10,'#FCDEC0','#E0B090',1);
+    circle(44,74,10,'#FCDEC0','#E0B090',1);
+    ctx.restore();
+  }
+
+  function drawAirPuff(x,y,size,alpha){
+    ctx.save();ctx.globalAlpha=alpha;
+    // onditas de aire
+    for(let i=0;i<3;i++){
+      const r=(size+i*12);
+      ctx.beginPath();
+      ctx.arc(x+r*.8,y,r*.5,-.6,.6);
+      ctx.strokeStyle=`hsl(${290+i*20},60%,80%)`;
+      ctx.lineWidth=2.5-i*.5;ctx.lineCap='round';
+      ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+    }
+    ctx.restore();
+  }
+
+  function drawStar(x,y,r,color,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=color;
+    ctx.translate(x,y);
+    ctx.beginPath();
+    for(let i=0;i<10;i++){
+      const a=i*Math.PI/5-Math.PI/2;
+      const rr=i%2===0?r:r*.4;
+      i===0?ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+    }
+    ctx.closePath();ctx.fill();ctx.restore();
+  }
+
+  function drawBaby(x,y,scale,alpha){
+    ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.globalAlpha=alpha;
+    // cuerpo onesie
+    ctx.beginPath();ctx.arc(0,30,30,0,Math.PI*2);
+    ctx.fillStyle='#FCDEC0';ctx.fill();ctx.strokeStyle='#EDB892';ctx.lineWidth=1;ctx.stroke();
+    // cabeza
+    circle(0,-10,32,'#FCDEC0','#EDB892',1.2);
+    // pelito
+    curve(-15,-38,-8,-44,8,-44,15,-38,'#C8904A',5);
+    // ojitos cerrados felices
+    ctx.beginPath();ctx.arc(-12,-12,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+    ctx.beginPath();ctx.arc(12,-12,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+    // sonrisita
+    ctx.beginPath();ctx.arc(0,-2,8,.2,Math.PI-.2);ctx.strokeStyle='#C07050';ctx.lineWidth=1.8;ctx.stroke();
+    // mejillitas
+    ellipse(-18,-4,6,4,'rgba(245,160,168,.4)');ellipse(18,-4,6,4,'rgba(245,160,168,.4)');
+    // onesie
+    ctx.beginPath();
+    ctx.moveTo(-28,16);ctx.bezierCurveTo(-30,22,-28,60,-24,72);
+    ctx.lineTo(24,72);ctx.bezierCurveTo(28,60,30,22,28,16);ctx.closePath();
+    ctx.fillStyle='#FFD6E8';ctx.fill();ctx.strokeStyle='#F0B0CC';ctx.lineWidth=.8;ctx.stroke();
+    txt('🌸',0,52,16,'','center');
+    // bracitos
+    ellipse(-36,24,10,8,'#FCDEC0','#EDB892',1,-.3);
+    ellipse(36,24,10,8,'#FCDEC0','#EDB892',1,.3);
+    // piernitas
+    ellipse(-16,72,12,8,'#FCDEC0','#EDB892',1,.2);
+    ellipse(16,72,12,8,'#FCDEC0','#EDB892',1,-.2);
+    ellipse(-18,78,10,5,'#FFD6E8');ellipse(18,78,10,5,'#FFD6E8');
+    ctx.restore();
+  }
+
+  // ---- SCENES ----
+  let frame=0, startTime=null, scene=0;
+  const TOTAL_DUR=5500; // ms total animation
+
+  // Scene timing (ms):
+  // 0-800: titulo aparece
+  // 800-1800: papa y mama aparecen
+  // 1800-4000: papa sopla, panza crece
+  // 4000-4800: flash de luz, bebe aparece
+  // 4800-5500: corazones y texto final
+
+  function lerp(a,b,t){return a+(b-a)*Math.min(1,Math.max(0,t));}
+  function easeOut(t){return 1-Math.pow(1-t,3);}
+  function easeInOut(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
+  function bounce(t){const n=7.5625,d=2.75;if(t<1/d)return n*t*t;else if(t<2/d){t-=1.5/d;return n*t*t+.75;}else if(t<2.5/d){t-=2.25/d;return n*t*t+.9375;}else{t-=2.625/d;return n*t*t+.984375;}}
+
+  function animate(ts){
+    if(!startTime)startTime=ts;
+    const elapsed=ts-startTime;
+    const totalP=Math.min(elapsed/TOTAL_DUR,1);
+    pf.style.width=(totalP*100)+'%';
+    frame++;
+
+    clear();
+    bg('#FFF0F8','#F8E8FF');
+
+    // floating background hearts
+    for(let i=0;i<8;i++){
+      const t=(elapsed/2000+i*.4)%(Math.PI*2);
+      const x=30+i*40,y=20+Math.sin(t+i)*15;
+      ctx.globalAlpha=.08+.04*Math.sin(t);
+      txt(['💕','✨','🌸','💝','🎀','💗','⭐','🌷'][i],x,y,16,'','center');
+      ctx.globalAlpha=1;
+    }
+
+    // ---- SCENE 0: title card (0-800ms) ----
+    if(elapsed<800){
+      const p=easeOut(elapsed/800);
+      ctx.globalAlpha=p;
+      txt('🎀',170,-20+30*p,36,'','center');
+      ctx.font='bold 22px "Great Vibes",cursive';
+      ctx.fillStyle='#E8829A';ctx.textAlign='center';
+      ctx.globalAlpha=p*.9;
+      ctx.fillText('Lista de regalitos',170,160+20*(1-p));
+      ctx.font='14px Nunito,sans-serif';
+      ctx.fillStyle='#C5A8D8';
+      ctx.fillText('para Lía Isabella',170,185+15*(1-p));
+      ctx.globalAlpha=1;
+    }
+
+    // ---- SCENE 1: personajes aparecen (800-1800ms) ----
+    else if(elapsed<1800){
+      const p=easeOut((elapsed-800)/1000);
+      // Emanuel entra desde la derecha
+      const emX=lerp(400,230,p), emY=100;
+      ctx.save();ctx.globalAlpha=p;
+      drawEmanuel(emX,emY,.72,1,0,0);
+      ctx.restore();
+      // Emanuela entra desde la izquierda
+      const luX=lerp(-60,110,p), luY=120;
+      ctx.save();ctx.globalAlpha=p;
+      drawEmanuela(luX,luY,.78,15);
+      ctx.restore();
+      cap.textContent='¡Preparando la lista de Lía! 🎀';
+    }
+
+    // ---- SCENE 2: sopla y panza crece (1800-4000ms) ----
+    else if(elapsed<4000){
+      const t=(elapsed-1800)/2200; // 0 to 1
+      const blowCycles=t*4; // numero de soplidos
+      const breathScale=1+.18*Math.abs(Math.sin(blowCycles*Math.PI)); // pecho sube y baja
+      const cheeks=Math.max(0,Math.sin(blowCycles*Math.PI)); // mejillas se inflan
+      const panzaR=lerp(16,38,easeInOut(t)); // panza crece
+      const sweat=Math.min(1,t*1.5); // mas sudor con tiempo
+
+      drawEmanuel(230,100,.72,breathScale,cheeks,sweat);
+      drawEmanuela(110,120,.78,panzaR);
+
+      // aire soplando
+      if(cheeks>.3){
+        const airA=cheeks*0.9;
+        // pajita
+        ctx.save();ctx.globalAlpha=airA;
+        roundRect(148,142,22,8,4,'#F9A8C9','#E87DB0',1);
+        circle(170,146,5,'#FFD6E8','#E87DB0',.8);
+        ctx.restore();
+        // ondas de aire
+        drawAirPuff(174,146,cheeks*8,airA*.8);
+        // mini particulas
+        if(cheeks>.6){
+          for(let i=0;i<4;i++){
+            const a=frame*0.08+i*1.5;
+            const px=180+Math.cos(a)*cheeks*18;
+            const py=146+Math.sin(a*0.7)*8;
+            drawStar(px,py,3,'rgba(197,168,216,.7)',cheeks*.8);
+          }
+        }
+      }
+
+      // captions dinamicos
+      const caps=['¡Emanuel está soplando! 💨','¡La panza crece! 👶','¡Más fuerte Emanuel! 😤','¡Ya llega Lía! 🌸'];
+      cap.textContent=caps[Math.floor(t*caps.length*.99)];
+    }
+
+    // ---- SCENE 3: flash y bebe aparece (4000-4800ms) ----
+    else if(elapsed<4800){
+      const t=(elapsed-4000)/800;
+      const flashA=Math.max(0,1-t*3);
+      // flash blanco
+      if(flashA>0){ctx.fillStyle=`rgba(255,255,255,${flashA})`;ctx.fillRect(0,0,W,H);}
+      const bebeA=easeOut(Math.max(0,(t-.2)/.8));
+      const bebeScale=lerp(.3,1,bounce(Math.min(1,(t-.1)/.9)));
+      drawEmanuel(230,100,.72,1,0,0);
+      drawEmanuela(110,120,.78,38);
+      drawBaby(170,105,bebeScale,bebeA);
+      // corazones volando
+      for(let i=0;i<6;i++){
+        const ht=Math.max(0,(t-.3)/.7);
+        const px=120+i*20,py=200-ht*120-Math.sin(i*2+ht*5)*20;
+        ctx.globalAlpha=Math.min(1,ht*2)*Math.max(0,1-(ht-.7)/.3);
+        txt(['💕','💝','🎀','✨','💗','🌸'][i],px,py,18,'','center');
+        ctx.globalAlpha=1;
+      }
+      cap.textContent=t<.4?'✨ ¡Llegó Lía Isabella! ✨':'¡Bienvenida al mundo Lía! 💕';
+    }
+
+    // ---- SCENE 4: final con bebe y corazones (4800-5500ms) ----
+    else {
+      const t=(elapsed-4800)/700;
+      drawBaby(170,105,1,1);
+      // corazones en espiral
+      for(let i=0;i<12;i++){
+        const a=i/12*Math.PI*2+t*2;
+        const r=60+Math.sin(t*3+i)* 20;
+        const px=170+Math.cos(a)*r;
+        const py=130+Math.sin(a)*r*.6;
+        const sc=.7+.3*Math.sin(t*4+i);
+        ctx.globalAlpha=.6+.4*Math.sin(t*3+i*.7);
+        txt(['💕','💝','🎀','✨','💗','🌸','⭐','🌷','🩷','🫶','✨','💫'][i],px,py,16*sc,'','center');
+        ctx.globalAlpha=1;
+      }
+      ctx.font='bold 20px "Great Vibes",cursive';
+      ctx.fillStyle='#E8829A';ctx.textAlign='center';
+      ctx.globalAlpha=Math.min(1,t*2);
+      ctx.fillText('¡Llegó Lía Isabella!',170,240);
+      ctx.globalAlpha=1;
+      cap.textContent='🎀 ¡Gracias por tanto amor! 🎀';
+    }
+
+    if(elapsed<TOTAL_DUR){
+      requestAnimationFrame(animate);
+    } else {
+      // fade out
+      const loaderEl=document.getElementById('loader');
+      loaderEl.style.transition='opacity .6s';loaderEl.style.opacity='0';
+      setTimeout(()=>{loaderEl.style.display='none';onDone();},650);
     }
   }
-  requestAnimationFrame(grow);
+  requestAnimationFrame(animate);
 }
 
 (async()=>{
