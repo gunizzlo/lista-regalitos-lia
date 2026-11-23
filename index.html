@@ -3,327 +3,494 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lista de regalitos para Lía Isabella</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+<title>Lista de regalitos para Lía Isabella 🎀</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-:root {
-  --rose:#D4617A; --blush:#FFD6D0; --paper:#FFF4EE; --sage:#7C9468;
-  --line:#E9C4BE; --done:#EFE6E2; --ink:#5A4034; --pill:#F5D5CF;
+:root{
+  --rose:#E8829A;--rose-light:#F5B8C8;--rose-pale:#FFF0F4;
+  --lavender:#C5A8D8;--lav-light:#EEE5F7;
+  --mint:#8ECFB8;--mint-light:#E0F5EE;
+  --peach:#F5B89A;--peach-light:#FEF0E8;
+  --sky:#A8C8E8;--sky-light:#E5F2FC;
+  --yellow:#F5D87A;--yellow-light:#FEF8E0;
+  --paper:#FFF8FC;--ink:#5A3040;--ink-muted:#9A7080;
   --white:#fff;
+  --rad:20px;--rad-sm:12px;--rad-pill:99px;
+  --shadow:0 8px 32px #E8829A18, 0 2px 8px #0000000A;
+  --shadow-hover:0 16px 48px #E8829A28, 0 4px 16px #0000001A;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:"Libre Baskerville",Georgia,serif;font-size:16px;line-height:1.65;min-height:100dvh}
-.wrap{max-width:640px;margin:0 auto;padding:32px 20px 60px}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:"Nunito",system-ui,sans-serif;
+  font-size:16px;line-height:1.6;
+  min-height:100dvh;overflow-x:hidden;
+}
 
-/* HEADER */
-.hello{text-align:center;margin-bottom:28px}
-h1.script{font-family:"Great Vibes",cursive;font-size:3.4rem;color:var(--rose);line-height:1.1;margin-bottom:4px}
-.hello p{margin:.5rem 0;font-size:.97rem}
-.how{background:var(--blush);border-radius:16px;padding:18px 22px;margin:20px 0;font-size:.93rem}
-.how ol{padding-left:1.3rem}
-.how li{margin:.3rem 0}
-.how small{display:block;margin-top:10px;font-style:italic;color:#8A6F62}
-.count{text-align:center;font-size:.95rem;margin:14px 0 4px}
-.count b{color:var(--rose)}
+/* BACKGROUND BLOBS */
+body::before,body::after{
+  content:"";position:fixed;border-radius:50%;filter:blur(80px);
+  pointer-events:none;z-index:0;opacity:.35;
+}
+body::before{width:600px;height:600px;top:-200px;right:-200px;background:radial-gradient(circle,#F5B8C8,#EEE5F7)}
+body::after{width:500px;height:500px;bottom:-150px;left:-150px;background:radial-gradient(circle,#E0F5EE,#FEF0E8)}
 
-/* CATEGORIES */
-section{margin-top:32px}
-h2.script{font-family:"Great Vibes",cursive;font-size:2.4rem;color:var(--rose);margin-bottom:12px}
+.wrap{max-width:680px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
+
+/* ---- LOADER ---- */
+#loader{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:80vh;gap:24px;animation:fadeIn .4s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-20px)}}
+.loader-txt{
+  font-size:1.1rem;font-weight:600;color:var(--rose);letter-spacing:.02em;
+  animation:pulse-txt 1.6s ease-in-out infinite;
+}
+@keyframes pulse-txt{0%,100%{opacity:.7}50%{opacity:1}}
+#loader.hiding{animation:fadeOut .5s ease forwards}
+
+/* ---- HEADER ---- */
+.header{text-align:center;margin-bottom:48px;animation:slideDown .7s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes slideDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+.script-title{
+  font-family:"Great Vibes",cursive;font-size:4rem;line-height:1;
+  background:linear-gradient(135deg,#E8829A,#C5A8D8,#8ECFB8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;margin-bottom:4px;
+}
+.subtitle{font-size:1rem;color:var(--ink-muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px}
+.intro-card{
+  background:linear-gradient(135deg,rgba(245,184,200,.15),rgba(197,168,216,.15));
+  border:1px solid rgba(232,130,154,.2);border-radius:var(--rad);
+  padding:24px 28px;text-align:left;position:relative;overflow:hidden;
+}
+.intro-card::before{
+  content:"🎀";position:absolute;right:16px;top:12px;font-size:2rem;opacity:.3;
+}
+.intro-card p{font-size:.95rem;color:var(--ink-muted);line-height:1.7}
+.intro-card p+p{margin-top:8px}
+.steps{
+  display:flex;flex-direction:column;gap:10px;margin-top:16px;
+}
+.step{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--white);border-radius:var(--rad-sm);padding:12px 16px;
+  border:1px solid rgba(232,130,154,.12);
+  transition:transform .2s,box-shadow .2s;
+}
+.step:hover{transform:translateX(4px);box-shadow:var(--shadow)}
+.step-num{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;color:var(--white);
+}
+.step:nth-child(1) .step-num{background:var(--rose)}
+.step:nth-child(2) .step-num{background:var(--lavender)}
+.step:nth-child(3) .step-num{background:var(--mint)}
+.step p{font-size:.9rem;color:var(--ink)}
+
+/* COUNT BADGE */
+.count-wrap{text-align:center;margin:32px 0 8px}
+.count-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--rose),var(--lavender));
+  color:#fff;border-radius:var(--rad-pill);
+  padding:8px 24px;font-weight:700;font-size:.95rem;
+  box-shadow:0 4px 16px #E8829A30;
+  transition:transform .2s;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) .3s both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.count-badge:hover{transform:scale(1.04)}
+
+/* CATEGORY */
+.cat-section{margin-top:40px;animation:fadeIn .6s ease both}
+.cat-title{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.cat-name{
+  font-family:"Great Vibes",cursive;font-size:2.6rem;
+  background:linear-gradient(135deg,var(--rose),var(--lavender));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cat-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(232,130,154,.3),transparent)}
 
 /* GIFT CARDS */
-.gift{padding:16px 0 18px;border-bottom:1.5px dashed var(--line);transition:background .3s}
-.gift:last-child{border-bottom:none}
-.top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
-.em{font-size:1.5rem;line-height:1;flex-shrink:0}
-.info{flex:1}
-.name{font-weight:700;font-size:1.05rem;line-height:1.3}
-.price{color:var(--sage);font-size:.9rem;margin-top:2px}
-.rep{display:inline-block;background:var(--pill);border-radius:99px;font-size:.75rem;padding:.18em .7em;margin-top:4px;color:var(--rose)}
-.links{list-style:none;margin-top:7px}
-.links li{margin:.25rem 0}
-.links a{font-size:.87rem;color:var(--rose);text-decoration:underline;text-decoration-color:var(--rose);text-underline-offset:3px}
+.gift{
+  background:var(--white);border-radius:var(--rad);
+  border:1px solid rgba(232,130,154,.12);
+  padding:20px 24px;margin-bottom:14px;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s, border-color .25s;
+  cursor:default;position:relative;overflow:hidden;
+  animation:cardIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.gift::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rose-light),var(--lavender),var(--mint));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.gift:hover{
+  transform:translateY(-4px) scale(1.01);
+  box-shadow:var(--shadow-hover);
+  border-color:rgba(232,130,154,.3);
+}
+.gift:hover::before{transform:scaleX(1)}
+.gift.taken{background:linear-gradient(135deg,rgba(238,229,247,.4),rgba(224,245,238,.4));border-color:rgba(197,168,216,.2)}
+.gift.taken::before{background:linear-gradient(90deg,var(--lavender),var(--mint));transform:scaleX(1)}
 
-/* RESERVED */
-.taken-label{margin-top:10px;padding:10px 14px;background:var(--done);border-radius:10px;font-size:.88rem;color:#8A6F62;border:1px solid var(--line)}
-.taken-label strong{color:var(--ink)}
+/* Gift top row */
+.gift-top{display:flex;gap:14px;align-items:flex-start}
+.gift-em{
+  width:48px;height:48px;border-radius:var(--rad-sm);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.gift:hover .gift-em{transform:scale(1.2) rotate(-5deg)}
+.gift:nth-child(1) .gift-em,.gift:nth-child(5) .gift-em,.gift:nth-child(9) .gift-em{background:var(--rose-pale)}
+.gift:nth-child(2) .gift-em,.gift:nth-child(6) .gift-em,.gift:nth-child(10) .gift-em{background:var(--lav-light)}
+.gift:nth-child(3) .gift-em,.gift:nth-child(7) .gift-em,.gift:nth-child(11) .gift-em{background:var(--mint-light)}
+.gift:nth-child(4) .gift-em,.gift:nth-child(8) .gift-em,.gift:nth-child(12) .gift-em{background:var(--peach-light)}
+.gift-info{flex:1}
+.gift-name{font-weight:800;font-size:1.05rem;color:var(--ink);line-height:1.3}
+.gift-name s{opacity:.5;font-weight:600}
+.gift-price{color:var(--rose);font-weight:700;font-size:.9rem;margin-top:3px}
+.gift-rep{
+  display:inline-flex;align-items:center;gap:4px;
+  background:linear-gradient(135deg,var(--mint-light),rgba(142,207,184,.2));
+  color:#2A7A6A;border-radius:var(--rad-pill);
+  font-size:.75rem;font-weight:700;padding:.2em .8em;margin-top:5px;
+  border:1px solid rgba(142,207,184,.4);
+}
+.gift-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.gift-link{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.8rem;font-weight:600;color:var(--rose);
+  background:var(--rose-pale);border-radius:var(--rad-pill);
+  padding:.25em .9em;text-decoration:none;
+  border:1px solid rgba(232,130,154,.2);
+  transition:all .2s;
+}
+.gift-link:hover{background:var(--rose);color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px #E8829A30}
 
-/* BUTTONS */
-.act{margin:14px 0 0 38px}
-.btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.6em;min-height:48px;padding:.55em 1.2em;border-radius:99px;background:var(--pill);color:var(--ink);font-family:inherit;font-size:1rem;border:1.5px solid var(--line);text-align:center;line-height:1.25;cursor:pointer;transition:all .2s}
-.btn::before{content:'♥'}
-.btn::after{content:'♥'}
-.btn.go{background:var(--rose);border-color:var(--rose);color:#fff;font-weight:700}
-.btn.go::before,.btn.go::after{content:'▸'}
-.btn:disabled{opacity:.6;cursor:default}
-.field{width:100%;padding:.6em .9em;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:1rem;background:#fff;margin-top:6px;outline:none;transition:border-color .2s}
-.field:focus{border-color:var(--rose)}
-.lbl{font-size:.88rem;margin-top:12px;display:block}
-.cancel{display:block;text-align:center;margin-top:10px;font-size:.88rem;color:#8A6F62;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.msg{font-size:.85rem;color:var(--rose);margin-top:6px;min-height:1.2em}
+/* TAKEN LABEL */
+.taken-label{
+  display:flex;align-items:center;gap:10px;margin-top:14px;
+  background:linear-gradient(135deg,var(--lav-light),var(--mint-light));
+  border:1px solid rgba(197,168,216,.3);border-radius:var(--rad-sm);
+  padding:12px 16px;animation:slideIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.taken-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--lavender));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;color:#fff;font-weight:800;
+}
+.taken-info{flex:1}
+.taken-name{font-weight:800;font-size:.95rem;color:var(--ink)}
+.taken-sub{font-size:.8rem;color:var(--ink-muted)}
+
+/* RESERVE BUTTON */
+.gift-act{margin-top:14px}
+.btn-reserve{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:.7em 1.4em;border-radius:var(--rad-pill);
+  background:linear-gradient(135deg,var(--rose-pale),var(--lav-light));
+  color:var(--rose);font-family:inherit;font-size:.95rem;font-weight:700;
+  border:1.5px solid rgba(232,130,154,.25);cursor:pointer;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;overflow:hidden;
+}
+.btn-reserve::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--rose),var(--lavender));
+  opacity:0;transition:opacity .25s;
+}
+.btn-reserve:hover{transform:translateY(-2px);box-shadow:0 8px 24px #E8829A30;border-color:transparent;color:#fff}
+.btn-reserve:hover::before{opacity:1}
+.btn-reserve span{position:relative;z-index:1}
+.btn-reserve:active{transform:scale(.97)}
+
+/* FORM */
+.reserve-form{
+  margin-top:14px;padding:18px 20px;
+  background:linear-gradient(135deg,rgba(255,240,244,.8),rgba(238,229,247,.8));
+  border:1px solid rgba(232,130,154,.2);border-radius:var(--rad);
+  animation:fadeIn .3s ease;backdrop-filter:blur(8px);
+}
+.form-label{font-size:.85rem;font-weight:700;color:var(--ink-muted);margin-bottom:6px;display:block}
+.form-input{
+  width:100%;padding:.7em 1em;border:1.5px solid rgba(232,130,154,.25);
+  border-radius:var(--rad-sm);font-family:inherit;font-size:.95rem;
+  background:var(--white);color:var(--ink);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.form-input:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(232,130,154,.12)}
+.form-input::placeholder{color:#C8A0B0}
+.btn-go{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;margin-top:10px;padding:.75em 1.4em;border-radius:var(--rad-pill);
+  background:linear-gradient(135deg,var(--rose),#C85A82);color:#fff;
+  font-family:inherit;font-size:1rem;font-weight:800;border:none;cursor:pointer;
+  box-shadow:0 4px 16px #E8829A30;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-go:hover{transform:translateY(-2px);box-shadow:0 8px 28px #E8829A45}
+.btn-go:disabled{opacity:.6;cursor:default;transform:none}
+.btn-go:active{transform:scale(.97)}
+.form-cancel{display:block;text-align:center;margin-top:8px;font-size:.85rem;color:var(--ink-muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.form-msg{font-size:.83rem;color:var(--rose);margin-top:6px;min-height:1em}
 
 /* TOAST */
-.toast{position:fixed;bottom:env(safe-area-inset-bottom,0px);left:50%;transform:translateX(-50%) translateY(120px);background:var(--rose);color:#fff;padding:.85em 1.5em;border-radius:99px;font-size:.95rem;font-weight:700;box-shadow:0 4px 20px #0003;z-index:999;white-space:nowrap;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none}
+.toast{
+  position:fixed;bottom:max(env(safe-area-inset-bottom,0px)+16px,20px);
+  left:50%;transform:translateX(-50%) translateY(120%);
+  background:linear-gradient(135deg,#E8829A,#C5A8D8);color:#fff;
+  padding:.9em 1.6em;border-radius:var(--rad-pill);font-size:.95rem;font-weight:700;
+  box-shadow:0 8px 32px #E8829A40;z-index:999;white-space:nowrap;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .45s;
+  opacity:0;pointer-events:none;
+}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 /* CONFETTI */
-.confetti-piece{position:fixed;top:-10px;width:10px;height:10px;border-radius:2px;opacity:0;pointer-events:none;z-index:1000;animation:fall 1.8s ease-in forwards}
-@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
-
-/* DONE GIFT ANIMATION */
-@keyframes fadeGreen{0%{background:transparent}30%{background:#e8f5e9}100%{background:transparent}}
-.gift.just-done{animation:fadeGreen 2s ease}
-
-/* HEART BURST */
-.heart-burst{position:fixed;pointer-events:none;z-index:1001;font-size:2rem;opacity:0;animation:heartPop .8s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes heartPop{0%{opacity:1;transform:scale(0) translateY(0)}60%{opacity:1;transform:scale(1.4) translateY(-40px)}100%{opacity:0;transform:scale(1) translateY(-80px)}}
-
-/* LOADING */
-.loading{text-align:center;padding:40px 0}
-.anim-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
-.loading-txt{color:#B8A09A;font-style:italic;font-size:.95rem;margin:0}
-#baby-anim{filter:drop-shadow(0 4px 12px #F9A8C922)}
+.confetti-piece{
+  position:fixed;top:-12px;pointer-events:none;z-index:1000;
+  border-radius:3px;animation:confetti-fall linear forwards;opacity:1;
+}
+@keyframes confetti-fall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1}
+  80%{opacity:1}
+  100%{transform:translateY(105vh) rotate(900deg);opacity:0}
+}
+.heart-pop{
+  position:fixed;pointer-events:none;z-index:1001;
+  animation:heart-rise .9s cubic-bezier(.34,1.56,.64,1) forwards;font-size:1.6rem;
+}
+@keyframes heart-rise{
+  0%{opacity:1;transform:scale(0) translateY(0)}
+  50%{opacity:1;transform:scale(1.3) translateY(-50px)}
+  100%{opacity:0;transform:scale(.8) translateY(-110px)}
+}
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(232,130,154,.2);pointer-events:none;
+  animation:ripple-out .6s ease-out forwards;
+}
+@keyframes ripple-out{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(4);opacity:0}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="hello">
-    <h1 class="script">Lista de regalitos</h1>
-    <p><strong>para Lía Isabella</strong></p>
-    <p>Armamos esta lista con mucho cariño porque varios de ustedes nos la pidieron.<br>Es solo una guía, sin ningún compromiso: lo más lindo para nosotros es que nos acompañen a esperar a Lía.</p>
-    <p>Si quieren, pueden juntarse entre varios para un regalo. Cualquier detalle, grande o chiquito, lo vamos a recibir con el corazón. ¡Gracias por tanto amor!</p>
-  </div>
-  <div class="how">
-    <ol>
-      <li>Elegí un regalito de la lista.</li>
-      <li>Tocá <strong>«Lo regalo yo»</strong> y escribí tu nombre. Si se juntan entre varios, pongan todos los nombres.</li>
-      <li>Tocá <strong>«Anotarme»</strong> y listo: queda reservado a tu nombre.</li>
-    </ol>
-    <small>Los links y precios son solo ideas de Mercado Libre: podés comprarlo donde quieras. Lo que ya tiene dueño aparece tachado. La ropa, los pañales y las toallitas pueden repetirse.</small>
-  </div>
-  <div class="count" id="count">Cargando...</div>
-  <div id="list">
-<div class="loading" id="loader">
-<div class="anim-wrap">
-<svg id="baby-anim" viewBox="0 0 200 220" width="160" height="176" xmlns="http://www.w3.org/2000/svg">
-  <!-- Pregnant woman -->
-  <g id="mama">
-    <!-- head -->
-    <circle cx="100" cy="38" r="22" fill="#F5C5A3" stroke="#E8A882" stroke-width="1.5"/>
-    <!-- hair -->
-    <ellipse cx="100" cy="20" rx="22" ry="12" fill="#C0845A"/>
-    <ellipse cx="80" cy="30" rx="8" ry="14" fill="#C0845A"/>
-    <ellipse cx="120" cy="30" rx="8" ry="14" fill="#C0845A"/>
-    <!-- eyes -->
-    <ellipse cx="92" cy="37" rx="2.5" ry="3" fill="#5A3A1A"/>
-    <ellipse cx="108" cy="37" rx="2.5" ry="3" fill="#5A3A1A"/>
-    <!-- smile -->
-    <path d="M93 46 Q100 52 107 46" fill="none" stroke="#C0785A" stroke-width="1.5" stroke-linecap="round"/>
+
+<!-- LOADER -->
+<div id="loader">
+<svg id="baby-svg" viewBox="0 0 200 240" width="180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="skin" cx="50%" cy="40%"><stop offset="0%" stop-color="#FCDEC0"/><stop offset="100%" stop-color="#F5C5A3"/></radialGradient>
+  </defs>
+  <!-- mama -->
+  <g id="g-mama">
+    <circle cx="100" cy="40" r="24" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
+    <ellipse cx="100" cy="21" rx="24" ry="13" fill="#B87040"/>
+    <ellipse cx="79" cy="33" rx="8" ry="15" fill="#B87040"/>
+    <ellipse cx="121" cy="33" rx="8" ry="15" fill="#B87040"/>
+    <ellipse cx="92" cy="39" rx="2.8" ry="3.2" fill="#5A3A1A"/>
+    <ellipse cx="108" cy="39" rx="2.8" ry="3.2" fill="#5A3A1A"/>
+    <circle cx="90" cy="38" r="1" fill="#fff" opacity=".7"/>
+    <circle cx="106" cy="38" r="1" fill="#fff" opacity=".7"/>
+    <path d="M93 49 Q100 55 107 49" fill="none" stroke="#C07050" stroke-width="1.5" stroke-linecap="round"/>
     <!-- body/dress -->
-    <path d="M72 60 Q100 55 128 60 L134 130 Q100 140 66 130 Z" fill="#F9A8C9" stroke="#E87DB0" stroke-width="1"/>
-    <!-- belly - animated -->
-    <ellipse id="panza" cx="100" cy="102" rx="18" ry="16" fill="#F7C5D8" stroke="#E87DB0" stroke-width="1.5"/>
+    <path d="M70 65 Q100 58 130 65 L136 148 Q100 158 64 148 Z" fill="#F9A8C9" stroke="#E87DB0" stroke-width=".8"/>
+    <!-- belt detail -->
+    <path d="M71 90 Q100 85 129 90" fill="none" stroke="#E87DB0" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <!-- belly -->
+    <ellipse id="panza" cx="100" cy="115" rx="20" ry="18" fill="#FCDEC0" stroke="#EDB892" stroke-width="1.5"/>
+    <ellipse id="panza-shine" cx="94" cy="108" rx="6" ry="4" fill="#fff" opacity=".25"/>
     <!-- arms -->
-    <path d="M72 72 Q55 85 58 100" fill="none" stroke="#F5C5A3" stroke-width="8" stroke-linecap="round"/>
-    <path d="M128 72 Q145 85 142 100" fill="none" stroke="#F5C5A3" stroke-width="8" stroke-linecap="round"/>
-    <!-- hands on belly -->
-    <circle cx="62" cy="102" r="6" fill="#F5C5A3"/>
-    <circle cx="138" cy="102" r="6" fill="#F5C5A3"/>
+    <path d="M70 78 Q50 92 54 112" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
+    <path d="M130 78 Q150 92 146 112" fill="none" stroke="#F5C5A3" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="56" cy="114" r="7" fill="#FCDEC0"/>
+    <circle cx="144" cy="114" r="7" fill="#FCDEC0"/>
     <!-- legs -->
-    <rect x="82" y="130" width="14" height="38" rx="7" fill="#F9A8C9"/>
-    <rect x="104" y="130" width="14" height="38" rx="7" fill="#F9A8C9"/>
-    <!-- shoes -->
-    <ellipse cx="89" cy="170" rx="11" ry="6" fill="#C0785A"/>
-    <ellipse cx="111" cy="170" rx="11" ry="6" fill="#C0785A"/>
+    <rect x="80" y="148" width="16" height="42" rx="8" fill="#F9A8C9"/>
+    <rect x="104" y="148" width="16" height="42" rx="8" fill="#F9A8C9"/>
+    <ellipse cx="88" cy="193" rx="13" ry="7" fill="#C07050"/>
+    <ellipse cx="112" cy="193" rx="13" ry="7" fill="#C07050"/>
   </g>
-
-  <!-- Baby (hidden initially) -->
-  <g id="bebe" opacity="0">
-    <!-- baby body -->
-    <ellipse cx="100" cy="130" rx="22" ry="26" fill="#F9C5B0" stroke="#F0A880" stroke-width="1"/>
-    <!-- baby head -->
-    <circle cx="100" cy="94" r="26" fill="#F5C5A3" stroke="#E8A882" stroke-width="1.5"/>
-    <!-- baby hair tuft -->
-    <path d="M92 72 Q100 65 108 72" fill="none" stroke="#C0845A" stroke-width="4" stroke-linecap="round"/>
-    <!-- baby eyes closed/happy -->
-    <path d="M89 93 Q92 90 95 93" fill="none" stroke="#5A3A1A" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M105 93 Q108 90 111 93" fill="none" stroke="#5A3A1A" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- baby smile -->
-    <path d="M93 103 Q100 110 107 103" fill="none" stroke="#C0785A" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- baby onesie -->
-    <path d="M78 118 Q100 112 122 118 L126 155 Q100 162 74 155 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width="1"/>
-    <!-- tiny star on onesie -->
-    <text x="97" y="142" font-size="12" text-anchor="middle">⭐</text>
-    <!-- arms -->
-    <ellipse cx="74" cy="130" rx="10" ry="7" fill="#F5C5A3" transform="rotate(-20,74,130)"/>
-    <ellipse cx="126" cy="130" rx="10" ry="7" fill="#F5C5A3" transform="rotate(20,126,130)"/>
-    <!-- legs/booties -->
-    <ellipse cx="88" cy="158" rx="12" ry="8" fill="#F9C5B0" transform="rotate(10,88,158)"/>
-    <ellipse cx="112" cy="158" rx="12" ry="8" fill="#F9C5B0" transform="rotate(-10,112,158)"/>
-    <!-- booties -->
-    <ellipse cx="84" cy="164" rx="10" ry="5" fill="#FFD6E8"/>
-    <ellipse cx="116" cy="164" rx="10" ry="5" fill="#FFD6E8"/>
+  <!-- bebe -->
+  <g id="g-bebe" opacity="0">
+    <ellipse cx="100" cy="150" rx="26" ry="30" fill="#FCDEC0" stroke="#EDB892" stroke-width="1"/>
+    <circle cx="100" cy="108" r="30" fill="url(#skin)" stroke="#EDB892" stroke-width="1.2"/>
+    <path d="M90 85 Q100 77 110 85" fill="none" stroke="#B87040" stroke-width="5" stroke-linecap="round"/>
+    <path d="M86 107 Q89 103 92 107" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M108 107 Q111 103 114 107" fill="none" stroke="#5A3A1A" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M92 118 Q100 125 108 118" fill="none" stroke="#C07050" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M74 134 Q76 128 83 130 L80 148 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+    <path d="M126 134 Q124 128 117 130 L120 148 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+    <path d="M74 134 Q100 126 126 134 L128 175 Q100 183 72 175 Z" fill="#FFD6E8" stroke="#F0B0CC" stroke-width=".8"/>
+    <text x="100" y="162" font-size="14" text-anchor="middle">🌸</text>
+    <ellipse cx="85" cy="178" rx="14" ry="9" fill="#FCDEC0" transform="rotate(12,85,178)"/>
+    <ellipse cx="115" cy="178" rx="14" ry="9" fill="#FCDEC0" transform="rotate(-12,115,178)"/>
+    <ellipse cx="80" cy="186" rx="12" ry="6" fill="#FFD6E8"/>
+    <ellipse cx="120" cy="186" rx="12" ry="6" fill="#FFD6E8"/>
   </g>
-
-  <!-- Hearts (hidden initially) -->
-  <g id="hearts" opacity="0">
-    <text x="30" y="60" font-size="20" id="h1" opacity="0">💕</text>
-    <text x="155" y="50" font-size="16" id="h2" opacity="0">💝</text>
-    <text x="20" y="100" font-size="14" id="h3" opacity="0">🎀</text>
-    <text x="160" y="90" font-size="18" id="h4" opacity="0">✨</text>
-    <text x="50" y="40" font-size="12" id="h5" opacity="0">💗</text>
-    <text x="140" y="130" font-size="14" id="h6" opacity="0">🌸</text>
+  <!-- hearts around -->
+  <g id="g-hearts" opacity="0">
+    <text class="hh" x="22" y="70" font-size="22" opacity="0">💕</text>
+    <text class="hh" x="158" y="55" font-size="18" opacity="0">💝</text>
+    <text class="hh" x="15" y="120" font-size="16" opacity="0">🎀</text>
+    <text class="hh" x="166" y="110" font-size="20" opacity="0">✨</text>
+    <text class="hh" x="45" y="45" font-size="14" opacity="0">💗</text>
+    <text class="hh" x="148" y="150" font-size="16" opacity="0">🌸</text>
+    <text class="hh" x="30" y="160" font-size="13" opacity="0">⭐</text>
+    <text class="hh" x="155" y="175" font-size="12" opacity="0">🌷</text>
   </g>
 </svg>
-<p class="loading-txt" id="loading-txt">Preparando los regalitos de Lía...</p>
+<div class="loader-txt" id="loader-txt">Preparando los regalitos de Lía...</div>
 </div>
+
+<!-- MAIN -->
+<div id="main" style="display:none">
+<header class="header">
+  <span class="script-title">Lista de regalitos</span>
+  <div class="subtitle">para Lía Isabella</div>
+  <div class="intro-card">
+    <p>Armamos esta lista con mucho cariño porque varios de ustedes nos la pidieron. Es solo una guía, sin ningún compromiso: lo más lindo para nosotros es que nos acompañen a esperar a Lía.</p>
+    <p>Si quieren, pueden juntarse entre varios para un regalo. Cualquier detalle, grande o chiquito, lo vamos a recibir con el corazón. ¡Gracias por tanto amor!</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Elegí un regalito de la lista.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Tocá <strong>«Lo regalo yo»</strong> y escribí tu nombre. Si se juntan entre varios, pongan todos los nombres.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Tocá <strong>«Anotarme»</strong> y listo: queda reservado a tu nombre.</p></div>
+    </div>
+  </div>
+</header>
+<div class="count-wrap"><div class="count-badge" id="count">🎀 0 de 0 regalitos tienen dueño</div></div>
+<div id="list"></div>
 </div>
-</div>
+
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-const REPO = 'gunizzlo/lista-regalitos-lia';
-const TOKEN = 'ghp_m9a5lWc82ZTV' + 'DA0NTuE0gqQePqCjNU3tVvV7';
-const API = 'https://api.github.com/repos/' + REPO + '/contents/reservas.json';
+const REPO='gunizzlo/lista-regalitos-lia';
+const TOKEN='ghp_m9a5lWc82ZTV'+'DA0NTuE0gqQePqCjNU3tVvV7';
+const API='https://api.github.com/repos/'+REPO+'/contents/reservas.json';
+const RAW='https://raw.githubusercontent.com/'+REPO+'/main/reservas.json';
 
-const GIFTS = [
+const GIFTS=[
   {row:2,cat:'Esenciales',e:'🧷',n:'Pañales talle P en adelante',p:'Cualquier marca nos sirve',rep:true,links:[{t:'Ver pañales',u:'https://listado.mercadolibre.com.uy/pa%C3%B1ales-talle-p'}]},
-  {row:3,cat:'Esenciales',e:'🧻',n:'Toallitas húmedas',p:'Desde $79',rep:true,links:[{t:'Colotis sin alcohol x80 · $79',u:'https://www.mercadolibre.com.uy/toallitas-humedas-colotis-0-alcohol-x-80-unidades/p/MLU2068669424'},{t:'Babysec Ultra x250 · $375',u:'https://www.mercadolibre.com.uy/babysec-toalla-humeda-ultra-x-250-unid/p/MLU2059746132'},{t:'Babysec Ultra x600 · $1.159',u:'https://www.mercadolibre.com.uy/babysec-toallas-ultra-x-600-unidades/p/MLU2101883790'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toallitas-humedas-bebe'}]},
+  {row:3,cat:'Esenciales',e:'🧻',n:'Toallitas húmedas',p:'Desde $79',rep:true,links:[{t:'Colotis x80 · $79',u:'https://www.mercadolibre.com.uy/toallitas-humedas-colotis-0-alcohol-x-80-unidades/p/MLU2068669424'},{t:'Babysec Ultra x250 · $375',u:'https://www.mercadolibre.com.uy/babysec-toalla-humeda-ultra-x-250-unid/p/MLU2059746132'},{t:'Babysec Ultra x600 · $1.159',u:'https://www.mercadolibre.com.uy/babysec-toallas-ultra-x-600-unidades/p/MLU2101883790'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toallitas-humedas-bebe'}]},
   {row:4,cat:'Alimentación',e:'🍼',n:'Mamaderas anticólicos',p:'Unos $1.800',rep:false,links:[{t:'Suavinex Zero Zero 270 ml · $1.800',u:'https://www.mercadolibre.com.uy/biberon-anticolicos-zerzer-270ml-tienda-oficial-suavinex-nombre-del-diseno-zero-zero-color-nude/p/MLU23852991'}]},
-  {row:5,cat:'Alimentación',e:'♨️',n:'Esterilizador de mamaderas',p:'US$36 (unos $1.440)',rep:false,links:[{t:'Mawe para 6 mamaderas, a vapor · US$36',u:'https://meli.la/1UG3RMR'}]},
+  {row:5,cat:'Alimentación',e:'♨️',n:'Esterilizador de mamaderas',p:'US$36 (unos $1.440)',rep:false,links:[{t:'Mawe 6 mamaderas · US$36',u:'https://meli.la/1UG3RMR'}]},
   {row:6,cat:'Alimentación',e:'🔥',n:'Calentador de mamaderas',p:'Unos $1.090',rep:false,links:[{t:'Portátil inalámbrico · $1.090',u:'https://www.mercadolibre.com.uy/calentador-de-mamaderas-biberones-portatil-inalambrico-bebes/up/MLUU4054434123'}]},
-  {row:7,cat:'Alimentación',e:'🪑',n:'Sillita para comer',p:'Unos $2.900',rep:false,links:[{t:'3 en 1 multifuncional JMV · $2.900',u:'https://meli.la/1FtfvMK'}]},
-  {row:8,cat:'Alimentación',e:'🤱',n:'Extractor de leche eléctrico',p:'Desde $2.202',rep:false,links:[{t:'Manos libres portátil · $2.202',u:'https://www.mercadolibre.com.uy/extractor-de-leche-electrico-manos-libres/p/MLU2090048326'},{t:'Bebesit doble con control remoto · $7.690',u:'https://meli.la/1oGNGxW'}]},
-  {row:9,cat:'Alimentación',e:'🫧',n:'Escurridor de mamaderas',p:'Desde $341',rep:false,links:[{t:'En caja, 2 colores · $341',u:'https://www.mercadolibre.com.uy/escurridor-de-mamaderas-en-caja-2-colores/up/MLUU2441711670'},{t:'Kikkaboo Tulip gris · $480',u:'https://www.mercadolibre.com.uy/escurridor-para-mamaderas-tulip-gris-kikkaboo-gris/p/MLU45005829'},{t:'Momeasy · $796',u:'https://www.mercadolibre.com.uy/escurridor-de-mamaderas-momeasy/p/MLU42509597'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/escurridor-mamaderas'}]},
-  {row:10,cat:'Alimentación',e:'💗',n:'Almohada para amamantar',p:'Unos $1.445',rep:false,links:[{t:'Almohadón maternal con correa, celeste · $1.445',u:'https://www.mercadolibre.com.uy/almohada-almohadon-maternal-lactancia-amamantar-con-correa-color-celeste/p/MLU32073363'}]},
-  {row:11,cat:'Ropita',e:'👗',n:"Ropa de Carter's",p:'De preferencia bodies y pijamas',rep:true,links:[{t:"Ver ropa de Carter's",u:'https://listado.mercadolibre.com.uy/ropa-bebe-carters'}]},
-  {row:12,cat:'Ropita',e:'👚',n:'Ropa a elección',p:'De talle un poco más grande',rep:true,links:[{t:'Ver ropita',u:'https://listado.mercadolibre.com.uy/ropa-bebe-3-6-meses'}]},
+  {row:7,cat:'Alimentación',e:'🪑',n:'Sillita para comer',p:'Unos $2.900',rep:false,links:[{t:'3 en 1 JMV · $2.900',u:'https://meli.la/1FtfvMK'}]},
+  {row:8,cat:'Alimentación',e:'🤱',n:'Extractor de leche eléctrico',p:'Desde $2.202',rep:false,links:[{t:'Manos libres · $2.202',u:'https://www.mercadolibre.com.uy/extractor-de-leche-electrico-manos-libres/p/MLU2090048326'},{t:'Bebesit doble · $7.690',u:'https://meli.la/1oGNGxW'}]},
+  {row:9,cat:'Alimentación',e:'🫧',n:'Escurridor de mamaderas',p:'Desde $341',rep:false,links:[{t:'En caja · $341',u:'https://www.mercadolibre.com.uy/escurridor-de-mamaderas-en-caja-2-colores/up/MLUU2441711670'},{t:'Kikkaboo · $480',u:'https://www.mercadolibre.com.uy/escurridor-para-mamaderas-tulip-gris-kikkaboo-gris/p/MLU45005829'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/escurridor-mamaderas'}]},
+  {row:10,cat:'Alimentación',e:'💗',n:'Almohada para amamantar',p:'Unos $1.445',rep:false,links:[{t:'Almohadón celeste · $1.445',u:'https://www.mercadolibre.com.uy/almohada-almohadon-maternal-lactancia-amamantar-con-correa-color-celeste/p/MLU32073363'}]},
+  {row:11,cat:'Ropita',e:'👗',n:"Ropa de Carter's",p:'Bodies y pijamas',rep:true,links:[{t:"Ver Carter's",u:'https://listado.mercadolibre.com.uy/ropa-bebe-carters'}]},
+  {row:12,cat:'Ropita',e:'👚',n:'Ropa a elección',p:'Talle un poco más grande',rep:true,links:[{t:'Ver ropita 3-6 meses',u:'https://listado.mercadolibre.com.uy/ropa-bebe-3-6-meses'}]},
   {row:13,cat:'Higiene y cuidado',e:'🛁',n:'Bañito con cambiador',p:'Unos $5.590',rep:false,links:[{t:'Plegable 2 en 1 · $5.590',u:'https://meli.la/2eeZyiR'}]},
-  {row:14,cat:'Higiene y cuidado',e:'🐻',n:'Toallas con capucha',p:'Desde $299',rep:false,links:[{t:'Döhler con capucha 90x70 · $299',u:'https://www.mercadolibre.com.uy/toalla-bebe-con-capucha-dohler-90-x-70-cm-disney-princesas/p/MLU50460354'},{t:'Con capucha de animales 80x80 · $399',u:'https://www.mercadolibre.com.uy/toalla-de-bebe-con-capucha-animales-80x80cm-blanco/p/MLU76167896'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toalla-con-capucha-bebe'}]},
-  {row:15,cat:'Higiene y cuidado',e:'🧼',n:'Jabón líquido para bebés',p:'Desde $451',rep:false,links:[{t:"Johnson's baño líquido 400 ml · $451",u:'https://www.mercadolibre.com.uy/jabon-liquido-hora-del-sueno-400-ml-johnsons/p/MLU2097435052'},{t:"Johnson's Dulces Sueños 400 ml · $669",u:'https://www.mercadolibre.com.uy/johnsons-baby-bano-liquido-dulces-suenos-400ml/up/MLUU5734465645'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/jabon-liquido-ba%C3%B1o-bebe-hipoalergenico'}]},
+  {row:14,cat:'Higiene y cuidado',e:'🐻',n:'Toallas con capucha',p:'Desde $299',rep:false,links:[{t:'Döhler 90x70 · $299',u:'https://www.mercadolibre.com.uy/toalla-bebe-con-capucha-dohler-90-x-70-cm-disney-princesas/p/MLU50460354'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/toalla-con-capucha-bebe'}]},
+  {row:15,cat:'Higiene y cuidado',e:'🧼',n:'Jabón líquido para bebés',p:'Desde $451',rep:false,links:[{t:"Johnson's 400 ml · $451",u:'https://www.mercadolibre.com.uy/jabon-liquido-hora-del-sueno-400-ml-johnsons/p/MLU2097435052'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/jabon-liquido-ba%C3%B1o-bebe-hipoalergenico'}]},
   {row:16,cat:'Higiene y cuidado',e:'💧',n:'Aceite para bebé',p:'Desde $465',rep:false,links:[{t:"Johnson's 200 ml · $465",u:'https://www.mercadolibre.com.uy/aceite-para-bebe-johnsons-original-200-ml/p/MLU27958483'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/aceite-bebe'}]},
-  {row:17,cat:'Higiene y cuidado',e:'🧴',n:'Crema corporal para bebé',p:'Desde $378',rep:false,links:[{t:"Johnson's antes de dormir 200 ml · $378",u:'https://www.mercadolibre.com.uy/crema-hidratante-bebe-johnsons-antes-de-dormir-x-200ml/p/MLU17380071'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/crema-corporal-bebe'}]},
-  {row:18,cat:'Higiene y cuidado',e:'🫧',n:'Shampoo para bebé',p:'Desde $220',rep:false,links:[{t:'Bebotes manzanilla 250 ml · $220',u:'https://www.mercadolibre.com.uy/shampoo-bebotes-manzanilla-250-ml/p/MLU62705438'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/shampoo-bebe'}]},
+  {row:17,cat:'Higiene y cuidado',e:'🧴',n:'Crema corporal para bebé',p:'Desde $378',rep:false,links:[{t:"Johnson's 200 ml · $378",u:'https://www.mercadolibre.com.uy/crema-hidratante-bebe-johnsons-antes-de-dormir-x-200ml/p/MLU17380071'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/crema-corporal-bebe'}]},
+  {row:18,cat:'Higiene y cuidado',e:'🫧',n:'Shampoo para bebé',p:'Desde $220',rep:false,links:[{t:'Bebotes manzanilla · $220',u:'https://www.mercadolibre.com.uy/shampoo-bebotes-manzanilla-250-ml/p/MLU62705438'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/shampoo-bebe'}]},
   {row:19,cat:'Higiene y cuidado',e:'🪮',n:'Cepillo y peine de cerdas suaves',p:'Desde $179',rep:false,links:[{t:'Mumlove set · $179',u:'https://www.mercadolibre.com.uy/mumlove-set-cepillo-y-peine-para-bebe-2-piezas-azul/up/MLUU5037052637'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/cepillo-pelo-bebe'}]},
   {row:20,cat:'Higiene y cuidado',e:'💅',n:'Set de uñas para bebé',p:'Unos $580',rep:false,links:[{t:'Lima y cortaúñas 6 piezas · $580',u:'https://articulo.mercadolibre.com.uy/MLU-636365673-lima-unas-bebe-corta-unas-pulidor-cuidado-bebe-6-piezas-_JM'}]},
-  {row:21,cat:'Higiene y cuidado',e:'🌸',n:'Colonia o perfume para bebé',p:'Desde $290',rep:false,links:[{t:'Bebotes colonia · $290',u:'https://www.mercadolibre.com.uy/colonia-bebe-bebotes-perfume-mvd-kids/up/MLUU3472705655'},{t:"Johnson's Fresca Caricia 100 ml · $428",u:'https://www.mercadolibre.com.uy/colonia-para-bebes-johnson-baby-fresca-caricia-100-ml/p/MLU19940993'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/colonia-bebe'}]},
-  {row:22,cat:'Higiene y cuidado',e:'🗑️',n:'Contenedor de pañales hermético',p:'Unos $3.249',rep:false,links:[{t:'Tommee Tippee hermético · $3.249',u:'https://www.mercadolibre.com.uy/contenedor-de-panales-tommee-tippee-hermetico-libre-d-olores/up/MLUU4011243450'}]},
-  {row:23,cat:'Higiene y cuidado',e:'👃',n:'Aspirador nasal',p:'Unos $1.490',rep:false,links:[{t:'Eléctrico con filtros y música · $1.490',u:'https://meli.la/15priKh'}]},
-  {row:24,cat:'Dormir y habitación',e:'🧶',n:'Mantas de algodón',p:'Desde $499',rep:false,links:[{t:'Lucerito con babero 70x70 · $499',u:'https://www.mercadolibre.com.uy/manta-para-bebe-lucerito-recien-nacido-con-babero-70x70-cm/up/MLUU3799422838'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/manta-algodon-bebe'}]},
+  {row:21,cat:'Higiene y cuidado',e:'🌸',n:'Colonia o perfume para bebé',p:'Desde $290',rep:false,links:[{t:'Bebotes · $290',u:'https://www.mercadolibre.com.uy/colonia-bebe-bebotes-perfume-mvd-kids/up/MLUU3472705655'},{t:"Johnson's 100 ml · $428",u:'https://www.mercadolibre.com.uy/colonia-para-bebes-johnson-baby-fresca-caricia-100-ml/p/MLU19940993'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/colonia-bebe'}]},
+  {row:22,cat:'Higiene y cuidado',e:'🗑️',n:'Contenedor de pañales hermético',p:'Unos $3.249',rep:false,links:[{t:'Tommee Tippee · $3.249',u:'https://www.mercadolibre.com.uy/contenedor-de-panales-tommee-tippee-hermetico-libre-d-olores/up/MLUU4011243450'}]},
+  {row:23,cat:'Higiene y cuidado',e:'👃',n:'Aspirador nasal',p:'Unos $1.490',rep:false,links:[{t:'Eléctrico con filtros · $1.490',u:'https://meli.la/15priKh'}]},
+  {row:24,cat:'Dormir y habitación',e:'🧶',n:'Mantas de algodón',p:'Desde $499',rep:false,links:[{t:'Lucerito con babero · $499',u:'https://www.mercadolibre.com.uy/manta-para-bebe-lucerito-recien-nacido-con-babero-70x70-cm/up/MLUU3799422838'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/manta-algodon-bebe'}]},
   {row:25,cat:'Dormir y habitación',e:'🌙',n:'Veladora (luz nocturna)',p:'Desde $1.890',rep:false,links:[{t:'Proyector velador conejo · $1.890',u:'https://www.mercadolibre.com.uy/proyector-velador-con-movimiento-musica-y-luz--conejo/up/MLUU4336309390'}]},
   {row:26,cat:'Dormir y habitación',e:'🦷',n:'Mordillos o juguetes blandos',p:'Desde $91',rep:false,links:[{t:'Mordillo ruedita · $91',u:'https://www.mercadolibre.com.uy/mordillo-ruedita-ergonomico-para-bebe-baby-innovation-color-rosa/p/MLU26413857'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/mordillo-bebe'}]},
-  {row:27,cat:'Dormir y habitación',e:'🧩',n:'Alfombra antigolpes',p:'Desde $599',rep:false,links:[{t:'Doble 200x180 gruesa · $599',u:'https://articulo.mercadolibre.com.uy/MLU-614752781-alfombra-antigolpe-doble-200x180-gruesa-infantil-bebe-el-rey-_JM'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/alfombra-antigolpes-bebe'}]},
-  {row:28,cat:'Dormir y habitación',e:'📹',n:'Monitor para bebé con cámara',p:'US$109 (unos $4.360)',rep:false,links:[{t:'Baby Call Smartguard 2.0 · US$109',u:'https://meli.la/2EhW6sD'}]},
-  {row:29,cat:'Paseo',e:'🤗',n:'Fular',p:'Desde $272',rep:false,links:[{t:'Semielástico ajustable · $272',u:'https://www.mercadolibre.com.uy/fular-portabebe-semielastico-lazo-ajustable-porta-bebe-color-azul/p/MLU47562254'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/fular-portabebe'}]},
-  {row:30,cat:'Paseo',e:'🦘',n:'Portabebé (mochila ergonómica)',p:'Unos $2.290',rep:false,links:[{t:'Mochila canguro con asiento y soporte · $2.290',u:'https://www.mercadolibre.com.uy/portabebes-ergonomico-mochila-canguro-con-asiento-y-soporte/up/MLUU1804694525'}]},
+  {row:27,cat:'Dormir y habitación',e:'🧩',n:'Alfombra antigolpes',p:'Desde $599',rep:false,links:[{t:'Doble 200x180 · $599',u:'https://articulo.mercadolibre.com.uy/MLU-614752781-alfombra-antigolpe-doble-200x180-gruesa-infantil-bebe-el-rey-_JM'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/alfombra-antigolpes-bebe'}]},
+  {row:28,cat:'Dormir y habitación',e:'📹',n:'Monitor con cámara',p:'US$109 (unos $4.360)',rep:false,links:[{t:'Smartguard 2.0 · US$109',u:'https://meli.la/2EhW6sD'}]},
+  {row:29,cat:'Paseo',e:'🤗',n:'Fular',p:'Desde $272',rep:false,links:[{t:'Semielástico · $272',u:'https://www.mercadolibre.com.uy/fular-portabebe-semielastico-lazo-ajustable-porta-bebe-color-azul/p/MLU47562254'},{t:'Más ideas',u:'https://listado.mercadolibre.com.uy/fular-portabebe'}]},
+  {row:30,cat:'Paseo',e:'🦘',n:'Portabebé (mochila ergonómica)',p:'Unos $2.290',rep:false,links:[{t:'Mochila canguro · $2.290',u:'https://www.mercadolibre.com.uy/portabebes-ergonomico-mochila-canguro-con-asiento-y-soporte/up/MLUU1804694525'}]},
 ];
 
-let reservas = {};
-let fileSha = '';
+let reservas={}, fileSha='';
 
-async function loadReservas() {
-  try {
-    // Get SHA from API
-    const r = await fetch(API + '?cachebust=' + Date.now(), {
-      headers: { Authorization: 'token ' + TOKEN }
-    });
-    const d = await r.json();
-    fileSha = d.sha;
-    // Fetch raw content directly (avoids base64 encoding issues)
-    const raw = await fetch('https://raw.githubusercontent.com/' + REPO + '/main/reservas.json?cb=' + Date.now());
-    reservas = await raw.json();
-  } catch(e) { reservas = {}; }
+async function loadReservas(){
+  try{
+    const r=await fetch(API+'?cb='+Date.now(),{headers:{Authorization:'token '+TOKEN}});
+    const d=await r.json(); fileSha=d.sha;
+    const raw=await fetch(RAW+'?cb='+Date.now());
+    reservas=await raw.json();
+  }catch(e){reservas={};}
 }
 
-async function saveReservas() {
-  const str = JSON.stringify(reservas, null, 2);
-    const bytes2 = new TextEncoder().encode(str);
-    const content = btoa(String.fromCharCode(...bytes2));
-  const r = await fetch(API, {
-    method: 'PUT',
-    headers: { Authorization: 'token ' + TOKEN, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: 'reserva actualizada', content, sha: fileSha })
-  });
-  const d = await r.json();
-  if (d.content) fileSha = d.content.sha;
-  return d.content ? true : false;
+async function saveReservas(){
+  const str=JSON.stringify(reservas,null,2);
+  const bytes=new TextEncoder().encode(str);
+  const content=btoa(String.fromCharCode(...bytes));
+  const r=await fetch(API,{method:'PUT',headers:{Authorization:'token '+TOKEN,'Content-Type':'application/json'},body:JSON.stringify({message:'reserva',content,sha:fileSha})});
+  const d=await r.json();
+  if(d.content)fileSha=d.content.sha;
+  return!!d.content;
 }
 
-function el(tag, cls, txt) {
-  const e = document.createElement(tag);
-  if (cls) e.className = cls;
-  if (txt !== undefined) e.textContent = txt;
-  return e;
-}
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 
-function renderList() {
-  const list = document.getElementById('list');
-  list.innerHTML = '';
-  const taken = Object.keys(reservas).filter(k => {
-    const g = GIFTS.find(g => g.row == k);
-    return g && (!g.rep);
-  }).length;
-  const repTaken = Object.keys(reservas).filter(k => {
-    const g = GIFTS.find(g => g.row == k);
-    return g && g.rep;
-  }).length;
-  document.getElementById('count').innerHTML = '<b>' + taken + ' de ' + GIFTS.filter(g=>!g.rep).length + '</b> regalitos ya tienen dueño';
-
-  const cats = [...new Set(GIFTS.map(g => g.cat))];
-  cats.forEach(cat => {
-    const sec = el('section');
-    const h2 = el('h2', 'script');
-    h2.textContent = cat;
-    sec.appendChild(h2);
-    GIFTS.filter(g => g.cat === cat).forEach(g => renderGift(g, sec));
+function renderList(){
+  const list=document.getElementById('list');list.innerHTML='';
+  const taken=GIFTS.filter(g=>!g.rep&&reservas[g.row]).length;
+  document.getElementById('count').textContent='🎀 '+taken+' de '+GIFTS.filter(g=>!g.rep).length+' regalitos tienen dueño';
+  const cats=[...new Set(GIFTS.map(g=>g.cat))];
+  cats.forEach((cat,ci)=>{
+    const sec=el('div','cat-section');
+    sec.style.animationDelay=(ci*0.08)+'s';
+    const title=el('div','cat-title');
+    const h=el('div','cat-name');h.textContent=cat;
+    title.appendChild(h);title.appendChild(el('div','cat-line'));
+    sec.appendChild(title);
+    GIFTS.filter(g=>g.cat===cat).forEach((g,gi)=>{renderGift(g,sec,gi);});
     list.appendChild(sec);
   });
 }
 
-function renderGift(g, parent) {
-  const res = reservas[g.row];
-  const isTaken = res && !g.rep;
-  const div = el('div', 'gift' + (isTaken ? ' taken' : ''));
-  div.dataset.row = g.row;
+const COLORS=['#FFF0F4','#EEE5F7','#E0F5EE','#FEF0E8','#E5F2FC','#FEF8E0'];
+function renderGift(g,parent,idx){
+  const res=reservas[g.row];
+  const isTaken=res&&!g.rep;
+  const div=el('div','gift'+(isTaken?' taken':''));
+  div.style.animationDelay=(idx*0.06)+'s';
+  div.dataset.row=g.row;
 
-  const top = el('div', 'top');
-  const em = el('span', 'em', g.e);
-  const info = el('div', 'info');
-
-  const name = el('div', 'name');
-  if (isTaken) { const s = el('s'); s.textContent = g.n; name.appendChild(s); }
-  else name.textContent = g.n;
+  const top=el('div','gift-top');
+  const em=el('div','gift-em');
+  em.textContent=g.e;
+  em.style.background=COLORS[idx%COLORS.length];
+  const info=el('div','gift-info');
+  const name=el('div','gift-name');
+  if(isTaken){const s=document.createElement('s');s.textContent=g.n;name.appendChild(s);}else name.textContent=g.n;
   info.appendChild(name);
+  const price=el('div','gift-price',g.p);info.appendChild(price);
+  if(g.rep){const r=el('span','gift-rep','✓ Se puede repetir');info.appendChild(r);}
+  const links=el('div','gift-links');
+  g.links.forEach(l=>{const a=el('a','gift-link',l.t);a.href=l.u;a.target='_blank';a.rel='noopener';links.appendChild(a);});
+  info.appendChild(links);
+  top.appendChild(em);top.appendChild(info);div.appendChild(top);
 
-  const price = el('div', 'price', g.p);
-  info.appendChild(price);
-
-  if (g.rep) {
-    const rep = el('span', 'rep', 'Se puede repetir');
-    info.appendChild(rep);
-  }
-
-  const ul = el('ul', 'links');
-  g.links.forEach(l => {
-    const li = el('li');
-    const a = el('a');
-    a.href = l.u; a.textContent = l.t; a.target = '_blank'; a.rel = 'noopener';
-    li.appendChild(a); ul.appendChild(li);
-  });
-  info.appendChild(ul);
-  top.appendChild(em); top.appendChild(info);
-  div.appendChild(top);
-
-  const act = el('div', 'act');
-  if (isTaken) {
-    const lbl = el('div', 'taken-label');
-    lbl.innerHTML = 'Ya lo regala <strong>' + res.by + '</strong> 💝';
-    act.appendChild(lbl);
-  } else if (res && g.rep) {
-    const lbl = el('div', 'taken-label');
-    lbl.innerHTML = 'Ya se anotó <strong>' + res.by + '</strong>, y se puede repetir 💝';
-    act.appendChild(lbl);
-    act.appendChild(buildForm(g));
+  const act=el('div','gift-act');
+  if(isTaken){
+    act.appendChild(buildTaken(res.by));
+  } else if(res&&g.rep){
+    const lbl=el('div','taken-label');
+    const av=el('div','taken-avatar');av.textContent=res.by.trim()[0].toUpperCase();
+    const inf=el('div','taken-info');
+    inf.appendChild(el('div','taken-name',res.by));
+    inf.appendChild(el('div','taken-sub','Ya se anotó · se puede repetir'));
+    lbl.appendChild(av);lbl.appendChild(inf);act.appendChild(lbl);
+    act.appendChild(buildBtn(g));
   } else {
     act.appendChild(buildBtn(g));
   }
@@ -331,155 +498,152 @@ function renderGift(g, parent) {
   parent.appendChild(div);
 }
 
-function buildBtn(g) {
-  const btn = el('button', 'btn', 'Lo regalo yo');
-  btn.onclick = () => {
-    btn.style.display = 'none';
+function buildTaken(by){
+  const lbl=el('div','taken-label');
+  const av=el('div','taken-avatar');av.textContent=by.trim()[0].toUpperCase();
+  const inf=el('div','taken-info');
+  inf.appendChild(el('div','taken-name',by));
+  inf.appendChild(el('div','taken-sub','Ya tiene dueño 💝'));
+  lbl.appendChild(av);lbl.appendChild(inf);return lbl;
+}
+
+function buildBtn(g){
+  const btn=el('button','btn-reserve');
+  btn.innerHTML='<span>♥ Lo regalo yo ♥</span>';
+  btn.onclick=(e)=>{
+    rippleEffect(e,btn);
+    btn.style.display='none';
     btn.parentNode.appendChild(buildForm(g));
   };
   return btn;
 }
 
-function buildForm(g) {
-  const wrap = el('div');
-  const lbl = el('label', 'lbl', 'Tu nombre');
-  const field = el('input', 'field');
-  field.type = 'text'; field.placeholder = 'Escribí tu nombre para anotarte';
-  const go = el('button', 'btn go', 'Anotarme');
-  const cancel = el('span', 'cancel', 'Cancelar');
-  const msg = el('div', 'msg');
-
+function buildForm(g){
+  const wrap=el('div','reserve-form');
+  const lbl=el('label','form-label','Tu nombre');
+  const field=el('input','form-input');
+  field.type='text';field.placeholder='Escribí tu nombre para anotarte';
+  const go=el('button','btn-go','♥ Anotarme ♥');
+  const cancel=el('span','form-cancel','Cancelar');
+  const msg=el('div','form-msg');
   lbl.appendChild(field);
-  wrap.appendChild(lbl);
-  wrap.appendChild(go);
-  wrap.appendChild(cancel);
-  wrap.appendChild(msg);
-
-  cancel.onclick = () => { wrap.remove(); const btn = buildBtn(g); document.querySelector('[data-row="'+g.row+'"] .act').appendChild(btn); };
-
-  go.onclick = async () => {
-    const nombre = field.value.trim();
-    if (!nombre) { msg.textContent = 'Escribí tu nombre para anotarte.'; return; }
-    go.disabled = true; go.textContent = 'Anotando...';
-    msg.textContent = '';
-    try {
-      await loadReservas(); // refresh sha
-      if (reservas[g.row] && !g.rep) { msg.textContent = 'Justo lo reservó alguien más. Elegí otro regalito 💝'; go.disabled = false; go.textContent = 'Anotarme'; return; }
-      if (reservas[g.row] && g.rep) {
-        reservas[g.row].by = reservas[g.row].by + ', ' + nombre;
-      } else {
-        reservas[g.row] = { by: nombre, fecha: new Date().toLocaleDateString('es-UY') };
-      }
-      const ok = await saveReservas();
-      if (ok) {
-        const giftEl = document.querySelector('[data-row="'+g.row+'"]');
-        giftEl.classList.add('just-done');
-        launchConfetti(giftEl);
-        launchHearts(giftEl);
-        showToast('¡Gracias, ' + nombre + '! Quedó anotado: ' + g.n + ' 💕');
+  wrap.appendChild(lbl);wrap.appendChild(go);wrap.appendChild(cancel);wrap.appendChild(msg);
+  cancel.onclick=()=>{wrap.remove();const b=buildBtn(g);document.querySelector('[data-row="'+g.row+'"] .gift-act').appendChild(b);};
+  go.onclick=async(e)=>{
+    const nombre=field.value.trim();
+    if(!nombre){msg.textContent='Escribí tu nombre para anotarte.';field.focus();return;}
+    rippleEffect(e,go);
+    go.disabled=true;go.textContent='Anotando...';msg.textContent='';
+    try{
+      await loadReservas();
+      if(reservas[g.row]&&!g.rep){msg.textContent='Justo lo reservó alguien más. Elegí otro regalito 💝';go.disabled=false;go.textContent='♥ Anotarme ♥';return;}
+      if(reservas[g.row]&&g.rep)reservas[g.row].by=reservas[g.row].by+', '+nombre;
+      else reservas[g.row]={by:nombre,fecha:new Date().toLocaleDateString('es-UY')};
+      const ok=await saveReservas();
+      if(ok){
+        const gEl=document.querySelector('[data-row="'+g.row+'"]');
+        if(gEl){launchConfetti(gEl);launchHearts(gEl);}
+        showToast('¡Gracias, '+nombre+'! Quedó anotado: '+g.n+' 💕');
         renderList();
-      } else {
-        reservas = {}; msg.textContent = 'No se pudo guardar. Intentá de nuevo.';
-        go.disabled = false; go.textContent = 'Anotarme';
-      }
-    } catch(e) {
-      msg.textContent = 'Error de conexión. Intentá de nuevo.';
-      go.disabled = false; go.textContent = 'Anotarme';
-    }
+      }else{msg.textContent='No se pudo guardar. Intentá de nuevo.';go.disabled=false;go.textContent='♥ Anotarme ♥';}
+    }catch(e2){msg.textContent='Error de conexión. Intentá de nuevo.';go.disabled=false;go.textContent='♥ Anotarme ♥';}
   };
   return wrap;
 }
 
-function showToast(txt) {
-  const t = document.getElementById('toast');
-  t.textContent = txt;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
+function rippleEffect(e,el){
+  const r=document.createElement('div');r.className='ripple';
+  const rect=el.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height);
+  r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px';
+  el.style.position='relative';el.appendChild(r);
+  setTimeout(()=>r.remove(),600);
 }
 
-function launchConfetti(anchor) {
-  const colors = ['#D4617A','#FFD6D0','#7C9468','#F5D5CF','#E9C4BE','#fff','#F9A8C0'];
-  const rect = anchor.getBoundingClientRect();
-  for (let i = 0; i < 28; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.cssText = [
-      'left:' + (rect.left + Math.random() * rect.width) + 'px',
-      'background:' + colors[Math.floor(Math.random()*colors.length)],
-      'width:' + (8+Math.random()*8) + 'px',
-      'height:' + (8+Math.random()*8) + 'px',
-      'border-radius:' + (Math.random()>0.5?'50%':'2px'),
-      'animation-delay:' + (Math.random()*0.4) + 's',
-      'animation-duration:' + (1.4+Math.random()*0.8) + 's'
-    ].join(';');
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 2500);
+function showToast(txt){
+  const t=document.getElementById('toast');t.textContent=txt;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500);
+}
+
+function launchConfetti(anchor){
+  const c=['#F5B8C8','#EEE5F7','#8ECFB8','#F5D87A','#A8C8E8','#F5B89A','#fff'];
+  const rect=anchor.getBoundingClientRect();
+  for(let i=0;i<36;i++){
+    const p=document.createElement('div');p.className='confetti-piece';
+    const size=6+Math.random()*10;
+    p.style.cssText='left:'+(rect.left+Math.random()*rect.width)+'px;background:'+c[Math.floor(Math.random()*c.length)]+';width:'+size+'px;height:'+size+'px;border-radius:'+(Math.random()>.5?'50%':'3px')+';animation-duration:'+(1.6+Math.random()*.8)+'s;animation-delay:'+(Math.random()*.3)+'s';
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2600);
   }
 }
 
-function launchHearts(anchor) {
-  const rect = anchor.getBoundingClientRect();
-  ['💕','💝','🎀','✨'].forEach((h, i) => {
-    const e = document.createElement('div');
-    e.className = 'heart-burst';
-    e.textContent = h;
-    e.style.cssText = 'left:' + (rect.left + 40 + i*40) + 'px;top:' + (rect.top + window.scrollY) + 'px;animation-delay:' + (i*0.12) + 's';
-    document.body.appendChild(e);
-    setTimeout(() => e.remove(), 1200);
+function launchHearts(anchor){
+  const rect=anchor.getBoundingClientRect();
+  ['💕','💝','🎀','✨','💗','🌸'].forEach((h,i)=>{
+    const e=document.createElement('div');e.className='heart-pop';e.textContent=h;
+    e.style.cssText='left:'+(rect.left+30+i*36)+'px;top:'+(rect.top+window.scrollY+10)+'px;animation-delay:'+(i*.1)+'s';
+    document.body.appendChild(e);setTimeout(()=>e.remove(),1200);
   });
 }
 
-
-function runLoaderAnimation(onDone) {
-  const panza = document.getElementById('panza');
-  const bebe = document.getElementById('bebe');
-  const mama = document.getElementById('mama');
-  const hearts = document.getElementById('hearts');
-  const txt = document.getElementById('loading-txt');
-  if (!panza) { onDone(); return; }
-  let start = null;
-  const dur = 2200;
-  function grow(ts) {
-    if (!start) start = ts;
-    const p = Math.min((ts - start) / dur, 1);
-    const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
-    panza.setAttribute('rx', 18 + ease * 20);
-    panza.setAttribute('ry', 16 + ease * 22);
-    if (p < 1) { requestAnimationFrame(grow); }
-    else {
-      txt.textContent = 'Llegó Lía Isabella! 🎀';
-      mama.style.transition = 'opacity .4s'; mama.style.opacity = '0';
-      setTimeout(() => {
-        mama.style.display='none';
-        bebe.style.transition='opacity .6s'; bebe.setAttribute('opacity','1');
-        hearts.setAttribute('opacity','1');
-        ['h1','h2','h3','h4','h5','h6'].forEach((id,i) => {
-          setTimeout(() => {
-            const el=document.getElementById(id);
-            el.setAttribute('opacity','1');
-            el.style.transition='transform 1.2s, opacity 1.2s';
-            el.style.transform='translateY(-'+(20+i*8)+'px)';
-          }, i*120);
+function runLoader(onDone){
+  const panza=document.getElementById('panza');
+  const pShine=document.getElementById('panza-shine');
+  const gMama=document.getElementById('g-mama');
+  const gBebe=document.getElementById('g-bebe');
+  const gHearts=document.getElementById('g-hearts');
+  const svg=document.getElementById('baby-svg');
+  const txt=document.getElementById('loader-txt');
+  if(!panza){onDone();return;}
+  let start=null,dur=2400;
+  function grow(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    const ease=p<.5?2*p*p:-1+(4-2*p)*p;
+    panza.setAttribute('rx',20+ease*26);
+    panza.setAttribute('ry',18+ease*28);
+    pShine.setAttribute('rx',6+ease*4);
+    if(p<1)requestAnimationFrame(grow);
+    else{
+      txt.textContent='¡Llegó Lía Isabella! 🎀';
+      txt.style.color='#C5A8D8';
+      gMama.style.transition='opacity .5s';gMama.style.opacity='0';
+      svg.style.transition='transform .5s cubic-bezier(.34,1.56,.64,1)';
+      svg.style.transform='scale(1.08)';
+      setTimeout(()=>{
+        gMama.style.display='none';
+        svg.style.transform='scale(1)';
+        gBebe.style.transition='opacity .7s';gBebe.setAttribute('opacity','1');
+        gHearts.setAttribute('opacity','1');
+        [...document.querySelectorAll('.hh')].forEach((h,i)=>{
+          setTimeout(()=>{
+            h.setAttribute('opacity','1');
+            h.style.transition='transform 1.3s, opacity 1.3s';
+            h.style.transform='translateY(-'+(18+i*10)+'px)';
+          },i*110);
         });
-        setTimeout(onDone, 900);
-      }, 450);
+        setTimeout(()=>{
+          const loader=document.getElementById('loader');
+          loader.classList.add('hiding');
+          setTimeout(()=>{loader.style.display='none';onDone();},500);
+        },900);
+      },520);
     }
   }
   requestAnimationFrame(grow);
 }
 
-(async () => {
-  const loaderEl = document.getElementById('loader');
-  const listEl = document.getElementById('list');
+(async()=>{
   await loadReservas();
-  if (loaderEl) {
-    runLoaderAnimation(() => {
-      loaderEl.remove();
-      renderList();
+  runLoader(()=>{
+    const main=document.getElementById('main');
+    main.style.display='block';
+    main.style.opacity='0';main.style.transform='translateY(20px)';
+    requestAnimationFrame(()=>{
+      main.style.transition='opacity .6s ease, transform .6s cubic-bezier(.34,1.56,.64,1)';
+      main.style.opacity='1';main.style.transform='translateY(0)';
     });
-  } else {
     renderList();
-  }
+  });
 })();
 </script>
 </body>
