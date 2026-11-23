@@ -288,7 +288,7 @@ body::after{width:500px;height:500px;bottom:-150px;left:-150px;background:radial
 <!-- LOADER -->
 <div id="loader">
 <div id="cinematic" style="text-align:center;position:relative;width:340px;margin:0 auto">
-  <canvas id="scene" width="340" height="260" style="display:block;margin:0 auto;border-radius:20px"></canvas>
+  <canvas id="scene" width="340" height="265" style="display:block;margin:0 auto;border-radius:20px"></canvas>
   <div id="caption" style="margin-top:14px;font-size:1rem;font-weight:700;color:#E8829A;min-height:28px;transition:opacity .3s;letter-spacing:.01em"></div>
   <div id="progress-bar" style="margin-top:10px;height:4px;border-radius:4px;background:rgba(232,130,154,.15);overflow:hidden">
     <div id="progress-fill" style="height:100%;border-radius:4px;background:linear-gradient(90deg,#E8829A,#C5A8D8);width:0%;transition:width .1s linear"></div>
@@ -526,462 +526,418 @@ function launchHearts(anchor){
 
 function runLoader(onDone){
   const canvas=document.getElementById('scene');
+  if(!canvas){onDone();return;}
   const ctx=canvas.getContext('2d');
   const cap=document.getElementById('caption');
   const pf=document.getElementById('progress-fill');
-  const W=340,H=260;
+  const W=340,H=265;
 
-  // ---- DRAWING HELPERS ----
-  function clear(){ctx.clearRect(0,0,W,H);}
-  function bg(c1,c2){
-    const g=ctx.createLinearGradient(0,0,0,H);
-    g.addColorStop(0,c1);g.addColorStop(1,c2);
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  }
-  function circle(x,y,r,fill,stroke,sw){
-    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fillStyle=fill;ctx.fill();
-    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
-  }
-  function ellipse(x,y,rx,ry,fill,stroke,sw,rot){
-    ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);
-    ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);
-    ctx.fillStyle=fill;ctx.fill();
-    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
-    ctx.restore();
-  }
-  function path(pts,fill,stroke,sw,close){
-    ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
-    for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
-    if(close)ctx.closePath();
-    if(fill){ctx.fillStyle=fill;ctx.fill();}
-    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1.5;ctx.stroke();}
-  }
-  function curve(x1,y1,cx1,cy1,cx2,cy2,x2,y2,stroke,sw){
-    ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(cx1,cy1,cx2,cy2,x2,y2);
-    ctx.strokeStyle=stroke;ctx.lineWidth=sw||2;ctx.lineCap='round';ctx.stroke();
-  }
-  function txt(t,x,y,size,fill,align,bold){
-    ctx.font=(bold?'bold ':'')+size+'px Nunito,sans-serif';
-    ctx.fillStyle=fill;ctx.textAlign=align||'center';ctx.fillText(t,x,y);
-  }
-  function roundRect(x,y,w,h,r,fill,stroke,sw){
-    ctx.beginPath();ctx.roundRect(x,y,w,h,r);
-    if(fill){ctx.fillStyle=fill;ctx.fill();}
-    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
-  }
+  function lerp(a,b,t){return a+(b-a)*Math.min(1,Math.max(0,t));}
+  function easeOut(t){return 1-(1-Math.min(1,t))**3;}
+  function easeInOut(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
+  function bounce(t){t=Math.min(1,t);const n=7.5625,d=2.75;if(t<1/d)return n*t*t;else if(t<2/d){t-=1.5/d;return n*t*t+.75;}else if(t<2.5/d){t-=2.25/d;return n*t*t+.9375;}else{t-=2.625/d;return n*t*t+.984375;}}
 
-  // ---- CHARACTER DRAWERS ----
+  function clr(){ctx.clearRect(0,0,W,H);}
+  function bg(c1,c2){const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,c1);g.addColorStop(1,c2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  function circ(x,y,r,f,s,sw){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);if(f){ctx.fillStyle=f;ctx.fill();}if(s){ctx.strokeStyle=s;ctx.lineWidth=sw||1.5;ctx.stroke();}}
+  function ell(x,y,rx,ry,f,s,sw,rot){ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);if(f){ctx.fillStyle=f;ctx.fill();}if(s){ctx.strokeStyle=s;ctx.lineWidth=sw||1.5;ctx.stroke();}ctx.restore();}
+  function rr(x,y,w,h,r,f,s,sw){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(f){ctx.fillStyle=f;ctx.fill();}if(s){ctx.strokeStyle=s;ctx.lineWidth=sw||1;ctx.stroke();}}
+  function txt(t,x,y,size,fill,align,bold,font){ctx.font=(bold?'bold ':'')+size+'px '+(font||'"Nunito",sans-serif');ctx.fillStyle=fill||'#5A3040';ctx.textAlign=align||'center';ctx.fillText(t,x,y);}
+  function cv(x1,y1,cx1,cy1,cx2,cy2,x2,y2,s,sw){ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(cx1,cy1,cx2,cy2,x2,y2);ctx.strokeStyle=s;ctx.lineWidth=sw||2;ctx.lineCap='round';ctx.stroke();}
+  function emo(e,x,y,size){ctx.font=size+'px serif';ctx.textAlign='center';ctx.fillText(e,x,y);}
 
-  function drawGonzalo(x,y,scale,breathScale,cheeksBlown,sweatAlpha){
-  // origin = top-center of head
-  // total height ~200px at scale 1
-  ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
-
-  const bs=breathScale||1; // chest breath scale
-
-  // --- HEAD (top) ---
-  // head center at (0, 29)
-  const hcy=29, hr=28;
-  // hair dark
-  ctx.beginPath();ctx.arc(0,hcy,hr+4,Math.PI,0);ctx.fillStyle='#3A2008';ctx.fill();
-  ellipse(-28,hcy,10,20,'#3A2008');
-  ellipse(28,hcy,10,20,'#3A2008');
-  // face
-  circle(0,hcy,hr,'#F5D5B5','#D4A878',1.2);
-  // eyes
-  if(cheeksBlown>.5){
-    // squinting while blowing
-    ctx.beginPath();ctx.moveTo(-18,hcy-2);ctx.quadraticCurveTo(-13,hcy+3,-8,hcy-2);
-    ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.lineCap='round';ctx.stroke();
-    ctx.beginPath();ctx.moveTo(8,hcy-2);ctx.quadraticCurveTo(13,hcy+3,18,hcy-2);
-    ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
-  } else {
-    ellipse(-13,hcy-1,4.5,4,'#fff');ellipse(13,hcy-1,4.5,4,'#fff');
-    ellipse(-13,hcy-1,3,3.2,'#3A2808');ellipse(13,hcy-1,3,3.2,'#3A2808');
-    circle(-11.5,hcy-2.5,1.1,'#fff');circle(14.5,hcy-2.5,1.1,'#fff');
-  }
-  // eyebrows
-  curve(-21,hcy-9,-13,hcy-13,-5,hcy-12,2,hcy-9,'#2A1808',2.5);
-  curve(-2,hcy-9,5,hcy-12,13,hcy-13,21,hcy-9,'#2A1808',2.5);
-  // cheeks puffed
-  if(cheeksBlown>.1){
-    ellipse(-28,hcy+6,10*cheeksBlown,7*cheeksBlown,'rgba(240,160,100,.4)');
-    ellipse(28,hcy+6,10*cheeksBlown,7*cheeksBlown,'rgba(240,160,100,.4)');
-  }
-  // beard (covers chin area)
-  ctx.beginPath();
-  ctx.moveTo(-24,hcy+10);
-  ctx.bezierCurveTo(-28,hcy+28,-20,hcy+40,0,hcy+42);
-  ctx.bezierCurveTo(20,hcy+40,28,hcy+28,24,hcy+10);
-  ctx.bezierCurveTo(16,hcy+18,0,hcy+20,-16,hcy+18);
-  ctx.closePath();ctx.fillStyle='#3A2008';ctx.fill();
-  // beard texture
-  [-16,-8,0,8,16].forEach(xx=>{
-    curve(xx,hcy+12,xx-.5,hcy+22,xx-.5,hcy+32,xx-1,hcy+40,'#2A1008',1);
-  });
-  // mustache
-  ctx.beginPath();ctx.moveTo(-18,hcy+10);
-  ctx.quadraticCurveTo(0,hcy+5,18,hcy+10);
-  ctx.fillStyle='#2A1008';ctx.fill();
-  // mouth (blowing = round O, else smile)
-  if(cheeksBlown>.3){
-    circle(0,hcy+26,5,'#6A2808');circle(0,hcy+26,3,'#3A1008');
-  } else {
-    curve(-8,hcy+28,-4,hcy+34,4,hcy+34,8,hcy+28,'#6A3818',1.5);
-  }
-
-  // --- NECK ---
-  roundRect(-10,hcy+hr-2,20,18,4,'#F5D5B5');
-
-  // --- BODY / shirt (inflates with breath) ---
-  const bodyTop=hcy+hr+14;
-  const bw=62*bs; // chest inflates
-  const bh=90;
-  roundRect(-bw/2,bodyTop,bw,bh,14,'#F5F0E8','#D8D0C0',1);
-  // shirt dots
-  for(let r=0;r<3;r++) for(let c=0;c<3;c++){
-    circle(-18+c*18,bodyTop+14+r*22,1.8,'rgba(180,170,155,.5)');
-  }
-  // shirt center line + buttons
-  ctx.beginPath();ctx.moveTo(0,bodyTop);ctx.lineTo(0,bodyTop+bh);
-  ctx.strokeStyle='#D8D0C0';ctx.lineWidth=.8;ctx.stroke();
-  [18,36,54].forEach(yy=>circle(0,bodyTop+yy,2,'#C8C0B0'));
-  // collar
-  ctx.beginPath();ctx.moveTo(-16,bodyTop);ctx.lineTo(0,bodyTop+16);ctx.lineTo(16,bodyTop);
-  ctx.strokeStyle='#D8D0C0';ctx.lineWidth=1;ctx.stroke();
-
-  // --- ARMS ---
-  // left arm (holds blower)
-  const armAngle=cheeksBlown>.1?-.45:-.2;
-  ctx.save();ctx.translate(-bw/2+4,bodyTop+10);ctx.rotate(armAngle);
-  roundRect(-7,0,14,52,7,'#F5D5B5','#D4A878',1);
-  ctx.restore();
-  // left hand
-  const handX=-bw/2-24+4, handY=bodyTop+56;
-  circle(handX,handY,10,'#F5D5B5','#D4A878',1);
-  // blower/straw in left hand
-  if(true){
-    roundRect(handX+2,handY-5,22,8,4,'#F9A8C9','#E87DB0',1);
-    circle(handX+24,handY-1,5,'#FFD6E8','#E87DB0',.8);
-  }
-  // right arm
-  ctx.save();ctx.translate(bw/2-4,bodyTop+10);ctx.rotate(.2);
-  roundRect(-7,0,14,52,7,'#F5D5B5','#D4A878',1);
-  ctx.restore();
-  circle(bw/2+18,bodyTop+58,10,'#F5D5B5','#D4A878',1);
-
-  // --- LEGS ---
-  const legTop=bodyTop+bh-4;
-  roundRect(-28,legTop,22,50,10,'#2A2A3A','#1A1A28',1);
-  roundRect(6,legTop,22,50,10,'#2A2A3A','#1A1A28',1);
-  ellipse(-17,legTop+52,18,6,'#1A1A28');
-  ellipse(17,legTop+52,18,6,'#1A1A28');
-
-  // sweat
-  if(sweatAlpha>0){
-    ctx.globalAlpha=sweatAlpha;
-    txt('💧',bw/2+30,bodyTop-10,15,'','center');
-    txt('💧',bw/2+36,bodyTop-24,11,'','center');
+  // ---- SCENE CARD helper ----
+  function card(c1,c2){
+    bg(c1||'#FFF0F8',c2||'#F0E8FF');
+    // subtle floating hearts bg
+    ctx.globalAlpha=.06;
+    ['💕','✨','🌸','💝'].forEach((e,i)=>emo(e,50+i*80,30+Math.sin(Date.now()/1200+i)*8,22));
     ctx.globalAlpha=1;
   }
 
-  ctx.restore();
-}
-
-function drawLu(x,y,scale,panzaR){
-  // origin = top-center of head
-  // total height ~200px at scale 1
-  ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);
-  const pr=panzaR||15;
-
-  // --- HEAD ---
-  const hcy=27, hr=26;
-  // hair dark brown long
-  ellipse(0,hcy-8,27,15,'#4A2810');
-  ellipse(-24,hcy+6,10,22,'#4A2810');
-  ellipse(24,hcy+6,10,22,'#4A2810');
-  // hair falls down sides
-  ctx.beginPath();ctx.moveTo(-34,hcy+10);
-  ctx.bezierCurveTo(-36,hcy+50,-34,hcy+90,-32,hcy+120);
-  ctx.lineWidth=10;ctx.strokeStyle='#4A2810';ctx.lineCap='round';ctx.stroke();
-  ctx.beginPath();ctx.moveTo(34,hcy+10);
-  ctx.bezierCurveTo(36,hcy+50,34,hcy+90,32,hcy+120);
-  ctx.lineWidth=10;ctx.strokeStyle='#4A2810';ctx.lineCap='round';ctx.stroke();
-  // face
-  circle(0,hcy,hr,'#FCDEC0','#E0B090',1);
-  // eyes GREEN
-  ellipse(-11,hcy,4.5,4,'#fff');ellipse(11,hcy,4.5,4,'#fff');
-  ellipse(-11,hcy,3.2,3.5,'#2A7030');ellipse(11,hcy,3.2,3.5,'#2A7030');
-  ellipse(-11,hcy+.5,1.8,2,'#1A4820');ellipse(11,hcy+.5,1.8,2,'#1A4820');
-  circle(-9.5,hcy-1.5,1.3,'#fff');circle(12.5,hcy-1.5,1.3,'#fff');
-  // lashes
-  [[-15,hcy-5],[-11,hcy-6],[-7,hcy-5],[7,hcy-5],[11,hcy-6],[15,hcy-5]].forEach(([px,py],i)=>{
-    ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+(i<3?-1.5:1.5),py-3.5);
-    ctx.strokeStyle='#2A1810';ctx.lineWidth=1.2;ctx.lineCap='round';ctx.stroke();
-  });
-  // eyebrows thin
-  curve(-17,hcy-7,-11,hcy-11,-5,hcy-10,-1,hcy-7,'#3A2010',1.6);
-  curve(1,hcy-7,5,hcy-10,11,hcy-11,17,hcy-7,'#3A2010',1.6);
-  // nose
-  curve(-2,hcy+7,0,hcy+11,0,hcy+11,2,hcy+7,'#D09070',1.1);
-  // BIG SMILE
-  ctx.beginPath();ctx.arc(0,hcy+10,11,0.15,Math.PI-.15);
-  ctx.fillStyle='#D06050';ctx.fill();
-  ctx.beginPath();ctx.arc(0,hcy+10,8,.25,Math.PI-.25);
-  ctx.fillStyle='#fff';ctx.fill();
-  // blush
-  ellipse(-20,hcy+8,7,4.5,'rgba(245,160,168,.35)');
-  ellipse(20,hcy+8,7,4.5,'rgba(245,160,168,.35)');
-  // earrings
-  ellipse(-28,hcy+6,3,5,'rgba(0,0,0,0)','#C8A060',1.5);
-  ellipse(28,hcy+6,3,5,'rgba(0,0,0,0)','#C8A060',1.5);
-
-  // --- NECK ---
-  roundRect(-9,hcy+hr-2,18,16,4,'#FCDEC0');
-
-  // --- DRESS black ---
-  const dressTop=hcy+hr+12;
-  ctx.beginPath();
-  ctx.moveTo(-44,dressTop);
-  ctx.bezierCurveTo(-46,dressTop+30,-50,dressTop+70,-48,dressTop+120);
-  ctx.lineTo(48,dressTop+120);
-  ctx.bezierCurveTo(50,dressTop+70,46,dressTop+30,44,dressTop);
-  ctx.closePath();ctx.fillStyle='#1A1A1A';ctx.fill();ctx.strokeStyle='#2A2A2A';ctx.lineWidth=.8;ctx.stroke();
-  // neckline
-  ctx.beginPath();ctx.moveTo(-20,dressTop);ctx.quadraticCurveTo(0,dressTop+14,20,dressTop);
-  ctx.fillStyle='#111';ctx.fill();
-  // necklace
-  ellipse(0,dressTop+8,15,3,'rgba(0,0,0,0)','#C8A060',1.5);
-
-  // --- BELLY (grows!) ---
-  const bellyY=dressTop+58;
-  ellipse(0,bellyY,pr,pr*.9,'#FCDEC0','#E0A880',1.5);
-  ellipse(-pr*.2,bellyY-pr*.15,pr*.28,pr*.2,'rgba(255,255,255,.2)');
-  if(pr>18) txt('✨',0,bellyY+5,Math.min(14,pr*.38),'','center');
-
-  // --- ARMS over belly ---
-  curve(-44,dressTop+20,-48,dressTop+55,-46,dressTop+70,-38,dressTop+72,'#F0C0A0',11);
-  curve(44,dressTop+20,48,dressTop+55,46,dressTop+70,38,dressTop+72,'#F0C0A0',11);
-  circle(-36,dressTop+74,9,'#FCDEC0','#E0B090',1);
-  circle(36,dressTop+74,9,'#FCDEC0','#E0B090',1);
-
-  ctx.restore();
-}
-
-function drawAirPuff(x,y,size,alpha){
-    ctx.save();ctx.globalAlpha=alpha;
-    // onditas de aire
-    for(let i=0;i<3;i++){
-      const r=(size+i*12);
-      ctx.beginPath();
-      ctx.arc(x+r*.8,y,r*.5,-.6,.6);
-      ctx.strokeStyle=`hsl(${290+i*20},60%,80%)`;
-      ctx.lineWidth=2.5-i*.5;ctx.lineCap='round';
-      ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+  // ---- CHARACTER FACES (simple cute style) ----
+  // Gonzalo: barba, pelo oscuro
+  function gonza(x,y,s,expr){
+    // s = scale, expr = 'happy','love','blow','tired'
+    ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+    // body
+    rr(-22,32,44,55,10,'#F5F0E8','#D8D0C0',1);
+    // shirt dots
+    for(let i=0;i<6;i++) circ(-12+i%3*12,-12+Math.floor(i/3)*18+42,1.5,'rgba(180,170,155,.5)');
+    // neck
+    rr(-8,28,16,12,4,'#E8B890');
+    // head
+    circ(0,16,26,'#F0C8A0','#D4A878',1.2);
+    // hair dark
+    ctx.beginPath();ctx.arc(0,16,26,Math.PI,.1*Math.PI,true);ctx.fillStyle='#3A2008';ctx.fill();
+    ell(-22,10,9,14,'#3A2008',null,0,0.15);
+    ell(22,10,9,14,'#3A2008',null,0,-0.15);
+    // beard
+    ctx.beginPath();ctx.moveTo(-20,22);ctx.bezierCurveTo(-24,38,-16,46,0,47);ctx.bezierCurveTo(16,46,24,38,20,22);ctx.bezierCurveTo(10,28,0,29,-10,28);ctx.closePath();ctx.fillStyle='#3A2008';ctx.fill();
+    // mustache
+    ctx.beginPath();ctx.moveTo(-14,22);ctx.quadraticCurveTo(0,18,14,22);ctx.fillStyle='#2A1808';ctx.fill();
+    // eyes based on expr
+    if(expr==='love'){
+      emo('❤',- 10,16,14);emo('❤',10,16,14);
+    } else if(expr==='blow'){
+      ctx.beginPath();ctx.arc(-10,14,5,Math.PI*.1,Math.PI*.9);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+      ctx.beginPath();ctx.arc(10,14,5,Math.PI*.1,Math.PI*.9);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+      ell(-22,18,8,5,'rgba(240,150,80,.4)');ell(22,18,8,5,'rgba(240,150,80,.4)');
+    } else if(expr==='tired'){
+      ctx.beginPath();ctx.arc(-10,15,5,Math.PI*.15,Math.PI*.85);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+      ctx.beginPath();ctx.arc(10,15,5,Math.PI*.15,Math.PI*.85);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
+    } else {
+      circ(-10,14,4.5,'#fff');circ(10,14,4.5,'#fff');
+      circ(-10,14,2.8,'#3A2808');circ(10,14,2.8,'#3A2808');
+      circ(-8.5,12.5,1,'#fff');circ(11.5,12.5,1,'#fff');
     }
+    // mouth based on expr
+    if(expr==='love') emo('😍',0,32,16);
+    else if(expr==='blow'){circ(0,36,5,'#6A2808');circ(0,36,3,'#3A1008');}
+    else if(expr==='tired') cv(-8,37,-4,42,4,42,8,37,'#6A3818',1.5);
+    else cv(-8,36,-4,41,4,41,8,36,'#6A3818',1.5);
     ctx.restore();
   }
 
-  function drawStar(x,y,r,color,alpha){
-    ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=color;
-    ctx.translate(x,y);
-    ctx.beginPath();
-    for(let i=0;i<10;i++){
-      const a=i*Math.PI/5-Math.PI/2;
-      const rr=i%2===0?r:r*.4;
-      i===0?ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+  // Lu: pelo largo oscuro, ojos verdes
+  function lu(x,y,s,expr,panza){
+    ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+    const pR=panza||0;
+    // dress black
+    const dh=65+pR*.5;
+    rr(-24,32,48,dh,10,'#1A1A1A','#2A2A2A',1);
+    // neck
+    rr(-7,28,14,10,4,'#FCDEC0');
+    // panza if needed
+    if(pR>0) ell(0,50+pR*.3,pR,pR*.85,'#FCDEC0','#E0A880',1.4);
+    // head
+    circ(0,14,26,'#FCDEC0','#E0B090',1.2);
+    // hair dark long
+    ctx.beginPath();ctx.arc(0,14,27,Math.PI,.05*Math.PI,true);ctx.fillStyle='#4A2810';ctx.fill();
+    ell(-22,8,9,22,'#4A2810',null,0,0.1);
+    ell(22,8,9,22,'#4A2810',null,0,-0.1);
+    cv(-32,18,-34,50,-32,80,-30,100,'#4A2810',9);
+    cv(32,18,34,50,32,80,30,100,'#4A2810',9);
+    // eyes GREEN
+    if(expr==='love'){
+      emo('❤',-10,14,14);emo('❤',10,14,14);
+    } else {
+      circ(-10,13,4.5,'#fff');circ(10,13,4.5,'#fff');
+      circ(-10,13,3.2,'#2A7030');circ(10,13,3.2,'#2A7030');
+      circ(-10,13,1.6,'#1A4820');circ(10,13,1.6,'#1A4820');
+      circ(-8.5,11.5,1.3,'#fff');circ(11.5,11.5,1.3,'#fff');
+      // lashes
+      [[-14,8],[-10,7],[-6,8],[6,8],[10,7],[14,8]].forEach(([px,py],i)=>{
+        ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+(i<3?-1.5:1.5),py-3.5);
+        ctx.strokeStyle='#2A1810';ctx.lineWidth=1.2;ctx.lineCap='round';ctx.stroke();
+      });
     }
-    ctx.closePath();ctx.fill();ctx.restore();
-  }
-
-  function drawBaby(x,y,scale,alpha){
-    ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.globalAlpha=alpha;
-    // cuerpo onesie
-    ctx.beginPath();ctx.arc(0,30,30,0,Math.PI*2);
-    ctx.fillStyle='#FCDEC0';ctx.fill();ctx.strokeStyle='#EDB892';ctx.lineWidth=1;ctx.stroke();
-    // cabeza
-    circle(0,-10,32,'#FCDEC0','#EDB892',1.2);
-    // pelito
-    curve(-15,-38,-8,-44,8,-44,15,-38,'#C8904A',5);
-    // ojitos cerrados felices
-    ctx.beginPath();ctx.arc(-12,-12,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
-    ctx.beginPath();ctx.arc(12,-12,4,Math.PI,0);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.8;ctx.stroke();
-    // sonrisita
-    ctx.beginPath();ctx.arc(0,-2,8,.2,Math.PI-.2);ctx.strokeStyle='#C07050';ctx.lineWidth=1.8;ctx.stroke();
-    // mejillitas
-    ellipse(-18,-4,6,4,'rgba(245,160,168,.4)');ellipse(18,-4,6,4,'rgba(245,160,168,.4)');
-    // onesie
-    ctx.beginPath();
-    ctx.moveTo(-28,16);ctx.bezierCurveTo(-30,22,-28,60,-24,72);
-    ctx.lineTo(24,72);ctx.bezierCurveTo(28,60,30,22,28,16);ctx.closePath();
-    ctx.fillStyle='#FFD6E8';ctx.fill();ctx.strokeStyle='#F0B0CC';ctx.lineWidth=.8;ctx.stroke();
-    txt('🌸',0,52,16,'','center');
-    // bracitos
-    ellipse(-36,24,10,8,'#FCDEC0','#EDB892',1,-.3);
-    ellipse(36,24,10,8,'#FCDEC0','#EDB892',1,.3);
-    // piernitas
-    ellipse(-16,72,12,8,'#FCDEC0','#EDB892',1,.2);
-    ellipse(16,72,12,8,'#FCDEC0','#EDB892',1,-.2);
-    ellipse(-18,78,10,5,'#FFD6E8');ellipse(18,78,10,5,'#FFD6E8');
+    // smile
+    if(expr==='love') emo('😍',0,28,16);
+    else {
+      ctx.beginPath();ctx.arc(0,19,10,.2,Math.PI-.2);ctx.fillStyle='#D06050';ctx.fill();
+      ctx.beginPath();ctx.arc(0,19,7,.3,Math.PI-.3);ctx.fillStyle='#fff';ctx.fill();
+    }
+    // earrings
+    ell(-28,16,2.5,4,null,'#C8A060',1.5);ell(28,16,2.5,4,null,'#C8A060',1.5);
+    // blush
+    ell(-20,18,7,4,'rgba(245,160,168,.3)');ell(20,18,7,4,'rgba(245,160,168,.3)');
     ctx.restore();
   }
+
+  // ---- CAPTION helper ----
+  function setcap(t){if(cap)cap.textContent=t;}
 
   // ---- SCENES ----
-  let frame=0, startTime=null, scene=0;
-  const TOTAL_DUR=5500; // ms total animation
+  // Scene durations (ms):
+  // 0    - 1200: "Había una vez..." - Gonzalo solo
+  // 1200 - 2400: Se conocen - los dos se miran con corazones
+  // 2400 - 3400: Se casan - anillos y confeti
+  // 3400 - 4400: La noche... 🌶️ (blur + emojis)
+  // 4400 - 5200: Prueba de embarazo positiva
+  // 5200 - 6400: Panza creciendo
+  // 6400 - 7400: ¡Nace Lía!
+  // 7400 - 8200: Final con corazones
+  const TOTAL=8200;
 
-  // Scene timing (ms):
-  // 0-800: titulo aparece
-  // 800-1800: papa y mama aparecen
-  // 1800-4000: papa sopla, panza crece
-  // 4000-4800: flash de luz, bebe aparece
-  // 4800-5500: corazones y texto final
-
-  function lerp(a,b,t){return a+(b-a)*Math.min(1,Math.max(0,t));}
-  function easeOut(t){return 1-Math.pow(1-t,3);}
-  function easeInOut(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
-  function bounce(t){const n=7.5625,d=2.75;if(t<1/d)return n*t*t;else if(t<2/d){t-=1.5/d;return n*t*t+.75;}else if(t<2.5/d){t-=2.25/d;return n*t*t+.9375;}else{t-=2.625/d;return n*t*t+.984375;}}
-
+  let start=null;
   function animate(ts){
-    if(!startTime)startTime=ts;
-    const elapsed=ts-startTime;
-    const totalP=Math.min(elapsed/TOTAL_DUR,1);
-    pf.style.width=(totalP*100)+'%';
-    frame++;
+    if(!start)start=ts;
+    const ms=ts-start;
+    const prog=Math.min(ms/TOTAL,1);
+    if(pf)pf.style.width=(prog*100)+'%';
 
-    clear();
-    bg('#FFF0F8','#F8E8FF');
+    clr();
 
-    // floating background hearts
-    for(let i=0;i<8;i++){
-      const t=(elapsed/2000+i*.4)%(Math.PI*2);
-      const x=30+i*40,y=20+Math.sin(t+i)*15;
-      ctx.globalAlpha=.08+.04*Math.sin(t);
-      txt(['💕','✨','🌸','💝','🎀','💗','⭐','🌷'][i],x,y,16,'','center');
-      ctx.globalAlpha=1;
-    }
-
-    // ---- SCENE 0: title card (0-800ms) ----
-    if(elapsed<800){
-      const p=easeOut(elapsed/800);
+    // ===================== SCENE 1: "Había una vez..." =====================
+    if(ms<1200){
+      const p=easeOut(ms/600);
+      card('#FFF8FC','#FFE8F4');
+      // title card style
       ctx.globalAlpha=p;
-      txt('🎀',170,-20+30*p,36,'','center');
-      ctx.font='bold 22px "Great Vibes",cursive';
-      ctx.fillStyle='#E8829A';ctx.textAlign='center';
-      ctx.globalAlpha=p*.9;
-      ctx.fillText('Lista de regalitos',170,160+20*(1-p));
-      ctx.font='14px Nunito,sans-serif';
-      ctx.fillStyle='#C5A8D8';
-      ctx.fillText('para Lía Isabella',170,185+15*(1-p));
+      rr(60,80,220,100,16,'rgba(255,255,255,.8)','rgba(232,130,154,.2)',1);
+      txt('Había una vez...','#E8829A',170,118,18,null,true);
+      txt('una historia de amor 🌹','#C5A8D8',170,145,13,null,false);
+      // Gonzalo pequeñito asomándose
+      ctx.globalAlpha=p*0.9;
+      gonza(290,200,.45,'happy');
       ctx.globalAlpha=1;
+      setcap('🎬 Una historia de amor...');
     }
 
-    // ---- SCENE 1: personajes aparecen (800-1800ms) ----
-    else if(elapsed<1800){
-      const p=easeOut((elapsed-800)/1000);
-      // Gonzalo entra desde la derecha
-      const emX=lerp(420,255,p), emY=10;
-      ctx.save();ctx.globalAlpha=p;
-      drawGonzalo(emX,emY,.60,1,0,0);
-      ctx.restore();
-      const luX=lerp(-80,100,p), luY=14;
-      ctx.save();ctx.globalAlpha=p;
-      drawLu(luX,luY,.66,15);
-      ctx.restore();
-      cap.textContent='¡Preparando la lista de Lía! 🎀';
+    // ===================== SCENE 2: Se conocen =====================
+    else if(ms<2400){
+      const t=(ms-1200)/1200, p=easeOut(t);
+      card('#FFF0F8','#F0E8FF');
+      // Lu entra izq, Gonzalo entra der
+      const luX=lerp(-40,90,p), gX=lerp(380,230,p);
+      lu(luX,110,.65,'love');
+      gonza(gX,110,.65,'love');
+      // corazones entre ellos
+      if(t>.4){
+        const h=easeOut((t-.4)/.6);
+        [170,150,190].forEach((x,i)=>{
+          const yy=130-h*40-Math.sin(ts/400+i)*10;
+          ctx.globalAlpha=h*(.6+.3*Math.sin(ts/300+i));
+          emo(['💕','❤','💗'][i],x,yy,18+i*4);
+          ctx.globalAlpha=1;
+        });
+      }
+      // ojos con corazones
+      if(t>.5){
+        txt('👀','#E8829A',170,220,13);
+      }
+      setcap('💕 Se conocieron y... ¡boom!');
     }
 
-    // ---- SCENE 2: sopla y panza crece (1800-4000ms) ----
-    else if(elapsed<4000){
-      const t=(elapsed-1800)/2200; // 0 to 1
-      const blowCycles=t*4; // numero de soplidos
-      const breathScale=1+.18*Math.abs(Math.sin(blowCycles*Math.PI)); // pecho sube y baja
-      const cheeks=Math.max(0,Math.sin(blowCycles*Math.PI)); // mejillas se inflan
-      const panzaR=lerp(16,38,easeInOut(t)); // panza crece
-      const sweat=Math.min(1,t*1.5); // mas sudor con tiempo
-
-      drawGonzalo(230,100,.72,breathScale,cheeks,sweat);
-      drawLu(110,120,.78,panzaR);
-
-      // aire soplando
-      if(cheeks>.3){
-        const airA=cheeks*0.9;
-        // pajita
-        ctx.save();ctx.globalAlpha=airA;
-        roundRect(148,142,22,8,4,'#F9A8C9','#E87DB0',1);
-        circle(170,146,5,'#FFD6E8','#E87DB0',.8);
-        ctx.restore();
-        // ondas de aire
-        drawAirPuff(190,130,cheeks*8,airA*.8);
-        // mini particulas
-        if(cheeks>.6){
-          for(let i=0;i<4;i++){
-            const a=frame*0.08+i*1.5;
-            const px=180+Math.cos(a)*cheeks*18;
-            const py=146+Math.sin(a*0.7)*8;
-            drawStar(px,py,3,'rgba(197,168,216,.7)',cheeks*.8);
-          }
+    // ===================== SCENE 3: Se casan =====================
+    else if(ms<3400){
+      const t=(ms-2400)/1000, p=easeOut(t);
+      card('#FFFAF0','#FFF0E8');
+      lu(100,110,.65,'love');
+      gonza(220,110,.65,'love');
+      // iglesia / altar
+      ctx.globalAlpha=.3*p;
+      rr(130,50,80,120,8,'#F5F0E8','#D8D0C0',1);
+      txt('⛪','#E8D0A0',170,55,24);
+      ctx.globalAlpha=1;
+      // anillos
+      if(t>.3){
+        const rp=easeOut((t-.3)/.7);
+        ctx.globalAlpha=rp;
+        emo('💍',135,175,22*rp);emo('💍',205,175,22*rp);
+        ctx.globalAlpha=1;
+      }
+      // confeti
+      if(t>.5){
+        const cp=(t-.5)/.5;
+        for(let i=0;i<16;i++){
+          const a=i/16*Math.PI*2;
+          const r=cp*90;
+          const x=170+Math.cos(a)*r, y=140+Math.sin(a)*r*.5;
+          ctx.globalAlpha=Math.max(0,1-cp*.8);
+          emo(['🎊','✨','🌸','💐','🎉','🌹'][i%6],x,y,13+Math.sin(a*3)*3);
+          ctx.globalAlpha=1;
         }
       }
-
-      // captions dinamicos
-      const caps=['¡Gonzalo está soplando! 💨','¡La panza crece! 👶','¡Más fuerte Gonzalo! 😤','¡Ya llega Lía! 🌸'];
-      cap.textContent=caps[Math.floor(t*caps.length*.99)];
+      txt('¡Se casaron! 💍','#E8829A',170,250,13,null,true);
+      setcap('💍 ¡Dijeron que sí!');
     }
 
-    // ---- SCENE 3: flash y bebe aparece (4000-4800ms) ----
-    else if(elapsed<4800){
-      const t=(elapsed-4000)/800;
-      const flashA=Math.max(0,1-t*3);
-      // flash blanco
-      if(flashA>0){ctx.fillStyle=`rgba(255,255,255,${flashA})`;ctx.fillRect(0,0,W,H);}
-      const bebeA=easeOut(Math.max(0,(t-.2)/.8));
-      const bebeScale=lerp(.3,1,bounce(Math.min(1,(t-.1)/.9)));
-      drawGonzalo(230,100,.72,1,0,0);
-      drawLu(110,120,.78,38);
-      drawBaby(170,105,bebeScale,bebeA);
-      // corazones volando
-      for(let i=0;i<6;i++){
-        const ht=Math.max(0,(t-.3)/.7);
-        const px=120+i*20,py=200-ht*120-Math.sin(i*2+ht*5)*20;
-        ctx.globalAlpha=Math.min(1,ht*2)*Math.max(0,1-(ht-.7)/.3);
-        txt(['💕','💝','🎀','✨','💗','🌸'][i],px,py,18,'','center');
+    // ===================== SCENE 4: La noche... 🌶️ =====================
+    else if(ms<4400){
+      const t=(ms-3400)/1000;
+      // fondo oscuro romantico
+      bg('#1A0A18','#2A0A28');
+      // luna
+      emo('🌙',290,40,28);
+      // cama
+      rr(50,140,240,80,12,'#4A2838','#6A3858',1);
+      rr(50,120,240,30,8,'#8A4860','#AA5878',1);
+      // almohadas
+      rr(60,122,80,24,8,'#D4A0B8');rr(200,122,80,24,8,'#D4A0B8');
+      // "personajes" tapados
+      rr(70,130,200,60,8,'#6A3858');
+      // BLUR / censura divertida
+      const blurBox=rr(80,118,180,70,6,'rgba(255,100,150,.15)');
+      // emojis flotando por todos lados
+      const emos=['💕','😅','❤','🔥','💦','😤','💫','🥵','❤','💕','😍','💋'];
+      emos.forEach((e,i)=>{
+        const a=t*2+i*.8;
+        const x=85+Math.cos(a+i)*70+i*10;
+        const y=130+Math.sin(a*1.3+i)*25-t*20;
+        const sc=.7+.4*Math.sin(a*2+i);
+        ctx.globalAlpha=.5+.5*Math.sin(a*3+i);
+        emo(e,(x+W)%W+20,((y+H)%H)+60,16*sc);
+        ctx.globalAlpha=1;
+      });
+      // censurador pixelado gracioso
+      ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(80,118,180,70);
+      txt('📵 CENSURADO 📵','#FFB0D0',170,157,13,null,true);
+      txt('(uso tu imaginación 😏)','#D090B8',170,172,10);
+      // estrellas cayendo
+      for(let i=0;i<8;i++){
+        const st=(t*.8+i*.2)%1;
+        emo('⭐',30+i*38,st*220,10+st*4);
+      }
+      setcap('🌙 Una noche especial... 😏');
+    }
+
+    // ===================== SCENE 5: Prueba de embarazo =====================
+    else if(ms<5200){
+      const t=(ms-4400)/800, p=easeOut(t);
+      card('#FFFAF8','#FFF0F8');
+      // Lu sosteniendo el test
+      lu(110,120,.65,'love');
+      // test de embarazo
+      const tp=easeOut(Math.max(0,(t-.1)/.9));
+      ctx.save();ctx.translate(220,140);ctx.rotate(-.2);
+      rr(-18,-50,36,90,8,'#F0F0F0','#C8C0C0',1.5);
+      rr(-12,-44,24,30,4,'#E8F0FF','#C0C8E8',1);
+      // dos rayas (positivo!)
+      if(t>.3){
+        const lp=easeOut((t-.3)/.7);
+        ctx.globalAlpha=lp;
+        rr(-8,-38,16,5,2,'#E8829A');
+        rr(-8,-28,16,5,2,'#E8829A');
         ctx.globalAlpha=1;
       }
-      cap.textContent=t<.4?'✨ ¡Llegó Lía Isabella! ✨':'¡Bienvenida al mundo Lía! 💕';
+      ctx.restore();
+      // corazones explotando
+      if(t>.5){
+        const hp=(t-.5)/.5;
+        for(let i=0;i<10;i++){
+          const a=i/10*Math.PI*2+hp*2;
+          const r=hp*80;
+          ctx.globalAlpha=Math.max(0,1-hp*.7);
+          emo(['💕','💖','✨','🎉','💗'][i%5],170+Math.cos(a)*r,150+Math.sin(a)*r*.6,16);
+          ctx.globalAlpha=1;
+        }
+      }
+      txt('¡¡POSITIVO!! 🎉','#E8829A',220,215,13,null,true);
+      setcap('🤰 ¡Dos rayitas! ¡Viene Lía!');
     }
 
-    // ---- SCENE 4: final con bebe y corazones (4800-5500ms) ----
+    // ===================== SCENE 6: Panza creciendo =====================
+    else if(ms<6400){
+      const t=(ms-5200)/1200;
+      card('#FFF8FC','#F8F0FF');
+      // 3 versiones de lu con panza creciente
+      const stages=[0,22,36];
+      const labels=['Mes 1','Mes 5','Mes 9'];
+      stages.forEach((pz,i)=>{
+        const p=easeOut(Math.max(0,(t-i*.25)/.75));
+        ctx.globalAlpha=p;
+        lu(60+i*110,130,.52,'happy',pz*p);
+        txt(labels[i],'#C5A8D8',60+i*110,228,10,null,true);
+        // progreso de panza en meses
+        if(i>0&&p>.1){
+          emo(i===1?'🤰':'🤶',60+i*110+8,135,12);
+        }
+        ctx.globalAlpha=1;
+      });
+      // flecha de tiempo
+      if(t>.3){
+        const ap=easeOut((t-.3)/.7);
+        ctx.globalAlpha=ap;
+        ctx.beginPath();ctx.moveTo(72,220);ctx.lineTo(282,220);
+        ctx.strokeStyle='rgba(197,168,216,.5)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+        // flecha
+        ctx.beginPath();ctx.moveTo(278,215);ctx.lineTo(285,220);ctx.lineTo(278,225);
+        ctx.fillStyle='rgba(197,168,216,.5)';ctx.fill();
+        txt('El tiempo pasa... ⏰','#C5A8D8',170,240,10,null,false);
+        ctx.globalAlpha=1;
+      }
+      setcap('🤰 ¡La panza de Lu crece!');
+    }
+
+    // ===================== SCENE 7: ¡Nace Lía! =====================
+    else if(ms<7400){
+      const t=(ms-6400)/1000, p=easeOut(t);
+      card('#FFF0FC','#F0E8FF');
+      // hospital/cama
+      rr(80,150,200,80,10,'#F5F0F8','#E0D0E8',1);
+      rr(80,135,200,20,6,'#D0C0D8','#C0B0C8',1);
+      lu(135,118,.62,'tired',38*Math.max(0,1-t*2));
+      gonza(240,135,.58,'tired');
+      // BEBE aparece con bounce
+      if(t>.3){
+        const bp=bounce(Math.min(1,(t-.3)/.5));
+        const bs=.3+bp*.7;
+        ctx.globalAlpha=Math.min(1,(t-.3)/.4);
+        ctx.save();ctx.translate(170,120);ctx.scale(bs,bs);
+        // bebé simple y linda
+        circ(0,0,22,'#FCDEC0','#EDB892',1.2);
+        // ojos cerraditos
+        ctx.beginPath();ctx.arc(-7,0,4,Math.PI,.03*Math.PI,true);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+        ctx.beginPath();ctx.arc(7,0,4,Math.PI,.03*Math.PI,true);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+        // sonrisita
+        ctx.beginPath();ctx.arc(0,6,7,.2,Math.PI-.2);ctx.strokeStyle='#C07050';ctx.lineWidth=1.5;ctx.stroke();
+        // pelito
+        cv(-8,-20,-4,-26,4,-26,8,-20,'#C8904A',4);
+        // gorrito
+        rr(-18,-28,36,16,8,'#FFD6E8','#F0B0CC',1);
+        emo('🌸',0,2,10);
+        ctx.restore();
+        ctx.globalAlpha=1;
+      }
+      // lluvia de emojis
+      if(t>.5){
+        const ep=(t-.5)/.5;
+        for(let i=0;i<12;i++){
+          const a=i/12*Math.PI*2;
+          const r=ep*110;
+          ctx.globalAlpha=Math.max(0,(.8-ep*.5));
+          emo(['💕','👶','🎀','✨','💗','🌸','⭐','🌷','🩷','🫶','✨','💫'][i],
+            170+Math.cos(a)*r, 140+Math.sin(a)*r*.55, 15);
+          ctx.globalAlpha=1;
+        }
+      }
+      txt('¡Nació Lía Isabella! 👶','#E8829A',170,250,13,null,true);
+      setcap('👶 ¡Bienvenida al mundo, Lía!');
+    }
+
+    // ===================== SCENE 8: Final =====================
     else {
-      const t=(elapsed-4800)/700;
-      drawBaby(175,80,1,1);
-      // corazones en espiral
-      for(let i=0;i<12;i++){
-        const a=i/12*Math.PI*2+t*2;
-        const r=60+Math.sin(t*3+i)* 20;
-        const px=170+Math.cos(a)*r;
-        const py=130+Math.sin(a)*r*.6;
-        const sc=.7+.3*Math.sin(t*4+i);
-        ctx.globalAlpha=.6+.4*Math.sin(t*3+i*.7);
-        txt(['💕','💝','🎀','✨','💗','🌸','⭐','🌷','🩷','🫶','✨','💫'][i],px,py,16*sc,'','center');
+      const t=(ms-7400)/800;
+      card('#FFF0F8','#F8EEFF');
+      // los tres juntos
+      lu(95,115,.60,'love',0);
+      gonza(235,115,.60,'love');
+      // bebe en el medio
+      ctx.save();ctx.translate(170,118);ctx.scale(.75,.75);
+      circ(0,0,22,'#FCDEC0','#EDB892',1.2);
+      ctx.beginPath();ctx.arc(-7,0,4,Math.PI,.03*Math.PI,true);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(7,0,4,Math.PI,.03*Math.PI,true);ctx.strokeStyle='#2A1808';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(0,6,7,.2,Math.PI-.2);ctx.strokeStyle='#C07050';ctx.lineWidth=1.5;ctx.stroke();
+      cv(-8,-20,-4,-26,4,-26,8,-20,'#C8904A',4);
+      rr(-18,-28,36,16,8,'#FFD6E8','#F0B0CC',1);
+      emo('🌸',0,2,10);
+      ctx.restore();
+      // corazones girando
+      for(let i=0;i<14;i++){
+        const a=i/14*Math.PI*2+t*1.5;
+        const r=65+Math.sin(t*3+i)*8;
+        ctx.globalAlpha=.55+.4*Math.sin(t*4+i*.7);
+        emo(['💕','💝','🎀','✨','💗','🌸','⭐','🌷','🩷','🫶','✨','💫','❤','🩷'][i],
+          170+Math.cos(a)*r, 148+Math.sin(a)*r*.5, 14+Math.sin(t*3+i)*3);
         ctx.globalAlpha=1;
       }
+      // titulo final
+      ctx.globalAlpha=Math.min(1,t*2.5);
       ctx.font='bold 20px "Great Vibes",cursive';
       ctx.fillStyle='#E8829A';ctx.textAlign='center';
-      ctx.globalAlpha=Math.min(1,t*2);
-      ctx.fillText('¡Llegó Lía Isabella!',170,240);
+      ctx.fillText('¡Lía Isabella llegó!',170,240);
       ctx.globalAlpha=1;
-      cap.textContent='🎀 ¡Gracias por tanto amor! 🎀';
+      setcap('🎀 ¡Gracias por tanto amor! 🎀');
     }
 
-    if(elapsed<TOTAL_DUR){
+    if(ms<TOTAL){
       requestAnimationFrame(animate);
     } else {
-      // fade out
       const loaderEl=document.getElementById('loader');
-      loaderEl.style.transition='opacity .6s';loaderEl.style.opacity='0';
-      setTimeout(()=>{loaderEl.style.display='none';onDone();},650);
+      if(loaderEl){loaderEl.style.transition='opacity .6s';loaderEl.style.opacity='0';setTimeout(()=>{loaderEl.style.display='none';onDone();},650);}
+      else onDone();
     }
   }
   requestAnimationFrame(animate);
